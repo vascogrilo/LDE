@@ -2,7 +2,7 @@
 [0m[[0mdebug[0m] [0mStarting sandboxed run...[0m
 [0m[[0mdebug[0m] [0mWaiting for threads to exit or System.exit to be called.[0m
 [0m[[0mdebug[0m] [0m  Classpath:[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/Desktop/servidor/target/scala-2.9.1/classes[0m
+[0m[[0mdebug[0m] [0m	/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes[0m
 [0m[[0mdebug[0m] [0m	/home/vasco/.sbt/boot/scala-2.9.1/lib/scala-library.jar[0m
 [0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/net.databinder/unfiltered-netty-server_2.9.1/jars/unfiltered-netty-server_2.9.1-0.6.4.jar[0m
 [0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/net.databinder/unfiltered-netty_2.9.1/jars/unfiltered-netty_2.9.1-0.6.4.jar[0m
@@ -26,3 +26,7 @@
 [0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/javax.activation/activation/jars/activation-1.1.jar[0m
 [0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.6.2.jar[0m
 [0m[[0mdebug[0m] [0mWaiting for thread run-main to exit[0m
+[0m[[0mdebug[0m] [0m	Thread run-main exited.[0m
+[0m[[0mdebug[0m] [0mInterrupting remaining threads (should be all daemons).[0m
+[0m[[0mdebug[0m] [0mSandboxed run complete..[0m
+[0m[[0mdebug[0m] [0mExited with code 0[0m
