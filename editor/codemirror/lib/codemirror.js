@@ -4,6 +4,22 @@
 // the CodeMirror function. Below that, at the bottom of the file,
 // some utilities are defined.
 
+
+
+// Functions defined by Vasco Grilo
+
+// Function styleEdtor to apply a theme and syntax highlighting to a textarea
+// Receives the ID of the textarea and the selected theme
+styleEditor = function(id,theme){
+	var editor = CodeMirror.fromTextArea(document.getElementById(id), {
+        lineNumbers: true,
+        matchBrackets: true,
+        theme: ""+theme,
+        mode: "text/x-scala"
+      });	
+}
+
+
 // CodeMirror is the only global var we claim
 window.CodeMirror = (function() {
   "use strict";

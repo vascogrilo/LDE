@@ -2,7 +2,7 @@
 	line-height: 1em;
 	font-family: monospace;	
 	position: relative;
-	overflow: hidden;
+	overflow: auto;
 	float: left;
 	width: 39%;
 	height: 446px;

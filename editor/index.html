@@ -13,8 +13,8 @@
   <body>
     <h1>Live Development Environment</h1>
 	
-	<form>
-		<textarea id="code" name="code">
+<form>
+<textarea id="code" name="code">
 object abstractTypes extends Application {
   abstract class Buffer {
     type T; val element: T
@@ -31,10 +31,10 @@ object abstractTypes extends Application {
   println(newIntBuffer(1).element)
   println(newIntBuffer(1, 2, 3).length)
 }
-	</textarea>
-	</form>
+</textarea>
+</form>
 
-	<textarea id="interpreter" class="interpreter">
+	<textarea id="interpreter" class="interpreter" readonly="readonly">
 Welcome to Scala version 2.9.1 (OpenJDK Server VM, Java 1.6.0_24).
 Type in expressions to have them evaluated.
 Type :help for more information.
@@ -43,14 +43,8 @@ scala>
 	
 </textarea>
 
-    <script>
-      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
-        lineNumbers: true,
-        matchBrackets: true,
-        theme: "eclipse",
-        mode: "text/x-scala"
-      });
-
+    <script type="text/javascript">
+      styleEditor("code","eclipse");
     </script>
     
   </body>
