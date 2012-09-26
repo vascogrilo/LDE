@@ -1,3 +1,16 @@
+.interpreter {
+	line-height: 1em;
+	font-family: monospace;	
+	position: relative;
+	overflow: hidden;
+	float: left;
+	width: 39%;
+	height: 446px;
+	border: 1px solid black;
+	border-left: 0px;
+	resize: none;
+}
+
 .CodeMirror {
   line-height: 1em;
   font-family: monospace;
@@ -6,6 +19,11 @@
   position: relative;
   /* This prevents unwanted scrollbars from showing up on the body and wrapper in IE. */
   overflow: hidden;
+  
+  float: left;
+  width: 60%;
+  height: 450px;
+  border: 1px solid black;
 }
 
 .CodeMirror-scroll {
