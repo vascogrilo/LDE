@@ -1,0 +1,22 @@
+b.input {
+	font-size: 120%;
+	font-family: monospace;
+	font-weight: bold
+}
+
+input.input {
+	background-color: #e0e0e0;
+	font-family: monospace;
+	font-size: 120%;
+	font-weight: bold
+}
+
+div.container {
+	width: 745px;
+	height: 400px;
+	background-color: #000000;
+	color: #ffffff;
+	opacity: 0.4;
+	text-align: left;
+	vertical-align: bottom;
+}

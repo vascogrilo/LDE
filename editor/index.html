@@ -1,0 +1,75 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Scala Worksheet</title>
+    <script src=codemirror/lib/codemirror.js></script>
+    <script src=codemirror/mode/clike/clike.js></script>
+    <script src=codemirror/mode/css/css.js></script>
+    <link rel="stylesheet" href=codemirror/lib/codemirror.css>
+    <link rel="stylesheet" href=codemirror/doc/docs.css>
+    <link rel="stylesheet" href=codemirror/theme/eclipse.css>
+    <style type=text/css>
+      .CodeMirror {
+        float: left;
+        width: 60%;
+        height: 450px;
+        border: 1px solid black;
+      }
+      iframe {
+        width: 39%;
+        float: left;
+        height: 450px;
+        border: 1px solid black;
+        border-left: 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Live Development Environment</h1>
+	
+	<form><textarea id="code" name="code">
+
+object abstractTypes extends Application {
+  abstract class Buffer {
+    type T; val element: T
+  }
+  abstract class SeqBuffer {
+    type T; val element: Seq[T]; def length = element.length
+  }
+  def newIntBuffer(el: Int) = new Buffer {
+    type T = Int; val element = el
+  }
+  def newIntBuffer(el: Int*) = new SeqBuffer {
+    type T = Int; val element = el
+  }
+  println(newIntBuffer(1).element)
+  println(newIntBuffer(1, 2, 3).length)
+}
+
+</textarea></form>
+
+    <script>
+      var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
+        lineNumbers: true,
+        matchBrackets: true,
+        theme: "eclipse",
+        mode: "text/x-scala"
+      });
+    </script>
+    
+    <iframe id=preview></iframe>
+    <script>
+      
+      function updatePreview() {
+        var previewFrame = document.getElementById('preview');
+        var preview =  previewFrame.contentDocument ||  previewFrame.contentWindow.document;
+        preview.open();
+        preview.write(editor.getValue());
+        preview.close();
+      }
+      //setTimeout(updatePreview, 300);
+    </script>
+    
+  </body>
+</html>
