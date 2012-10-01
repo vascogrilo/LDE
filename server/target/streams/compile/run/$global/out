@@ -3,28 +3,31 @@
 [0m[[0mdebug[0m] [0mWaiting for threads to exit or System.exit to be called.[0m
 [0m[[0mdebug[0m] [0m  Classpath:[0m
 [0m[[0mdebug[0m] [0m	/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.sbt/boot/scala-2.9.1/lib/scala-library.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/net.databinder/unfiltered-netty-server_2.9.1/jars/unfiltered-netty-server_2.9.1-0.6.4.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/net.databinder/unfiltered-netty_2.9.1/jars/unfiltered-netty_2.9.1-0.6.4.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/net.databinder/unfiltered_2.9.1/jars/unfiltered_2.9.1-0.6.4.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/net.databinder/unfiltered-util_2.9.1/jars/unfiltered-util_2.9.1-0.6.4.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.4.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/io.netty/netty/bundles/netty-3.5.3.Final.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/net.databinder/dispatch-nio_2.9.1/jars/dispatch-nio_2.9.1-0.8.5.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/net.databinder/dispatch-core_2.9.1/jars/dispatch-core_2.9.1-0.8.5.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.1.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.1.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/net.databinder/dispatch-futures_2.9.1/jars/dispatch-futures_2.9.1-0.8.5.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/org.apache.httpcomponents/httpasyncclient/jars/httpasyncclient-4.0-alpha1.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/org.apache.httpcomponents/httpcore-nio/jars/httpcore-nio-4.1.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/org.clapper/avsl_2.9.1/jars/avsl_2.9.1-0.3.6.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/org.clapper/grizzled-scala_2.9.1/jars/grizzled-scala_2.9.1-1.0.8.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/jline/jline/jars/jline-0.9.94.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/junit/junit/jars/junit-3.8.1.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/javax.mail/mail/jars/mail-1.4.3.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/javax.activation/activation/jars/activation-1.1.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.6.2.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.sbt/boot/scala-2.9.1/lib/scala-library.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/net.databinder/unfiltered-netty-server_2.9.1/jars/unfiltered-netty-server_2.9.1-0.6.4.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/net.databinder/unfiltered-netty_2.9.1/jars/unfiltered-netty_2.9.1-0.6.4.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/net.databinder/unfiltered_2.9.1/jars/unfiltered_2.9.1-0.6.4.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/net.databinder/unfiltered-util_2.9.1/jars/unfiltered-util_2.9.1-0.6.4.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.4.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/io.netty/netty/bundles/netty-3.5.3.Final.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/net.databinder/dispatch-nio_2.9.1/jars/dispatch-nio_2.9.1-0.8.5.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/net.databinder/dispatch-core_2.9.1/jars/dispatch-core_2.9.1-0.8.5.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.1.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.1.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/net.databinder/dispatch-futures_2.9.1/jars/dispatch-futures_2.9.1-0.8.5.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/org.apache.httpcomponents/httpasyncclient/jars/httpasyncclient-4.0-alpha1.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/org.apache.httpcomponents/httpcore-nio/jars/httpcore-nio-4.1.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/org.clapper/avsl_2.9.1/jars/avsl_2.9.1-0.3.6.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/org.clapper/grizzled-scala_2.9.1/jars/grizzled-scala_2.9.1-1.0.8.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/jline/jline/jars/jline-0.9.94.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/junit/junit/jars/junit-3.8.1.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/javax.mail/mail/jars/mail-1.4.3.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/javax.activation/activation/jars/activation-1.1.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.6.2.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/com.twitter/util-core_2.9.1/jars/util-core_2.9.1-1.12.8.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.ivy2/cache/com.twitter/util-eval_2.9.1/jars/util-eval_2.9.1-1.12.8.jar[0m
+[0m[[0mdebug[0m] [0m	/root/.sbt/boot/scala-2.9.1/lib/scala-compiler.jar[0m
 [0m[[0mdebug[0m] [0mWaiting for thread run-main to exit[0m
 [0m[[0mdebug[0m] [0m	Thread run-main exited.[0m
 [0m[[0mdebug[0m] [0mInterrupting remaining threads (should be all daemons).[0m

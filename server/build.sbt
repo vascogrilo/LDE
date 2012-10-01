@@ -8,9 +8,11 @@ libraryDependencies ++= Seq(
    "net.databinder" %% "unfiltered-netty-server" % "0.6.4",
    "net.databinder" %% "dispatch-nio" % "0.8.5",
    "org.clapper" %% "avsl" % "0.3.6",
-   "net.databinder" %% "unfiltered-spec" % "0.6.4" % "test"
+   "net.databinder" %% "unfiltered-spec" % "0.6.4" % "test",
+   "com.twitter" % "util-core_2.9.1" % "1.12.8", "com.twitter" % "util-eval_2.9.1" % "1.12.8"
 )
 
 resolvers ++= Seq(
-  "jboss repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/"
+  "jboss repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/",
+  "twitter-repo" at "http://maven.twttr.com"
 )

@@ -2,40 +2,51 @@ package com.example
 
 import unfiltered.request._
 import unfiltered.response._
-
 import unfiltered.netty._
 
-object Interpret extends async.Plan with ServerErrorResponse {
+import com.twitter.util._
+import scala.io.Source
+
+object Interpret extends cycle.Plan with cycle.SynchronousExecution with ServerErrorResponse {
 	
+	import QParams._
 	val logger = org.clapper.avsl.Logger(getClass)
 	
 	def intent = {
 		case GET(Path("/scala")) => 
 			logger.debug("GET /scala")
-			view(Map.empty)
+			view(Map.empty)(<p></p>)
+		case POST(Path("/scala") & Params(params)) =>
+			logger.debug("POST /scala")
+			val vw = view(params)_
+			vw(<p></p>)
 	}
 	
-	def view(params: Map[String, Seq[String]]) = {
-    Html(
-		<html>
-		<head>
-		<script src="../resources/scripts/bcl.js"></script>
-		</head>
-		<body>
-		<br/>
-		<br/>
-		<br/>
-		<center>
-		<form id="bclform" onSubmit="return bcl_go( this );">
-		<nobr>
-		<b style="font-size: 120%; font-family: monospace; font-weight: bold">%</b>
-		<input style="background-color: #e0e0e0; font-family: monospace; font-size: 120%; font-weight: bold"
-		id="bclline" type="text" name="cmd" size="80"/>
-		</nobr>
-		</form>
-		</center>
-		</body>
-		</html>
-	)
+	def view(params: Map[String, Seq[String]])(body: scala.xml.NodeSeq) = {
+		def content(k: String) = params.get(k).flatMap { _.headOption } getOrElse("")
+		Html(
+			<html>
+			<head>
+			    <title>Scala Worksheet</title>
+			    <script src="js/codemirror.js"></script>
+			    <script src="js/clike.js"></script>
+			    <script src="js/css.js"></script>
+			    <script src="js/jquery.js"></script>
+			    <link rel="stylesheet" href="css/codemirror.css"/>
+			    <link rel="stylesheet" href="css/eclipse.css"/>
+			    <link rel="stylesheet" href="css/docs.css"/>
+			</head>
+			<body>
+			    <h1>Live Development Environment</h1>
+			    { body }
+			<form method="POST">
+			<textarea id="code" name="code" class="CodeMirror">{content("code")}</textarea>
+			</form>
+			
+			<textarea id="interpreter" name="interpreter" class="interpreter" readonly="readonly">{content("interpreter")}</textarea>
+			
+			</body>
+			</html>
+				)
   }
 }

@@ -1,5 +1,7 @@
 package com.example
 
+import java.net.URL
+
 /** embedded server */
 object Server {
   val logger = org.clapper.avsl.Logger(Server.getClass)
@@ -7,15 +9,13 @@ object Server {
 
   def main(args: Array[String]) {
     unfiltered.netty.Http(8080)
-      .handler(Palindrome)
-      .handler(Interpret)
-      .handler(Time)
-      .run { s =>
-        logger.info("starting unfiltered app at localhost on port %s"
-                    .format(s.port))
-        unfiltered.util.Browser.open(
-          "http://127.0.0.1:%d/time".format(s.port))
-      }
+		.handler(Palindrome)
+		.handler(Interpret)
+		.handler(Time)
+		.handler(Loader)
+		.run { s =>
+			logger.info("starting unfiltered app at localhost on port %s".format(s.port))
+		}
     http.shutdown()
   }
 }
