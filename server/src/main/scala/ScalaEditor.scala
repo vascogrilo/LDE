@@ -23,7 +23,7 @@ object ScalaEditor extends ServerPlan2 {
 	
 	import QParams._
 	val logger = org.clapper.avsl.Logger(getClass)
-	var data = scala.collection.Map("code" -> List("val keywords = List(\"Apple\", \"Ananas\", \"Mango\", \"Banana\", \"Beer\")\nval result = keywords.sorted.groupBy(_.head)\nprintln(result)"), "interpreter" -> List("Welcome to the Scala Interpreter.\nThis window will present the results from interpreting the source code.\n\n\nscala> "))
+	var data = scala.collection.Map("code" -> List("val keywords = List(\"Apple\", \"Ananas\", \"Mango\", \"Banana\", \"Beer\")\nval result = keywords.sorted.groupBy(_.head)\nprintln(result)"), "interpreter" -> List("\n\n\nscala> "))
 	
 	def intent = {
 		case GET(Path("/scala")) => 
@@ -43,30 +43,30 @@ object ScalaEditor extends ServerPlan2 {
 	
 	def view(data: scala.collection.Map[String, Seq[String]])(body: NodeSeq) = {
 		Html(
-			<html>
-			<head>
-			    <title>Scala Worksheet</title>
-			    <script src="js/codemirror.js"></script>
-			    <script src="js/clike.js"></script>
-			    <script src="js/css.js"></script>
-			    <link rel="stylesheet" href="css/codemirror.css"/>
-			    <link rel="stylesheet" href="css/eclipse.css"/>
-			    <link rel="stylesheet" href="css/docs.css"/>
-			</head>
-			<body>
-			    <h1>Live Development Environment</h1>
-			    <h3>Scala Worksheet</h3>
-				
-				<form method="POST">
-				<textarea id="code" name="code">{ content("code") }</textarea>
-				</form>
-				<textarea id="interpreter" name="interpreter" class="interpreter" readonly="readonly">{ content("interpreter") }</textarea>
-			</body>
-			
-			<script>
-				window.onload = styleEditor('code','eclipse');
-			</script>
-			</html>
-				)
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Scala Worksheet</title>
+<script src="js/codemirror.js"></script>
+<script src="js/clike.js"></script>
+<script src="js/css.js"></script>
+<link rel="stylesheet" href="css/codemirror.css"/>
+<link rel="stylesheet" href="css/eclipse.css"/>
+<link rel="stylesheet" href="css/docs.css"/>
+</head>
+<body>
+<h1>Live Development Environment</h1>
+<h3>Scala Worksheet</h3>
+
+<form method="POST">
+<textarea id="code" name="code" class="CodeMirror">{ content("code") }</textarea>
+<textarea id="interpreter" name="interpreter" class="interpreter" readonly="readonly">{ content("interpreter") }</textarea>
+</form>
+</body>
+
+<script>
+window.onload = styleEditor('code','eclipse');
+</script>
+</html>)
   }
 }
