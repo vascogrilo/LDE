@@ -17,9 +17,9 @@
   }
 
   function scriptHint(editor, keywords, getToken) {
-    // Find the token at the cursor
+    /* Find the token at the cursor */
     var cur = editor.getCursor(), token = getToken(editor, cur), tprop = token;
-    // If it's not a 'word-style' token, ignore the token.
+    /* If it's not a 'word-style' token, ignore the token. */
 
     if (!/^[\w$_]*$/.test(token.string)) {
         token = tprop = {start: cur.ch, end: cur.ch, string: "", state: token.state,
@@ -31,7 +31,7 @@
     
     var completionList = getCompletions(token, context); 
     completionList = completionList.sort();
-    //prevent autocomplete for last word, instead show dropdown with one word
+    /*prevent autocomplete for last word, instead show dropdown with one word */
     if(completionList.length == 1) {
       completionList.push(" ");
     }
@@ -105,8 +105,8 @@
     }
 
     if (context) {
-      // If this is a property, see if it belongs to some object we can
-      // find in the current environment.
+      /* If this is a property, see if it belongs to some object we can
+      /* find in the current environment. */
       var obj = context.pop(), base;
 
       if (obj.className == "pig-word") 

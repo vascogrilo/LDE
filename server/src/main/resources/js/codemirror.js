@@ -1,15 +1,15 @@
-// CodeMirror version 2.34
+/* CodeMirror version 2.34
 
-// All functions that need access to the editor's state live inside
-// the CodeMirror function. Below that, at the bottom of the file,
-// some utilities are defined.
+/* All functions that need access to the editor's state live inside
+/* the CodeMirror function. Below that, at the bottom of the file,
+/* some utilities are defined. */
 
 
 
-// Functions defined by Vasco Grilo
+/* Functions defined by Vasco Grilo */
 
-// Function styleEdtor to apply a theme and syntax highlighting to a textarea
-// Receives the ID of the textarea and the selected theme
+/* Function styleEdtor to apply a theme and syntax highlighting to a textarea
+/* Receives the ID of the textarea and the selected theme */
 styleEditor = function(id,theme){
 	var editor = CodeMirror.fromTextArea(document.getElementById(id), {
         lineNumbers: true,
@@ -20,13 +20,13 @@ styleEditor = function(id,theme){
 }
 
 
-// CodeMirror is the only global var we claim
+/* CodeMirror is the only global var we claim */
 window.CodeMirror = (function() {
   "use strict";
-  // This is the function that produces an editor instance. Its
-  // closure is used to store the editor state.
+  /* This is the function that produces an editor instance. Its */
+  /* closure is used to store the editor state. */
   function CodeMirror(place, givenOptions) {
-    // Determine effective options based on given values and defaults.
+    /* Determine effective options based on given values and defaults. */
     var options = {}, defaults = CodeMirror.defaults;
     for (var opt in defaults)
       if (defaults.hasOwnProperty(opt))
@@ -34,51 +34,51 @@ window.CodeMirror = (function() {
 
     var input = elt("textarea", null, null, "position: absolute; padding: 0; width: 1px; height: 1em");
     input.setAttribute("wrap", "off"); input.setAttribute("autocorrect", "off"); input.setAttribute("autocapitalize", "off");
-    // Wraps and hides input textarea
+    /* Wraps and hides input textarea */
     var inputDiv = elt("div", [input], null, "overflow: hidden; position: relative; width: 3px; height: 0px;");
-    // The empty scrollbar content, used solely for managing the scrollbar thumb.
+    /* The empty scrollbar content, used solely for managing the scrollbar thumb. */
     var scrollbarInner = elt("div", null, "CodeMirror-scrollbar-inner");
-    // The vertical scrollbar. Horizontal scrolling is handled by the scroller itself.
+    /* The vertical scrollbar. Horizontal scrolling is handled by the scroller itself. */
     var scrollbar = elt("div", [scrollbarInner], "CodeMirror-scrollbar");
-    // DIVs containing the selection and the actual code
+    /* DIVs containing the selection and the actual code */
     var lineDiv = elt("div"), selectionDiv = elt("div", null, null, "position: relative; z-index: -1");
-    // Blinky cursor, and element used to ensure cursor fits at the end of a line
+    /* Blinky cursor, and element used to ensure cursor fits at the end of a line */
     var cursor = elt("pre", "\u00a0", "CodeMirror-cursor"), widthForcer = elt("pre", "\u00a0", "CodeMirror-cursor", "visibility: hidden");
-    // Used to measure text size
+    /* Used to measure text size */
     var measure = elt("div", null, null, "position: absolute; width: 100%; height: 0px; overflow: hidden; visibility: hidden;");
     var lineSpace = elt("div", [measure, cursor, widthForcer, selectionDiv, lineDiv], null, "position: relative; z-index: 0");
     var gutterText = elt("div", null, "CodeMirror-gutter-text"), gutter = elt("div", [gutterText], "CodeMirror-gutter");
-    // Moved around its parent to cover visible view
+    /* Moved around its parent to cover visible view */
     var mover = elt("div", [gutter, elt("div", [lineSpace], "CodeMirror-lines")], null, "position: relative");
-    // Set to the height of the text, causes scrolling
+    /* Set to the height of the text, causes scrolling */
     var sizer = elt("div", [mover], null, "position: relative");
-    // Provides scrolling
+    /* Provides scrolling */
     var scroller = elt("div", [sizer], "CodeMirror-scroll");
     scroller.setAttribute("tabIndex", "-1");
-    // The element in which the editor lives.
+    /* The element in which the editor lives. */
     var wrapper = elt("div", [inputDiv, scrollbar, scroller], "CodeMirror" + (options.lineWrapping ? " CodeMirror-wrap" : ""));
     if (place.appendChild) place.appendChild(wrapper); else place(wrapper);
 
     themeChanged(); keyMapChanged();
-    // Needed to hide big blue blinking cursor on Mobile Safari
+    /* Needed to hide big blue blinking cursor on Mobile Safari */
     if (ios) input.style.width = "0px";
     if (!webkit) scroller.draggable = true;
     lineSpace.style.outline = "none";
     if (options.tabindex != null) input.tabIndex = options.tabindex;
     if (options.autofocus) focusInput();
     if (!options.gutter && !options.lineNumbers) gutter.style.display = "none";
-    // Needed to handle Tab key in KHTML
+    /* Needed to handle Tab key in KHTML */
     if (khtml) inputDiv.style.height = "1px", inputDiv.style.position = "absolute";
 
-    // Check for OS X >= 10.7. This has transparent scrollbars, so the
-    // overlaying of one scrollbar with another won't work. This is a
-    // temporary hack to simply turn off the overlay scrollbar. See
-    // issue #727.
+    /* Check for OS X >= 10.7. This has transparent scrollbars, so the
+    /* overlaying of one scrollbar with another won't work. This is a
+    /* temporary hack to simply turn off the overlay scrollbar. See
+    /* issue #727. */
     if (mac_geLion) { scrollbar.style.zIndex = -2; scrollbar.style.visibility = "hidden"; }
-    // Need to set a minimum width to see the scrollbar on IE7 (but must not set it on IE8).
+    /* Need to set a minimum width to see the scrollbar on IE7 (but must not set it on IE8). */
     else if (ie_lt8) scrollbar.style.minWidth = "18px";
 
-    // Delayed object wrap timeouts, making sure only one is active. blinker holds an interval.
+    /* Delayed object wrap timeouts, making sure only one is active. blinker holds an interval. */
     var poll = new Delayed(), highlight = new Delayed(), blinker;
 
     // mode holds a mode API object. doc is the tree of Line objects,

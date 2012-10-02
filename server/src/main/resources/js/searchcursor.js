@@ -6,11 +6,11 @@
     pos = pos ? cm.clipPos(pos) : {line: 0, ch: 0};
     this.pos = {from: pos, to: pos};
 
-    // The matches method is filled in based on the type of query.
-    // It takes a position and a direction, and returns an object
-    // describing the next occurrence of the query, or null if no
-    // more matches were found.
-    if (typeof query != "string") { // Regexp match
+    /* The matches method is filled in based on the type of query.
+    /* It takes a position and a direction, and returns an object
+    /* describing the next occurrence of the query, or null if no
+    /* more matches were found. */
+    if (typeof query != "string") { /* Regexp match */
       if (!query.global) query = new RegExp(query.source, query.ignoreCase ? "ig" : "g");
       this.matches = function(reverse, pos) {
         if (reverse) {
@@ -35,11 +35,11 @@
                   to: {line: pos.line, ch: start + match[0].length},
                   match: match};
       };
-    } else { // String query
+    } else { /* String query */
       if (caseFold) query = query.toLowerCase();
       var fold = caseFold ? function(str){return str.toLowerCase();} : function(str){return str;};
       var target = query.split("\n");
-      // Different methods for single-line and multi-line queries
+      /* Different methods for single-line and multi-line queries */
       if (target.length == 1)
         this.matches = function(reverse, pos) {
           var line = fold(cm.getLine(pos.line)), len = query.length, match;

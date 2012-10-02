@@ -98,7 +98,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
     return state.context = state.context.prev;
   }
 
-  // Interface
+  /* Interface */
 
   return {
     startState: function(basecolumn) {
@@ -169,7 +169,7 @@ CodeMirror.defineMode("clike", function(config, parserConfig) {
     return "meta";
   }
 
-  // C#-style strings where "" escapes a quote.
+  /* C#-style strings where "" escapes a quote. */
   function tokenAtString(stream, state) {
     var next;
     while ((next = stream.next()) != null) {

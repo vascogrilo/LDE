@@ -2,26 +2,14 @@
 [0m[[0mdebug[0m] [0mInitial source changes: [0m
 [0m[[0mdebug[0m] [0m	removed:Set()[0m
 [0m[[0mdebug[0m] [0m	added: Set()[0m
-[0m[[0mdebug[0m] [0m	modified: Set(/home/vasco/Desktop/LDE/server/src/main/scala/Interpret.scala)[0m
+[0m[[0mdebug[0m] [0m	modified: Set()[0m
 [0m[[0mdebug[0m] [0mRemoved products: Set()[0m
 [0m[[0mdebug[0m] [0mModified external sources: Set()[0m
 [0m[[0mdebug[0m] [0mModified binary dependencies: Set()[0m
-[0m[[0mdebug[0m] [0mInitial directly invalidated sources: Set(/home/vasco/Desktop/LDE/server/src/main/scala/Interpret.scala)[0m
+[0m[[0mdebug[0m] [0mInitial directly invalidated sources: Set()[0m
 [0m[[0mdebug[0m] [0m[0m
 [0m[[0mdebug[0m] [0mSources indirectly invalidated by:[0m
 [0m[[0mdebug[0m] [0m	product: Set()[0m
 [0m[[0mdebug[0m] [0m	binary dep: Set()[0m
 [0m[[0mdebug[0m] [0m	external source: Set()[0m
-[0m[[0mdebug[0m] [0mInitially invalidated: Set(/home/vasco/Desktop/LDE/server/src/main/scala/Interpret.scala)[0m
-[0m[[0minfo[0m] [0mCompiling 1 Scala source to /home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes...[0m
-[0m[[0mdebug[0m] [0mInterfacing (CompilerInterface) with Scala compiler version 2.9.1.final[0m
-[0m[[0mdebug[0m] [0mCalling Scala compiler with arguments  (CompilerInterface):[0m
-[0m[[0mdebug[0m] [0m	-d[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes[0m
-[0m[[0mdebug[0m] [0m	-bootclasspath[0m
-[0m[[0mdebug[0m] [0m	/usr/lib/jvm/java-6-openjdk-i386/jre/lib/resources.jar:/usr/lib/jvm/java-6-openjdk-i386/jre/lib/rt.jar:/usr/lib/jvm/java-6-openjdk-i386/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-6-openjdk-i386/jre/lib/jsse.jar:/usr/lib/jvm/java-6-openjdk-i386/jre/lib/jce.jar:/usr/lib/jvm/java-6-openjdk-i386/jre/lib/charsets.jar:/usr/lib/jvm/java-6-openjdk-i386/jre/lib/netx.jar:/usr/lib/jvm/java-6-openjdk-i386/jre/lib/plugin.jar:/usr/lib/jvm/java-6-openjdk-i386/jre/lib/rhino.jar:/usr/lib/jvm/java-6-openjdk-i386/jre/lib/modules/jdk.boot.jar:/usr/lib/jvm/java-6-openjdk-i386/jre/classes:/root/.sbt/boot/scala-2.9.1/lib/scala-library.jar[0m
-[0m[[0mdebug[0m] [0m	-classpath[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes:/root/.ivy2/cache/net.databinder/unfiltered-netty-server_2.9.1/jars/unfiltered-netty-server_2.9.1-0.6.4.jar:/root/.ivy2/cache/net.databinder/unfiltered-netty_2.9.1/jars/unfiltered-netty_2.9.1-0.6.4.jar:/root/.ivy2/cache/net.databinder/unfiltered_2.9.1/jars/unfiltered_2.9.1-0.6.4.jar:/root/.ivy2/cache/net.databinder/unfiltered-util_2.9.1/jars/unfiltered-util_2.9.1-0.6.4.jar:/root/.ivy2/cache/commons-codec/commons-codec/jars/commons-codec-1.4.jar:/root/.ivy2/cache/io.netty/netty/bundles/netty-3.5.3.Final.jar:/root/.ivy2/cache/net.databinder/dispatch-nio_2.9.1/jars/dispatch-nio_2.9.1-0.8.5.jar:/root/.ivy2/cache/net.databinder/dispatch-core_2.9.1/jars/dispatch-core_2.9.1-0.8.5.jar:/root/.ivy2/cache/org.apache.httpcomponents/httpclient/jars/httpclient-4.1.jar:/root/.ivy2/cache/org.apache.httpcomponents/httpcore/jars/httpcore-4.1.jar:/root/.ivy2/cache/commons-logging/commons-logging/jars/commons-logging-1.1.1.jar:/root/.ivy2/cache/net.databinder/dispatch-futures_2.9.1/jars/dispatch-futures_2.9.1-0.8.5.jar:/root/.ivy2/cache/org.apache.httpcomponents/httpasyncclient/jars/httpasyncclient-4.0-alpha1.jar:/root/.ivy2/cache/org.apache.httpcomponents/httpcore-nio/jars/httpcore-nio-4.1.jar:/root/.ivy2/cache/org.clapper/avsl_2.9.1/jars/avsl_2.9.1-0.3.6.jar:/root/.ivy2/cache/org.clapper/grizzled-scala_2.9.1/jars/grizzled-scala_2.9.1-1.0.8.jar:/root/.ivy2/cache/jline/jline/jars/jline-0.9.94.jar:/root/.ivy2/cache/junit/junit/jars/junit-3.8.1.jar:/root/.ivy2/cache/javax.mail/mail/jars/mail-1.4.3.jar:/root/.ivy2/cache/javax.activation/activation/jars/activation-1.1.jar:/root/.ivy2/cache/org.slf4j/slf4j-api/jars/slf4j-api-1.6.2.jar:/root/.ivy2/cache/com.twitter/util-core_2.9.1/jars/util-core_2.9.1-1.12.8.jar:/root/.ivy2/cache/com.twitter/util-eval_2.9.1/jars/util-eval_2.9.1-1.12.8.jar:/root/.sbt/boot/scala-2.9.1/lib/scala-compiler.jar[0m
-[0m[[0mdebug[0m] [0m	/home/vasco/Desktop/LDE/server/src/main/scala/Interpret.scala[0m
-[0m[[0mdebug[0m] [0m	Invalidated direct: Set()[0m
-[0m[[0mdebug[0m] [0mIncrementally invalidated: Set()[0m
+[0m[[0mdebug[0m] [0mInitially invalidated: Set()[0m

@@ -1,5 +1,5 @@
 CodeMirror.multiplexingMode = function(outer /*, others */) {
-  // Others should be {open, close, mode [, delimStyle]} objects
+  /* Others should be {open, close, mode [, delimStyle]} objects */
   var others = Array.prototype.slice.call(arguments, 1);
   var n_others = others.length;
 

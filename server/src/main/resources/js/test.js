@@ -1,9 +1,9 @@
-// Initiate ModeTest and set defaults
+/* Initiate ModeTest and set defaults */
 var MT = ModeTest;
 MT.modeName = 'css';
 MT.modeOptions = {};
 
-// Requires at least one media query
+/* Requires at least one media query */
 MT.testMode(
   'atMediaEmpty',
   '@media { }',
@@ -81,7 +81,7 @@ MT.testMode(
   ]
 );
 
-// Error, because "and" is only allowed immediately preceding a media expression
+/* Error, because "and" is only allowed immediately preceding a media expression */
 MT.testMode(
   'atMediaInvalidAttribute',
   '@media foobarhello { }',
@@ -93,7 +93,7 @@ MT.testMode(
   ]
 );
 
-// Error, because "and" is only allowed immediately preceding a media expression
+/* Error, because "and" is only allowed immediately preceding a media expression */
 MT.testMode(
   'atMediaInvalidAnd',
   '@media and screen { }',
@@ -107,7 +107,7 @@ MT.testMode(
   ]
 );
 
-// Error, because "not" is only allowed as the first item in each media query
+/* Error, because "not" is only allowed as the first item in each media query */
 MT.testMode(
   'atMediaInvalidNot',
   '@media screen not (not) { }',
@@ -123,7 +123,7 @@ MT.testMode(
   ]
 );
 
-// Error, because "only" is only allowed as the first item in each media query
+/* Error, because "only" is only allowed as the first item in each media query */
 MT.testMode(
   'atMediaInvalidOnly',
   '@media screen only (only) { }',
@@ -139,8 +139,8 @@ MT.testMode(
   ]
 );
 
-// Error, because "foobarhello" is neither a known type or property, but
-// property was expected (after "and"), and it should be in parenthese.
+/* Error, because "foobarhello" is neither a known type or property, but
+/* property was expected (after "and"), and it should be in parenthese. */
 MT.testMode(
   'atMediaUnknownType',
   '@media screen and foobarhello { }',
@@ -156,8 +156,8 @@ MT.testMode(
   ]
 );
 
-// Error, because "color" is not a known type, but is a known property, and
-// should be in parentheses.
+/* Error, because "color" is not a known type, but is a known property, and
+/* should be in parentheses. */
 MT.testMode(
   'atMediaInvalidType',
   '@media screen and color { }',
@@ -173,8 +173,8 @@ MT.testMode(
   ]
 );
 
-// Error, because "print" is not a known property, but is a known type,
-// and should not be in parenthese.
+/* Error, because "print" is not a known property, but is a known type,
+/* and should not be in parenthese. */
 MT.testMode(
   'atMediaInvalidProperty',
   '@media screen and (print) { }',
@@ -190,7 +190,7 @@ MT.testMode(
   ]
 );
 
-// Soft error, because "foobarhello" is not a known property or type.
+/* Soft error, because "foobarhello" is not a known property or type. */
 MT.testMode(
   'atMediaUnknownProperty',
   '@media screen and (foobarhello) { }',
@@ -441,61 +441,61 @@ MT.testMode(
     null, '; }'
   ]
 );
-//
-//MT.testMode(
-//  'tagClass',
-//  '@media only screen and (min-width: 500px), print {foo.bar#hello { color: black !important; background: #f00; margin: -5px; padding: 5px; -foo-box-sizing: border-box; } /* world */}',
-//  [
-//    'def', '@media',
-//    null, ' ',
-//    'keyword', 'only',
-//    null, ' ',
-//    'attribute', 'screen',
-//    null, ' ',
-//    'operator', 'and',
-//    null, ' ',
-//    'bracket', '(',
-//    'property', 'min-width',
-//    'operator', ':',
-//    null, ' ',
-//    'number', '500px',
-//    'bracket', ')',
-//    null, ', ',
-//    'attribute', 'print',
-//    null, ' {',
-//    'tag', 'foo',
-//    'qualifier', '.bar',
-//    'header', '#hello',
-//    null, ' { ',
-//    'property', 'color',
-//    'operator', ':',
-//    null, ' ',
-//    'keyword', 'black',
-//    null, ' ',
-//    'keyword', '!important',
-//    null, '; ',
-//    'property', 'background',
-//    'operator', ':',
-//    null, ' ',
-//    'atom', '#f00',
-//    null, '; ',
-//    'property', 'padding',
-//    'operator', ':',
-//    null, ' ',
-//    'number', '5px',
-//    null, '; ',
-//    'property', 'margin',
-//    'operator', ':',
-//    null, ' ',
-//    'number', '-5px',
-//    null, '; ',
-//    'meta', '-foo-',
-//    'property', 'box-sizing',
-//    'operator', ':',
-//    null, ' ',
-//    'string-2', 'border-box',
-//    null, '; } ',
-//    'comment', '/* world */',
-//    null, '}'
-//  ]
-//);
+/*
+/*MT.testMode(
+ *   'tagClass',
+ *  '@media only screen and (min-width: 500px), print {foo.bar#hello { color: black !important; background: #f00; margin: -5px; padding: 5px; -foo-box-sizing: border-box; } }',
+/*  [
+/*    'def', '@media',
+/*    null, ' ',
+    'keyword', 'only',
+    null, ' ',
+    'attribute', 'screen',
+    null, ' ',
+    'operator', 'and',
+    null, ' ',
+    'bracket', '(',
+    'property', 'min-width',
+    'operator', ':',
+    null, ' ',
+    'number', '500px',
+    'bracket', ')',
+    null, ', ',
+    'attribute', 'print',
+    null, ' {',
+    'tag', 'foo',
+    'qualifier', '.bar',
+    'header', '#hello',
+    null, ' { ',
+    'property', 'color',
+    'operator', ':',
+    null, ' ',
+    'keyword', 'black',
+    null, ' ',
+    'keyword', '!important',
+    null, '; ',
+    'property', 'background',
+    'operator', ':',
+    null, ' ',
+    'atom', '#f00',
+   null, '; ',
+    'property', 'padding',
+    'operator', ':',
+    null, ' ',
+    'number', '5px',
+    null, '; ',
+    'property', 'margin',
+    'operator', ':',
+  null, ' ',
+    'number', '-5px',
+   null, '; ',
+    'meta', '-foo-',
+    'property', 'box-sizing',
+    'operator', ':',
+    null, ' ',
+    'string-2', 'border-box',
+    null, '; } ',
+    'comment', '',
+    null, '}'
+  ]
+);*/

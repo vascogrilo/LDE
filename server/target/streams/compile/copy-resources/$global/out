@@ -1,13 +1,8 @@
 [0m[[0mdebug[0m] [0mCopy resource mappings: [0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/jquery,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/jquery)[0m
+[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/Source.scala~,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/Source.scala~)[0m
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/ajax,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/ajax)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/InsertionSort.scala,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/InsertionSort.scala)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/index.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/index.html)[0m
+[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/Source.scala,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/Source.scala)[0m
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/jquery/jquery-1.8.2.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/jquery/jquery-1.8.2.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/jquery/jquery.xdomainajax.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/jquery/jquery.xdomainajax.js)[0m
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/js/runmode-standalone.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/js/runmode-standalone.js)[0m
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/js/runmode.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/js/runmode.js)[0m
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/js/search.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/js/search.js)[0m
@@ -32,80 +27,6 @@
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/js/clike.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/js/clike.js)[0m
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/js/foldcode.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/js/foldcode.js)[0m
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/js/searchcursor.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/js/searchcursor.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/ajax/comm.js~,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/ajax/comm.js~)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/ajax/comm.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/ajax/comm.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/Link to mode,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/Link to mode)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/LICENSE,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/LICENSE)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/README.md,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/README.md)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/keymap,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/keymap)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/mode,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/mode)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/package.json,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/package.json)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/doc,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/doc)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/Link to mode/clike,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/Link to mode/clike)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/Link to mode/css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/Link to mode/css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/Link to mode/clike/clike.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/Link to mode/clike/clike.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/Link to mode/clike/index.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/Link to mode/clike/index.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/Link to mode/clike/scala.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/Link to mode/clike/scala.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/Link to mode/css/test.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/Link to mode/css/test.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/Link to mode/css/css.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/Link to mode/css/css.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/Link to mode/css/index.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/Link to mode/css/index.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/keymap/emacs.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/keymap/emacs.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/keymap/vim.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/keymap/vim.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/mode/clike,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/mode/clike)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/mode/css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/mode/css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/mode/clike/clike.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/mode/clike/clike.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/mode/clike/index.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/mode/clike/index.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/mode/clike/scala.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/mode/clike/scala.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/mode/css/test.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/mode/css/test.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/mode/css/css.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/mode/css/css.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/mode/css/index.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/mode/css/index.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/codemirror.js~,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/codemirror.js~)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/codemirror.css~,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/codemirror.css~)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/codemirror.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/codemirror.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/codemirror.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/codemirror.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/runmode-standalone.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/runmode-standalone.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/runmode.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/runmode.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/dialog.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/dialog.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/search.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/search.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/match-highlighter.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/match-highlighter.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/javascript-hint.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/javascript-hint.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/simple-hint.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/simple-hint.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/closetag.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/closetag.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/overlay.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/overlay.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/formatting.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/formatting.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/pig-hint.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/pig-hint.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/simple-hint.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/simple-hint.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/dialog.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/dialog.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/multiplex.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/multiplex.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/xml-hint.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/xml-hint.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/loadmode.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/loadmode.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/foldcode.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/foldcode.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/lib/util/searchcursor.js,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/lib/util/searchcursor.js)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/erlang-dark.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/erlang-dark.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/eclipse.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/eclipse.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/night.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/night.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/neat.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/neat.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/rubyblue.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/rubyblue.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/lesser-dark.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/lesser-dark.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/monokai.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/monokai.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/vibrant-ink.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/vibrant-ink.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/blackboard.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/blackboard.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/elegant.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/elegant.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/ambiance.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/ambiance.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/xq-dark.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/xq-dark.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/theme/cobalt.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/theme/cobalt.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/doc/upgrade_v2.2.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/doc/upgrade_v2.2.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/doc/baboon_vector.svg,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/doc/baboon_vector.svg)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/doc/reporting.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/doc/reporting.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/doc/compress.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/doc/compress.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/doc/oldrelease.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/doc/oldrelease.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/doc/docs.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/doc/docs.css)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/doc/internals.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/doc/internals.html)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/doc/baboon.png,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/doc/baboon.png)[0m
-[0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/codemirror/doc/manual.html,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/codemirror/doc/manual.html)[0m
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/css/erlang-dark.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/css/erlang-dark.css)[0m
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/css/dialog.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/css/dialog.css)[0m
 [0m[[0mdebug[0m] [0m	(/home/vasco/Desktop/LDE/server/src/main/resources/css/eclipse.css,/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes/css/eclipse.css)[0m

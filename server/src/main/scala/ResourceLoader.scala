@@ -7,7 +7,7 @@ import unfiltered.netty._
 import com.twitter.util._
 import com.twitter.io.TempFile
 
-object Loader extends async.Plan with ServerErrorResponse {
+object ResourceLoader extends async.Plan with ServerErrorResponse {
 	
 	val logger = org.clapper.avsl.Logger(getClass)
 	
@@ -24,7 +24,7 @@ object Loader extends async.Plan with ServerErrorResponse {
 		val lines = io.Source.fromFile(TempFile.fromResourcePath(path)).getLines
 		var source: String = ""
 		while(lines.hasNext){
-			source = source + lines.next
+			source = source + "\n" + lines.next
 		}
 		return source
 	}

@@ -1,10 +1,10 @@
-// Define search commands. Depends on dialog.js or another
-// implementation of the openDialog method.
+/* Define search commands. Depends on dialog.js or another
+/* implementation of the openDialog method.
 
-// Replace works a little oddly -- it will do the replace on the next
-// Ctrl-G (or whatever is bound to findNext) press. You prevent a
-// replace by making sure the match is no longer selected when hitting
-// Ctrl-G.
+/* Replace works a little oddly -- it will do the replace on the next
+/* Ctrl-G (or whatever is bound to findNext) press. You prevent a
+/* replace by making sure the match is no longer selected when hitting
+/* Ctrl-G. */
 
 (function() {
   function SearchState() {
@@ -15,7 +15,7 @@
     return cm._searchState || (cm._searchState = new SearchState());
   }
   function getSearchCursor(cm, query, pos) {
-    // Heuristic: if the query string is all lowercase, do a case insensitive search.
+    /* Heuristic: if the query string is all lowercase, do a case insensitive search. */
     return cm.getSearchCursor(query, pos, typeof query == "string" && query == query.toLowerCase());
   }
   function dialog(cm, text, shortText, f) {
@@ -39,7 +39,7 @@
       cm.operation(function() {
         if (!query || state.query) return;
         state.query = parseQuery(query);
-        if (cm.lineCount() < 2000) { // This is too expensive on big documents.
+        if (cm.lineCount() < 2000) { /* This is too expensive on big documents. */
           for (var cursor = getSearchCursor(cm, state.query); cursor.findNext();)
             state.marked.push(cm.markText(cursor.from(), cursor.to(), "CodeMirror-searching"));
         }

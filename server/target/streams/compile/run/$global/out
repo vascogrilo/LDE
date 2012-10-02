@@ -1,6 +1,7 @@
 [0m[[0minfo[0m] [0mRunning com.example.Server [0m
 [0m[[0mdebug[0m] [0mStarting sandboxed run...[0m
 [0m[[0mdebug[0m] [0mWaiting for threads to exit or System.exit to be called.[0m
+[0m[[0mdebug[0m] [0mWaiting for thread run-main to exit[0m
 [0m[[0mdebug[0m] [0m  Classpath:[0m
 [0m[[0mdebug[0m] [0m	/home/vasco/Desktop/LDE/server/target/scala-2.9.1/classes[0m
 [0m[[0mdebug[0m] [0m	/root/.sbt/boot/scala-2.9.1/lib/scala-library.jar[0m
@@ -28,7 +29,6 @@
 [0m[[0mdebug[0m] [0m	/root/.ivy2/cache/com.twitter/util-core_2.9.1/jars/util-core_2.9.1-1.12.8.jar[0m
 [0m[[0mdebug[0m] [0m	/root/.ivy2/cache/com.twitter/util-eval_2.9.1/jars/util-eval_2.9.1-1.12.8.jar[0m
 [0m[[0mdebug[0m] [0m	/root/.sbt/boot/scala-2.9.1/lib/scala-compiler.jar[0m
-[0m[[0mdebug[0m] [0mWaiting for thread run-main to exit[0m
 [0m[[0mdebug[0m] [0m	Thread run-main exited.[0m
 [0m[[0mdebug[0m] [0mInterrupting remaining threads (should be all daemons).[0m
 [0m[[0mdebug[0m] [0mSandboxed run complete..[0m

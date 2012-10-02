@@ -28,7 +28,7 @@ jQuery.ajax = (function(_ajax){
         
         if ( /get/i.test(o.type) && !/json/i.test(o.dataType) && isExternal(url) ) {
             
-            // Manipulate options so that JSONP-x request is made to YQL
+            /* Manipulate options so that JSONP-x request is made to YQL */
             
             o.url = YQL;
             o.dataType = 'json';
@@ -43,8 +43,8 @@ jQuery.ajax = (function(_ajax){
                 format: 'xml'
             };
             
-            // Since it's a JSONP request
-            // complete === success
+            /* Since it's a JSONP request */
+            /* complete === success */
             if (!o.success && o.complete) {
                 o.success = o.complete;
                 delete o.complete;
@@ -54,11 +54,11 @@ jQuery.ajax = (function(_ajax){
                 return function(data) {
                     
                     if (_success) {
-                        // Fake XHR callback.
+                        /* Fake XHR callback. */
                         _success.call(this, {
                             responseText: (data.results[0] || '')
-                                // YQL screws with <script>s
-                                // Get rid of them
+                                /* YQL screws with <script>s */
+                                /* Get rid of them */
                                 .replace(/<script[^>]+?\/>|<script(.|\s)*?\/script>/gi, '')
                         }, 'success');
                     }

@@ -15,7 +15,7 @@ CodeMirror.runMode = function(string, modespec, callback, options) {
         return;
       }
       var escaped = "";
-      // HTML-escape and replace tabs
+      /* HTML-escape and replace tabs */
       for (var pos = 0;;) {
         var idx = text.indexOf("\t", pos);
         if (idx == -1) {

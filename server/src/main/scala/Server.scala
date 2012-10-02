@@ -1,6 +1,6 @@
 package com.example
 
-import java.net.URL
+import unfiltered.netty.Http
 
 /** embedded server */
 object Server {
@@ -8,11 +8,9 @@ object Server {
   val http = new dispatch.nio.Http
 
   def main(args: Array[String]) {
-    unfiltered.netty.Http(8080)
-		.handler(Palindrome)
-		.handler(Interpret)
-		.handler(Time)
-		.handler(Loader)
+    Http(8080)
+		.handler(ScalaEditor)
+		.handler(ResourceLoader)
 		.run { s =>
 			logger.info("starting unfiltered app at localhost on port %s".format(s.port))
 		}
