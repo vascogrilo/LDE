@@ -1,0 +1,7 @@
+*.class
+*.log
+
+editor/*
+target/*
+server/project/*
+server/target/*
