@@ -18,14 +18,14 @@ object ResourceLoader extends async.Plan with ServerErrorResponse {
 		case req @ GET(Path(Seg("css" :: file :: Nil))) =>
 			logger.debug("GET /css")
 			req.respond(ResponseString(readFromFile("/css/" + file)))
+		case req @ GET(Path("/html")) =>
+			Redirect("/html/index.html")
+		case req @ GET(Path(Seg("html" :: file :: Nil))) =>
+			logger.debug("GET /html")
+			req.respond(ResponseString(readFromFile("/html/" + file)))
 	}
 	
 	def readFromFile(path: String) : String = {
-		val lines = io.Source.fromFile(TempFile.fromResourcePath(path)).getLines
-		var source: String = ""
-		while(lines.hasNext){
-			source = source + "\n" + lines.next
-		}
-		return source
+		io.Source.fromFile(TempFile.fromResourcePath(path)).getLines.mkString("\n")
 	}
 }
