@@ -73,3 +73,10 @@ window.onload = styleEditor('code','eclipse');
   }
   
 }
+
+object REPLView {
+	
+	def view(data: scala.collection.Map[String, Seq[String]])(body: NodeSeq) = {
+		Html(<html><head></head><body></body></html>)
+	}
+}
