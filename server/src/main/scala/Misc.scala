@@ -4,7 +4,6 @@ import unfiltered.request._
 import unfiltered.response._
 import unfiltered.netty._
 
-import com.twitter.util._
 import scala.xml._
 
 /**
@@ -38,11 +37,11 @@ object MemoryExecutor {
 
 object EditorView {
 	
-	var data = scala.collection.Map("code" -> List("val keywords = List(\"Apple\", \"Ananas\", \"Mango\", \"Banana\", \"Beer\")\nval result = keywords.sorted.groupBy(_.head)\nprintln(result)"), "interpreter" -> List("\n\n\nscala> "))
+	var data = scala.collection.mutable.Map("code" -> Seq("val keywords = List(\"Apple\", \"Ananas\", \"Mango\", \"Banana\", \"Beer\")\nval result = keywords.sorted.groupBy(_.head)\nprintln(result)"), "interpreter" -> Seq("\n\n\nscala> "))
 	
 	def content(k: String) = data.get(k).flatMap { _.headOption } getOrElse("")
 	
-	def view(data: scala.collection.Map[String, Seq[String]])(body: NodeSeq) = {
+	def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
 		Html(
 <html>
 <head>
@@ -76,7 +75,7 @@ window.onload = styleEditor('code','eclipse');
 
 object REPLView {
 	
-	def view(data: scala.collection.Map[String, Seq[String]])(body: NodeSeq) = {
+	def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
 		Html(<html><head></head><body></body></html>)
 	}
 }
