@@ -14,8 +14,8 @@ object ScalaEditor extends ServerPlan2 {
 	import QParams._
 	val logger = org.clapper.avsl.Logger(getClass)
 	
-	val intpCfg = de.sciss.scalainterpreter.Interpreter.Config()
-	val interpreter = de.sciss.scalainterpreter.Interpreter(intpCfg)
+	val intpCfg = MyInterpreter.Config()
+	val interpreter = MyInterpreter(intpCfg)
 	
 	def intent = {
 		case GET(Path("/scala")) =>
