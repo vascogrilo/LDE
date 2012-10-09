@@ -16,6 +16,7 @@ Current Status
 How to test the project
 -----------------
 
- * clone the repository
- * under the 'server' folder run the command 'sbt run'
- * open up a new browser at http://localhost:8080/scala
+ * Clone the repository
+ * Under the 'server' folder run the command 'sbt run'
+ * Open up a new browser at http://localhost:8080/scala
+ * Evaluate the code by pressing Ctrl+S
