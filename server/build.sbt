@@ -1,4 +1,4 @@
-organization := "com.example"
+organization := "pt.feup.lde"
 
 name := "servidor"
 

@@ -1,10 +1,11 @@
-package com.example
+package pt.feup.lde
 
 import unfiltered.request._
 import unfiltered.response._
 import unfiltered.netty._
 
 import scala.xml._
+import java.io.FileNotFoundException
 
 /**
  *	Server traits definitions 
@@ -25,6 +26,23 @@ object MemoryExecutor {
 	import org.jboss.netty.handler.execution._
 	lazy val underlying = new MemoryAwareThreadPoolExecutor(
 		16, 65536, 1048576)
+}
+
+/**
+ * Miscellaneous object containing utility functions
+ * 
+ * readFromFile : reads and returns the contents of a file from the resource path
+ * 
+ */
+object Misc {
+	def readFromFile(klass: Class[_], path: String) : String = {
+		klass.getResourceAsStream(path) match {
+			case null =>
+				throw new FileNotFoundException(path)
+			case stream =>
+		        io.Source.fromInputStream(stream).getLines().mkString("\n")
+		}
+	}
 }
 
 /**

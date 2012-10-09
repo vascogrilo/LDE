@@ -1,4 +1,4 @@
-package com.example
+package pt.feup.lde
 
 import unfiltered.netty.Http
 

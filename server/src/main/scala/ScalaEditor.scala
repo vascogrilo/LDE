@@ -1,4 +1,4 @@
-package com.example
+package pt.feup.lde
 
 import unfiltered.request._
 import unfiltered.response._
