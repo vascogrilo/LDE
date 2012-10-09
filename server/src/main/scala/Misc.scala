@@ -57,36 +57,20 @@ object EditorView {
 	
 	var data = scala.collection.mutable.Map("code" -> Seq("val keywords = List(\"Apple\", \"Ananas\", \"Mango\", \"Banana\", \"Beer\")\nval result = keywords.sorted.groupBy(_.head)\nprintln(result)"), "interpreter" -> Seq("\n\n\nscala> "))
 	
+	var html1 : String = Misc.readFromFile(getClass,"/html/part1.html")
+	var html2 : String = Misc.readFromFile(getClass,"/html/part2.html")
+	var html3 : String = Misc.readFromFile(getClass,"/html/part3.html")
+	
 	def content(k: String) = data.get(k).flatMap { _.headOption } getOrElse("")
 	
+	def loadHTML(data: scala.collection.mutable.Map[String, Seq[String]]) = {
+		html1 = Misc.readFromFile(getClass,"/html/part1.html")
+		html2 = Misc.readFromFile(getClass,"/html/part2.html")
+		html3 = Misc.readFromFile(getClass,"/html/part3.html")
+	}
+	
 	def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
-		Html(
-<html>
-<head>
-<meta charset="utf-8"/>
-<title>Scala Worksheet</title>
-<script src="js/codemirror.js"></script>
-<script src="js/clike.js"></script>
-<script src="js/css.js"></script>
-<link rel="stylesheet" href="css/codemirror.css"/>
-<link rel="stylesheet" href="css/eclipse.css"/>
-<link rel="stylesheet" href="css/docs.css"/>
-</head>
-<body>
-<h1>Live Development Environment</h1>
-<h3>Scala Worksheet</h3>
-
-<form method="POST">
-<input type="submit"/>
-<textarea id="code" name="code" class="CodeMirror">{ content("code") }</textarea>
-<textarea id="interpreter" name="interpreter" class="interpreter" readonly="readonly">{ content("interpreter") }</textarea>
-</form>
-</body>
-
-<script>
-window.onload = styleEditor('code','eclipse');
-</script>
-</html>)
+		Html(XML.loadString(html1 + data("code").head + html2 + data("interpreter").head + html3))
   }
   
 }

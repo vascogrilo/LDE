@@ -26,14 +26,14 @@ object ScalaEditor extends ServerPlan2 {
 			EditorView.view(EditorView.data)(NodeSeq.Empty)
 		case POST(Path("/editor") & Params(data)) =>
 			logger.debug("POST /editor")
-			val splited = data("code").head.split("\n")
-			splited.foreach { command =>
-				val res = interpreter.interpret(command)
+			//val splited = data("code").head.split("\n")
+			//splited.foreach { command =>
+				//val res = interpreter.interpret(command)
 				//println(res.toString)
-				EditorView.data("interpreter") = EditorView.data("interpreter") :+ res.toString
-			}
+				//EditorView.data("interpreter") = EditorView.data("interpreter") :+ res.toString
+			//}
 			
-			//val res = interpreter.interpret(data("code").head)
+			val res = interpreter.interpret(data("code").head)
 			
 			EditorView.data("code") = data("code")
 			//EditorView.data("interpreter") = EditorView.data("interpreter") :+ res.toString
