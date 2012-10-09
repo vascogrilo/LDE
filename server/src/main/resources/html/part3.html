@@ -1,8 +1,23 @@
 </textarea>
 </form>
-</body>
 
-<script>
+<script type='text/javascript'>
 window.onload = styleEditor('code','eclipse');
+
+document.onkeyup=function(e) {
+    if(e.which == 17) isCtrl=false;
+}
+
+document.onkeydown=function(e){
+    if(e.which == 17) 
+		isCtrl=true;
+    if(e.which == 83) {
+		if(isCtrl == true) {
+			document.getElementById('form').submit();
+			return false;
+		}
+    }
+}
 </script>
+</body>
 </html>
