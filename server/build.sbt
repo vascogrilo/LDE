@@ -8,7 +8,9 @@ scalaVersion := "2.9.2"
 
 // override def fork = forkRun(new File("target/scala_2.9.2/classes"))
 
-fork := true
+fork in run := true
+
+javaOptions in run += "-Xmx1024m"
 
 libraryDependencies ++= Seq(
    "net.databinder" %% "unfiltered-netty-server" % "0.6.4",
