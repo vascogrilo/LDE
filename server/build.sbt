@@ -6,8 +6,6 @@ version := "0.1.0-SNAPSHOT"
 
 scalaVersion := "2.9.2"
 
-// override def fork = forkRun(new File("target/scala_2.9.2/classes"))
-
 fork in run := true
 
 javaOptions in run += "-Xmx1024m"

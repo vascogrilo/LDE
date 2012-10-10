@@ -31,10 +31,13 @@ object MemoryExecutor {
 /**
  * Miscellaneous object containing utility functions
  * 
- * readFromFile : reads and returns the contents of a file from the resource path
- * 
  */
 object Misc {
+	
+	/**
+	 * readFromFile : reads and returns the contents of a file from the resource path
+	 *
+	 */
 	def readFromFile(klass: Class[_], path: String) : String = {
 		klass.getResourceAsStream(path) match {
 			case null =>
@@ -43,6 +46,15 @@ object Misc {
 		        io.Source.fromInputStream(stream).getLines().mkString("\n")
 		}
 	}
+	
+	/**
+	 * concatList : concatenates a list of strings into a single string
+	 * 
+	 */
+	 def concatList(l : Seq[String]) : String = l match {
+		 case Nil => ""
+		 case _ => l.head + concatList(l.tail)
+	 }
 }
 
 /**
@@ -75,8 +87,8 @@ object EditorView {
 	}
 	
 	def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
-		Html(XML.loadString(html1 + data("code").head + html2 + data("interpreter").head + html3))
-  }
+		Html(XML.loadString(html1 + data("code").head + html2 + Misc.concatList(data("interpreter")) + html3))
+	}
   
 }
 

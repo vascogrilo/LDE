@@ -36,7 +36,7 @@ object ScalaEditor extends ServerPlan2 {
 			val res = interpreter.interpret(data("code").head)
 			
 			EditorView.data("code") = data("code")
-			//EditorView.data("interpreter") = EditorView.data("interpreter") :+ res.toString
+			EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("\n\nscala> " + res)
 			EditorView.view(EditorView.data)(NodeSeq.Empty)
 	}
 }
