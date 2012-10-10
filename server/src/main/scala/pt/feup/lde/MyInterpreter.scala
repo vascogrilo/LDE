@@ -26,17 +26,21 @@ import tools.nsc.interpreter.{Results, JLineCompletion, Completion, NamedParam, 
 import java.util.concurrent.Executors
 
 object MyInterpreter {
+   
    object Config {
       implicit def build( b: ConfigBuilder ) : Config = b.build
       def apply() : ConfigBuilder = new ConfigBuilderImpl
    }
+   
    sealed trait ConfigLike {
       implicit def build( b: ConfigBuilder ) : Config = b.build
       def imports: Seq[ String ]
       def bindings: Seq[ NamedParam ]
       def out: Option[ Writer ]
    }
+   
    sealed trait Config extends ConfigLike
+   
    object ConfigBuilder {
       def apply( config: Config ) : ConfigBuilder = {
          import config._
@@ -47,6 +51,7 @@ object MyInterpreter {
          b
       }
    }
+   
    sealed trait ConfigBuilder extends ConfigLike {
       def imports: Seq[ String ] // need to restate that to get reassignment sugar
       def imports_=( value: Seq[ String ]) : Unit
