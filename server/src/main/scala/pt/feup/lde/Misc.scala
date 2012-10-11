@@ -67,13 +67,15 @@ object Misc {
 
 object EditorView {
 	
+	val interpreter_head = "Welcome to Scala version 2.9.2 (OpenJDK Server VM, Java 1.6.0_24).\n" +
+								"Type in expressions to have them evaluated.\n" +
+								"Type :help for more information.\n\n\nscala> "
+								
 	var data = scala.collection.mutable.Map(
 		"code" -> Seq("val keywords = List(\"Apple\", \"Ananas\", \"Mango\", \"Banana\", \"Beer\")\n" + 
 						"val result = keywords.sorted.groupBy(_.head)\nprintln(result)"),
-		"interpreter" -> Seq("Welcome to Scala version 2.9.2 (OpenJDK Server VM, Java 1.6.0_24).\n" +
-								"Type in expressions to have them evaluated.\n" +
-								"Type :help for more information.\n\n\nscala> "))
-	
+		"interpreter" -> Seq(interpreter_head))
+								
 	var html1 : String = Misc.readFromFile(getClass,"/html/part1.html")
 	var html2 : String = Misc.readFromFile(getClass,"/html/part2.html")
 	var html3 : String = Misc.readFromFile(getClass,"/html/part3.html")

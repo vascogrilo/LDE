@@ -8,13 +8,16 @@ import scala.xml._
 import de.sciss.scalainterpreter._
 
 import collection.mutable._
+import java.io.StringWriter
 
 object ScalaEditor extends ServerPlan2 {
 	
 	import QParams._
 	val logger = org.clapper.avsl.Logger(getClass)
+	val results = new StringWriter()
 	
 	val intpCfg = MyInterpreter.Config()
+	intpCfg.out = Some(results)
 	val interpreter = MyInterpreter(intpCfg)
 	
 	def intent = {
@@ -36,7 +39,8 @@ object ScalaEditor extends ServerPlan2 {
 			val res = interpreter.interpret(data("code").head)
 			
 			EditorView.data("code") = data("code")
-			EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("\n\nscala> " + res)
+			//EditorView.data("interpreter") = EditorView.data("interpreter") :+ (results.toString + "\n\nscala> ")
+			EditorView.data("interpreter") = Seq(EditorView.interpreter_head + results.toString + "\n\nscala> ")
 			EditorView.view(EditorView.data)(NodeSeq.Empty)
 	}
 }
