@@ -6,27 +6,7 @@ import unfiltered.netty._
 
 import scala.xml._
 import java.io.FileNotFoundException
-
-/**
- *	Server traits definitions 
- * 	Different traits defined in order to be used with any Handler
- *  In their own files, an handler for the Server must extends one of
- *  the following traits
- * 
- *  Added MemoryExecutor in order to limit memory usage to prevent failures
- * 
- */
-trait ServerPlan1 extends cycle.Plan with cycle.ThreadPool with ServerErrorResponse
-
-trait ServerPlan2 extends cycle.Plan with cycle.DeferralExecutor with cycle.DeferredIntent with ServerErrorResponse {
-	def underlying = MemoryExecutor.underlying
-}
-
-object MemoryExecutor {
-	import org.jboss.netty.handler.execution._
-	lazy val underlying = new MemoryAwareThreadPoolExecutor(
-		16, 65536, 1048576)
-}
+import pt.feup.lde.MyInterpreter._
 
 /**
  * Miscellaneous object containing utility functions
@@ -53,9 +33,46 @@ object Misc {
 	 */
 	 def concatList(l : Seq[String]) : String = l match {
 		 case Nil => ""
-		 case x :: xs => x + concatList(xs)
+		 case _ => l.head + concatList(l.tail)
 	 }
 }
+
+/**
+ * 
+ * Implicit Conversions
+ * In this object we will store all implicit conversions we want on
+ * interpreting results
+ * 
+ */
+object ImplicitConversions {
+	
+	implicit def resultToString(r : MyInterpreter.Result) = r.toString
+	
+}
+
+
+
+/**
+ *	Server traits definitions 
+ * 	Different traits defined in order to be used with any Handler
+ *  In their own files, an handler for the Server must extends one of
+ *  the following traits
+ * 
+ *  Added MemoryExecutor in order to limit memory usage to prevent failures
+ * 
+ */
+trait ServerPlan1 extends cycle.Plan with cycle.ThreadPool with ServerErrorResponse
+
+trait ServerPlan2 extends cycle.Plan with cycle.DeferralExecutor with cycle.DeferredIntent with ServerErrorResponse {
+	def underlying = MemoryExecutor.underlying
+}
+
+object MemoryExecutor {
+	import org.jboss.netty.handler.execution._
+	lazy val underlying = new MemoryAwareThreadPoolExecutor(
+		16, 65536, 1048576)
+}
+
 
 /**
  *  User-defined views for HTML

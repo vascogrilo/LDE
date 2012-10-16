@@ -16,31 +16,40 @@ object ScalaEditor extends ServerPlan2 {
 	val logger = org.clapper.avsl.Logger(getClass)
 	val results = new StringWriter()
 	
+	//val lp   = LogPane().makeDefault()
 	val intpCfg = MyInterpreter.Config()
 	intpCfg.out = Some(results)
+	//intCfg.out = Some( lp.writer )
+	
 	val interpreter = MyInterpreter(intpCfg)
 	
+    /*val split = SplitPane()
+    val f     = new javax.swing.JFrame("REPL Test")
+    f.getContentPane.add(split.component, "Center")
+    f.pack()
+    f.setVisible(true)*/
+    
 	def intent = {
 		case GET(Path("/scala")) =>
 			Redirect("/editor")
 		case GET(Path("/editor")) => 
 			logger.debug("GET /editor")
-			//Eval.compile("object Session { }")
 			EditorView.view(EditorView.data)(NodeSeq.Empty)
 		case POST(Path("/editor") & Params(data)) =>
 			logger.debug("POST /editor")
-			//val splited = data("code").head.split("\n")
-			//splited.foreach { command =>
-				//val res = interpreter.interpret(command)
+			val splited = data("code").head.split("\n")
+			splited.foreach { command =>
+				val res = interpreter.interpret(command)
+				EditorView.data("interpreter") = EditorView.data("interpreter") :+ (results.toString + "\n" + res.toString + "\n\n") 
 				//println(res.toString)
 				//EditorView.data("interpreter") = EditorView.data("interpreter") :+ res.toString
-			//}
+			}
 			
-			val res = interpreter.interpret(data("code").head)
+			//val res = interpreter.interpret(data("code").head)
 			
 			EditorView.data("code") = data("code")
-			//EditorView.data("interpreter") = EditorView.data("interpreter") :+ (results.toString + "\n\nscala> ")
-			EditorView.data("interpreter") = Seq(EditorView.interpreter_head + results.toString + "\n\nscala> ")
+			//EditorView.data("interpreter") = Seq(EditorView.interpreter_head + res.toString + "\n\nscala> ")
+			//EditorView.data("interpreter") = Seq(EditorView.interpreter_head + results.toString + "\n" + res.toString + "\n\nscala> ")
 			EditorView.view(EditorView.data)(NodeSeq.Empty)
 	}
 }
