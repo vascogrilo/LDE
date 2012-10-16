@@ -53,7 +53,7 @@ object Misc {
 	 */
 	 def concatList(l : Seq[String]) : String = l match {
 		 case Nil => ""
-		 case _ => l.head + concatList(l.tail)
+		 case x :: xs => x + concatList(xs)
 	 }
 }
 
