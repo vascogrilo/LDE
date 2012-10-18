@@ -5,9 +5,10 @@
 	overflow: auto;
 	float: left;
 	width: 39%;
-	height: 452px;
+	height: 450px;
 	border: 1px solid black;
 	border-left: 0px;
+	padding-left: 4px;
 	resize: none;
 }
 
