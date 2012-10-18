@@ -20,12 +20,14 @@ object ScalaEditor extends ServerPlan2 {
 	
 	//val lp   = LogPane().makeDefault()
 	val intpCfg = MyInterpreter.Config()
-	intpCfg.imports :+= "pt.feup.lde.Conversions._" 
+	//intpCfg.imports :+= "pt.feup.lde.Conversions._" 
 	intpCfg.out = Some(output)
 	//intpCfg.out = Some(results)
 	//intCfg.out = Some( lp.writer )
 	
 	val interpreter = MyInterpreter(intpCfg)
+	interpreter.interpret("object Conversions {	implicit def fromList[A](l : List[A]) = new Object { def toHtml = <ul> { l.map(e => <li> { e } </li>) } </ul> toString }}")
+    interpreter.interpret("import Conversions._")
     
 	def intent = {
 		case GET(Path("/scala")) =>
