@@ -5,11 +5,11 @@
 window.onload = styleEditor('code','eclipse');
 
 document.onkeyup=function(e) {
-    if(e.which == 17 || e.metaKey) isCtrl=false;
+    if(e.which == 17 || e.which == 224 || e.which == 91 || e.which == 93) isCtrl=false;
 }
 
 document.onkeydown=function(e){
-    if(e.which == 17 || e.metaKey) 
+    if(e.which == 17 || e.which == 224 || e.which == 91 || e.which == 93) 
 		isCtrl=true;
     if(e.which == 83) {
 		if(isCtrl == true) {
