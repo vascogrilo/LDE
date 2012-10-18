@@ -51,26 +51,26 @@ object ScalaEditor extends ServerPlan2 {
 	 * TEMPORARY: CONSTANTLY REFACTOR THIS AND IMPROVE IT
 	 */
 	def evaluateCode(code : String) = {
-			val splited = code.split("\n")
-			EditorView.data("interpreter") = Seq(EditorView.interpreter_head)
-			splited.foreach { command =>
-				if(!(command.trim).isEmpty) {
-					val res = interpreter.interpret(command)
-					var resultString : String = ""
-					res match {
-						case Success( name, value ) => {
-							ids = ids :+ name
-							val res1 = interpreter.interpret(name + ".toHtml")
-							res1 match {
-								case Success( name1, value1 ) => resultString = name + " = " + value1
-								case _ => resultString = name + " = " + value
-							}
+		val splited = code.split("\n")
+		EditorView.resetResultData
+		splited.foreach { command =>
+			if(!(command.trim).isEmpty) {
+				val res = interpreter.interpret(command)
+				var resultString : String = ""
+				res match {
+					case Success( name, value ) => {
+						ids = ids :+ name
+						val res1 = interpreter.interpret(name + ".toHtml")
+						res1 match {
+							case Success( name1, value1 ) => resultString = name + " = " + value1
+							case _ => resultString = name + " = " + value
 						}
-						case Error( _ ) => resultString = "There was an error in: " + command
-						case Incomplete => resultString = "Incomplete instruction: " + command
 					}
-					EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>" + resultString + "</p>")
+					case Error( _ ) => resultString = "There was an error in: " + command
+					case Incomplete => resultString = "Incomplete instruction: " + command
 				}
+				EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>" + resultString + "</p>")
 			}
-	   }
+		}
+   }
 }

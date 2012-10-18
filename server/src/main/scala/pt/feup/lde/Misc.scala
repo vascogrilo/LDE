@@ -100,6 +100,10 @@ object EditorView {
 	def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
 		Html(XML.loadString(html1 + data("code").head + html2 + Misc.concatList(data("interpreter")) + html3))
 	}
+	
+	def resetResultData = { 
+		data("interpreter") = Seq(interpreter_head)
+	} 
   
 }
 
