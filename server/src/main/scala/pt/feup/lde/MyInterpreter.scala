@@ -24,6 +24,7 @@ import tools.nsc.{Settings => CompilerSettings, ConsoleWriter, NewLinePrintWrite
 import java.io._
 import tools.nsc.interpreter.{Results, JLineCompletion, Completion, NamedParam, IMain}
 import java.util.concurrent.Executors
+import pt.feup.lde.Conversions._
 
 object MyInterpreter {
    
@@ -97,7 +98,9 @@ object MyInterpreter {
       cset.classpath.value += File.pathSeparator + System.getProperty( "java.class.path" )
       val in = new IMain( cset, new NewLinePrintWriter( config.out getOrElse (new ConsoleWriter), true )) with ResultIntp {
 		  
-		 scala.Console.setOut(new PrintStream(new FileOutputStream("/home/vasco/Desktop/LDE/server/src/main/resources/RESULTS",true),true)) 
+		 //scala.Console.setOut(new PrintStream(new FileOutputStream("/home/vasco/Desktop/LDE/server/src/main/resources/RESULTS",true),true)) 
+		 //scala.Console.setOut( pt.feup.lde.ScalaEditor.output )
+		 
 		 
          override protected def parentClassLoader = MyInterpreter.getClass.getClassLoader
 
