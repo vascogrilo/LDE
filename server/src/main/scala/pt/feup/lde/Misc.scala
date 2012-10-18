@@ -7,6 +7,7 @@ import unfiltered.netty._
 import scala.xml._
 import java.io.FileNotFoundException
 import pt.feup.lde.MyInterpreter._
+import pt.feup.lde.Conversions._
 
 /**
  * Miscellaneous object containing utility functions
@@ -35,22 +36,8 @@ object Misc {
 		 case Nil => ""
 		 case _ => l.head + concatList(l.tail)
 	 }
+	 
 }
-
-/**
- * 
- * Implicit Conversions
- * In this object we will store all implicit conversions we want on
- * interpreting results
- * 
- */
-object ImplicitConversions {
-	
-	implicit def resultToString(r : MyInterpreter.Result) = r.toString
-	
-}
-
-
 
 /**
  *	Server traits definitions 
@@ -93,20 +80,15 @@ object EditorView {
 						"val result = keywords.sorted.groupBy(_.head)\nprintln(result)"),
 		"interpreter" -> Seq(interpreter_head))
 								
-	var html1 : String = Misc.readFromFile(getClass,"/html/part1.html")
-	var html2 : String = Misc.readFromFile(getClass,"/html/part2.html")
-	var html3 : String = Misc.readFromFile(getClass,"/html/part3.html")
+	val html1 : String = Misc.readFromFile(getClass,"/html/part1.html")
+	val html2 : String = Misc.readFromFile(getClass,"/html/part2.html")
+	val html3 : String = Misc.readFromFile(getClass,"/html/part3.html")
 	
 	def content(k: String) = data.get(k).flatMap { _.headOption } getOrElse("")
 	
-	def loadHTML(data: scala.collection.mutable.Map[String, Seq[String]]) = {
-		html1 = Misc.readFromFile(getClass,"/html/part1.html")
-		html2 = Misc.readFromFile(getClass,"/html/part2.html")
-		html3 = Misc.readFromFile(getClass,"/html/part3.html")
-	}
-	
 	def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
 		Html(XML.loadString(html1 + data("code").head + html2 + Misc.concatList(data("interpreter")) + html3))
+		//Html(XML.loadString(html1 + data("code").head + html2 + Conversions.toHtml(List(1,2,3)) + html3))
 	}
   
 }
