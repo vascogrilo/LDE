@@ -7,7 +7,6 @@ import unfiltered.netty._
 import scala.xml._
 import java.io.FileNotFoundException
 import pt.feup.lde.MyInterpreter._
-import pt.feup.lde.Conversions._
 
 /**
  * Miscellaneous object containing utility functions
@@ -84,13 +83,12 @@ object MemoryExecutor {
 
 object EditorView {
 	
-	val interpreter_head = "Welcome to Scala version 2.9.2 (OpenJDK Server VM, Java 1.6.0_24).\n" +
-								"Type in expressions to have them evaluated.\n" +
-								"Type :help for more information.\n\n\nscala> "
+	val interpreter_head = "Welcome to Scala Worksheet Live Development Environment version 0.1.<p/>" +
+							"Running under Scala version 2.9.2 (OpenJDK Server VM, Java 1.6.0_24).<p/>" +
+							"Type in expressions and hit (Cmd/Ctrl)+S to have them evaluated.<p/>"
 								
 	var data = scala.collection.mutable.Map(
-		"code" -> Seq("val keywords = List(\"Apple\", \"Ananas\", \"Mango\", \"Banana\", \"Beer\")\n" + 
-						"val result = keywords.sorted.groupBy(_.head)\nprintln(result)"),
+		"code" -> Seq("val l = List(1,2,3)\n\n" +  "val x = 1\n\n" + "val ll = List(3,4,x)"),
 		"interpreter" -> Seq(interpreter_head))
 								
 	val html1 : String = Misc.readFromFile(getClass,"/html/part1.html")
@@ -101,7 +99,6 @@ object EditorView {
 	
 	def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
 		Html(XML.loadString(html1 + data("code").head + html2 + Misc.concatList(data("interpreter")) + html3))
-		//Html(XML.loadString(html1 + data("code").head + html2 + Conversions.toHtml(List(1,2,3)) + html3))
 	}
   
 }

@@ -24,7 +24,6 @@ import tools.nsc.{Settings => CompilerSettings, ConsoleWriter, NewLinePrintWrite
 import java.io._
 import tools.nsc.interpreter.{Results, JLineCompletion, Completion, NamedParam, IMain}
 import java.util.concurrent.Executors
-import pt.feup.lde.Conversions._
 
 object MyInterpreter {
    

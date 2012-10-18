@@ -52,6 +52,7 @@ object ScalaEditor extends ServerPlan2 {
 	 */
 	def evaluateCode(code : String) = {
 			val splited = code.split("\n")
+			EditorView.data("interpreter") = Seq(EditorView.interpreter_head)
 			splited.foreach { command =>
 				val res = interpreter.interpret(command)
 				res match {
@@ -59,11 +60,11 @@ object ScalaEditor extends ServerPlan2 {
 						ids = ids :+ name
 						val res1 = interpreter.interpret(name + ".toHtml")
 						res1 match {
-							case Success( name1, value1 ) => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("\n" + value1 + "\n")
-							case _ => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("\n" + value + "\n\nscala> ")
+							case Success( name1, value1 ) =>  EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>scala> " + value1 + "</p>")
+							case _ => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>" + value + "</p>scala> ")
 						}
 					}
-					case _ => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("\n" + res.toString + "\n\nscala> ")
+					case _ => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>" + res.toString + "</p>scala> ")
 				}
 			}
 	   }
