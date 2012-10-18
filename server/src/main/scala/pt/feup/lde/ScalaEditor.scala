@@ -24,8 +24,6 @@ object ScalaEditor extends ServerPlan2 {
 	val interpreter = MyInterpreter(intpCfg)
 	Misc.injectConversions(interpreter)
 	
-	//interpreter.interpret("object Conversions {	implicit def fromList[A](l : List[A]) = new Object { def toHtml = <ul> { l.map(e => <li> { e } </li>) } </ul> toString }}")
-    //interpreter.interpret("import Conversions._")
     
 	def intent = {
 		case GET(Path("/scala")) =>
@@ -35,32 +33,38 @@ object ScalaEditor extends ServerPlan2 {
 			EditorView.view(EditorView.data)(NodeSeq.Empty)
 		case POST(Path("/editor") & Params(data)) =>
 			logger.debug("POST /editor")
-			val splited = data("code").head.split("\n")
-			splited.foreach { command =>
-				
-				try {
-					val res = interpreter.interpret(command)
-					res match {
-						case Success( name, value) => {
-							ids = ids :+ name
-							val res1 = interpreter.interpret(name + ".toHtml")
-							res1 match {
-								case Success( name1, value1) => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("\n" + value1 + "\n")
-								case _ => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("\n" + value + "\n\nscala> ")
-							}
-						}
-						case _ => println("ENTROU NO DEFAULT")
-					}
-				}
-				catch {
-					case _ => println("Exception caught. Maybe you have an error on your code?")
-				}
-			}
 			
-			//val res = interpreter.interpret(data("code").head)
+			evaluateCode(data("code").head)
 			
 			EditorView.data("code") = data("code")
-			//EditorView.data("interpreter") = Seq(EditorView.interpreter_head + results.toString + "\n" + res.toString + "\n\nscala> ")
 			EditorView.view(EditorView.data)(NodeSeq.Empty)
 	}
+	
+    /**
+	 * evaluateCode
+	 * This function will iterate over every instuction on the parameter received
+	 * and evaluate it one by one.
+	 * It will inspect each result and (if successful add the new identifier to the list) and 
+	 * try and call toHtml conversion on every result indentifier.
+	 * If there is no toHtml conversion a verbose conversion will take place.
+	 * 
+	 * TEMPORARY: CONSTANTLY REFACTOR THIS AND IMPROVE IT
+	 */
+	def evaluateCode(code : String) = {
+			val splited = code.split("\n")
+			splited.foreach { command =>
+				val res = interpreter.interpret(command)
+				res match {
+					case Success( name, value ) => {
+						ids = ids :+ name
+						val res1 = interpreter.interpret(name + ".toHtml")
+						res1 match {
+							case Success( name1, value1 ) => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("\n" + value1 + "\n")
+							case _ => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("\n" + value + "\n\nscala> ")
+						}
+					}
+					case _ => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("\n" + res.toString + "\n\nscala> ")
+				}
+			}
+	   }
 }
