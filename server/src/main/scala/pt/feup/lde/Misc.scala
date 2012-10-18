@@ -37,6 +37,18 @@ object Misc {
 		 case _ => l.head + concatList(l.tail)
 	 }
 	 
+	 /**
+	  * injectConversions
+	  * This function will inject the Conversions object
+	  * onto the MyInterpreter object
+	  * loading the Conversions from the Resources/scala folder
+	  */
+	  def injectConversions(i : MyInterpreter) : Boolean = {
+		  //still missing catching the exception from readFromFile...
+		  val code : String = Misc.readFromFile(getClass,"/scala/Conversions.scala")
+		  i.interpret(code)
+		  true
+	  }
 }
 
 /**
