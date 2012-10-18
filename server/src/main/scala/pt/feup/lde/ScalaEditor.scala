@@ -69,7 +69,7 @@ object ScalaEditor extends ServerPlan2 {
 					case Error( _ ) => resultString = "There was an error in: " + command
 					case Incomplete => resultString = "Incomplete instruction: " + command
 				}
-				EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>" + resultString + "</p>")
+				EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>> " + resultString + "</p>")
 			}
 		}
    }
