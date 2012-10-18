@@ -54,17 +54,22 @@ object ScalaEditor extends ServerPlan2 {
 			val splited = code.split("\n")
 			EditorView.data("interpreter") = Seq(EditorView.interpreter_head)
 			splited.foreach { command =>
-				val res = interpreter.interpret(command)
-				res match {
-					case Success( name, value ) => {
-						ids = ids :+ name
-						val res1 = interpreter.interpret(name + ".toHtml")
-						res1 match {
-							case Success( name1, value1 ) =>  EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>scala> " + value1 + "</p>")
-							case _ => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>" + value + "</p>scala> ")
+				if(!(command.trim).isEmpty) {
+					val res = interpreter.interpret(command)
+					var resultString : String = ""
+					res match {
+						case Success( name, value ) => {
+							ids = ids :+ name
+							val res1 = interpreter.interpret(name + ".toHtml")
+							res1 match {
+								case Success( name1, value1 ) => resultString = name + " = " + value1
+								case _ => resultString = name + " = " + value
+							}
 						}
+						case Error( _ ) => resultString = "There was an error in: " + command
+						case Incomplete => resultString = "Incomplete instruction: " + command
 					}
-					case _ => EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>" + res.toString + "</p>scala> ")
+					EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>" + resultString + "</p>")
 				}
 			}
 	   }

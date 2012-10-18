@@ -308,6 +308,8 @@ object MyInterpreter {
 
       def completer: Completion.ScalaCompleter = cmp.completer()
 
+	  def reset = in.reset()
+
       def interpret( code: String, quiet: Boolean ) : MyInterpreter.Result = {
          if( quiet ) {
             in.beQuietDuring( in.interpretWithResult( code ))

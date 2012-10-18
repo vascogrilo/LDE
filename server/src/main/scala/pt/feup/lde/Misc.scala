@@ -88,7 +88,7 @@ object EditorView {
 							"Type in expressions and hit (Cmd/Ctrl)+S to have them evaluated.<p/>"
 								
 	var data = scala.collection.mutable.Map(
-		"code" -> Seq("val l = List(1,2,3)\n\n" +  "val x = 1\n\n" + "val ll = List(3,4,x)"),
+		"code" -> Seq("val l = List(1,2,3)\n\nval ll = List(\"Item 1\",\"Item 2\",\"Item 3\")"),
 		"interpreter" -> Seq(interpreter_head))
 								
 	val html1 : String = Misc.readFromFile(getClass,"/html/part1.html")
