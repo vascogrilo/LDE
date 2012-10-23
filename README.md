@@ -6,6 +6,7 @@ A live Scala worksheet for development
 Current Status
 -----------------
 
+ * Live code interpretation is enabled. Code is interpreted every 10sec for now.
  * Conversions are working. So far we have conversions for List,Seq,Map,Int and String.
  * Output is parsed and results identifiers are extracted and stored successfully.
  * Code is interpreted as a whole.
