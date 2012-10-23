@@ -65,10 +65,10 @@ object ScalaEditor extends ServerPlan2 {
 					ids = Misc.extractIds(results.toString)
 					//ids.map { id => println(id) }
 					ids.map { id => {
-						println("IDENTIFIER: " + id)
+						//println("IDENTIFIER: " + id)
 						val res1 = interpreter.interpret(id + ".toHtml")
 						res1 match {
-							case Success( name1, value1 ) => resultString = id + " = " + value1
+							case Success( name1, value1 ) => resultString = id + "(" + name1 + ") = " + value1
 							case _ => resultString = id + " = " + value
 						}
 						EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>> " + resultString + "</p>")
