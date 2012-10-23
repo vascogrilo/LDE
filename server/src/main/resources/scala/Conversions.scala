@@ -25,6 +25,11 @@ object Conversions {
 		
 		def toHtml = s
 	}
+	
+	implicit def fromMap[A,B](m : Map[A,B]) = new Object {
+	
+		def toHtml = <table> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1 } </td> <td> { keyValue._2 } </td> </tr> ) } </table> toString 
+	}
 }
 
 import Conversions._
