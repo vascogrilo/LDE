@@ -6,6 +6,11 @@ A live Scala worksheet for development
 Current Status
 -----------------
 
+ * Conversions are working. So far we have conversions for List,Seq,Map,Int and String.
+ * Output is parsed and results identifiers are extracted and stored successfully.
+ * Code is interpreted as a whole.
+ 
+ 
  * Unfiltered netty Server can't yet interpret Scala source code
  * Code editor stable for now. Provides line numbers, syntax highlighting and brackets matching for Scala.
 
@@ -17,6 +22,6 @@ How to test the project
 -----------------
 
  * Clone the repository
- * Under the 'server' folder run the command 'sbt run'
+ * Under the 'server' folder run the command 'sbt run' or 'sudo sbt run'
  * Open up a new browser at http://localhost:8080/scala
  * Evaluate the code by pressing Ctrl+S
