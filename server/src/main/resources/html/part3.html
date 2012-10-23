@@ -2,21 +2,40 @@
 </form>
 
 <script type='text/javascript'>
-window.onload = styleEditor('code','eclipse');
+
+window.onload = function(){
+	styleEditor('code','eclipse');
+}
+
+var interval = setInterval('submit()',10000);
+
+function submit()
+{
+	document.getElementById('form').submit();
+}
 
 document.onkeyup=function(e) {
     if(e.which == 17 || e.which == 224 || e.which == 91 || e.which == 93) isCtrl=false;
 }
 
 document.onkeydown=function(e){
+    
     if(e.which == 17 || e.which == 224 || e.which == 91 || e.which == 93) 
 		isCtrl=true;
+    
     if(e.which == 83) {
 		if(isCtrl == true) {
 			document.getElementById('form').submit();
 			return false;
 		}
     }
+    
+    if(e.which == 88) {
+		if(isCtrl == true) {
+			clearInterval(interval);
+			return false;
+		}
+	}
 }
 </script>
 </body>
