@@ -15,6 +15,16 @@ object Conversions {
 		
 		def toHtml = <ul> { l.map(e => <li> { e } </li>) } </ul> toString
     }
+    
+    implicit def fromSeq[A](s : Seq[A]) = new Object {
+		
+		def toHtml = <ul> { s.map(e => <li> { e } </li>) } </ul> toString
+	}
+	
+	implicit def fromString(s : String) = new Object {
+		
+		def toHtml = s
+	}
 }
 
 import Conversions._

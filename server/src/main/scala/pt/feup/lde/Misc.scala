@@ -7,6 +7,7 @@ import unfiltered.netty._
 import scala.xml._
 import java.io.FileNotFoundException
 import pt.feup.lde.MyInterpreter._
+import java.util.StringTokenizer
 
 /**
  * Miscellaneous object containing utility functions
@@ -23,7 +24,7 @@ object Misc {
 			case null =>
 				throw new FileNotFoundException(path)
 			case stream =>
-		        io.Source.fromInputStream(stream).getLines().mkString("\n")
+		        io.Source.fromInputStream(stream,"utf-8").getLines().mkString("\n")
 		}
 	}
 	
@@ -45,8 +46,19 @@ object Misc {
 	  def injectConversions(i : MyInterpreter) : Boolean = {
 		  //still missing catching the exception from readFromFile...
 		  val code : String = Misc.readFromFile(getClass,"/scala/Conversions.scala")
-		  i.interpret(code)
+		  i.interpret(code,true)
 		  true
+	  }
+	  
+	  
+	  def extractIds(s : String) = {
+		  var ids = scala.collection.mutable.Seq.empty[ String ]
+		  val lines = s.split("\n")
+		  lines.foreach{ line =>
+			//println(new StringTokenizer(line,":").nextToken())
+			ids = ids :+ (new StringTokenizer(line,":").nextToken())
+		}
+		  ids
 	  }
 	   
 }
