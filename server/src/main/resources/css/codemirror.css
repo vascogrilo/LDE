@@ -1,6 +1,7 @@
 .interpreter {
 	line-height: 1em;
-	font-family: monospace;	
+	font-family: "Courier New";	
+	font-size: 13px;
 	position: relative;
 	overflow: auto;
 	float: left;
@@ -12,10 +13,21 @@
 	resize: none;
 }
 
+p.int {
+	color: gray;
+	font-style: italic;
+}
+
+p.string {
+	color: gray;
+	font-style: italic;
+}
+
 .CodeMirror {
   line-height: 1em;
-  font-family: monospace;
-
+  font-family: "Lucida Console";
+  font-size: 12.5px;
+  
   /* Necessary so the scrollbar can be absolutely positioned within the wrapper on Lion. */
   position: relative;
   /* This prevents unwanted scrollbars from showing up on the body and wrapper in IE. */
