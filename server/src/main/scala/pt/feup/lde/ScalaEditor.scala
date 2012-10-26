@@ -37,6 +37,7 @@ object ScalaEditor extends ServerPlan2 {
 		case POST(Path("/editor") & Params(data)) =>
 			logger.debug("POST /editor")
 			
+			//interpreter.resetAndLoad
 			evaluateCode(data("code").head,true)
 			//Misc.printOutIds(results.toString)
 			
@@ -68,7 +69,7 @@ object ScalaEditor extends ServerPlan2 {
 						//println("IDENTIFIER: " + id)
 						val res1 = interpreter.interpret(id + ".toHtml")
 						res1 match {
-							case Success( name1, value1 ) => resultString = id + "(" + name1 + ") = " + value1
+							case Success( name1, value1 ) => resultString = id + " = " + value1
 							case _ => resultString = id + " = " + value
 						}
 						EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>> " + resultString + "</p>")

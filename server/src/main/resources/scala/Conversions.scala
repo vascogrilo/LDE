@@ -11,6 +11,16 @@
 
 object Conversions {
 	
+	implicit def fromString(s : String) = new Object {
+		
+		def toHtml = s
+	}
+	
+	implicit def fromInt(i : Int) = new Object {
+	
+		def toHtml = i toString
+	}
+	
 	implicit def fromList[A](l : List[A]) = new Object {
 		
 		def toHtml = <ul> { l.map(e => <li> { e } </li>) } </ul> toString
@@ -19,11 +29,6 @@ object Conversions {
     implicit def fromSeq[A](s : Seq[A]) = new Object {
 		
 		def toHtml = <ul> { s.map(e => <li> { e } </li>) } </ul> toString
-	}
-	
-	implicit def fromString(s : String) = new Object {
-		
-		def toHtml = s
 	}
 	
 	implicit def fromMap[A,B](m : Map[A,B]) = new Object {

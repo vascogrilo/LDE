@@ -47,6 +47,7 @@ object Misc {
 		  //still missing catching the exception from readFromFile...
 		  val code : String = Misc.readFromFile(getClass,"/scala/Conversions.scala")
 		  i.interpret(code,true)
+		  //i.compileString(code)
 		  true
 	  }
 	  

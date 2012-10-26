@@ -160,8 +160,11 @@ object MyInterpreter {
 
 	  def resetAndLoad = {
 		  in.reset
+		  in.resetClassLoader
 		  in.interpret(readFromFile(getClass,"/scala/Conversions.scala"))
 	  }
+	  
+	  def compileString(s : String) = in.compileString(s)
 
       def interpret( code: String, quiet: Boolean ) : MyInterpreter.Result = {
          if( quiet ) {
@@ -197,6 +200,8 @@ trait MyInterpreter {
     * @return        the result of the execution of the interpreted code
     */
    def interpret( code: String, quiet: Boolean = false ) : MyInterpreter.Result
+   
+   def compileString( code: String) : Boolean
    
    /**
     * Resets the state of the Interpreter
