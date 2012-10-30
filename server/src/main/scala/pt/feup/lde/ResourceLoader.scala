@@ -20,5 +20,8 @@ object ResourceLoader extends async.Plan with ServerErrorResponse {
 		case req @ GET(Path(Seg("html" :: file :: Nil))) =>
 			logger.debug("GET /html")
 			req.respond(ResponseString(Misc.readFromFile(getClass,"/html/" + file)))
+		case req @ GET(Path(Seg("output" :: file :: Nil))) =>
+			logger.debug("GET /output")
+			req.respond(ResponseString(Misc.readFromFile(getClass,"/output/" + file)))
 	}
 }
