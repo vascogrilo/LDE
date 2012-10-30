@@ -43,6 +43,9 @@ object ScalaEditor extends ServerPlan2 {
 			
 			EditorView.data("code") = data("code")
 			EditorView.view(EditorView.data)(NodeSeq.Empty)
+		case GET(Path("/editor2")) =>
+			logger.debug("GET /editor2")
+			EditorView.view2(EditorView.data)(NodeSeq.Empty)
 	}
 	
     /**
