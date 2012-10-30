@@ -11,6 +11,7 @@ object Server {
     Http(8080)
 		.handler(ScalaEditor)
 		.handler(ResourceLoader)
+		.handler(ExtJsLoader)
 		.run { s =>
 			logger.info("starting unfiltered app at localhost on port %s".format(s.port))
 		}
