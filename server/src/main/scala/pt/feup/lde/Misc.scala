@@ -108,16 +108,17 @@ object EditorView {
 	val html2 : String = Misc.readFromFile(getClass,"/html/part2.html")
 	val html3 : String = Misc.readFromFile(getClass,"/html/part3.html")
 	val html4 : String = Misc.readFromFile(getClass,"/html/part4.html")
+	val html5 : String = Misc.readFromFile(getClass,"/html/part5.html")
 	
 	def content(k: String) = data.get(k).flatMap { _.headOption } getOrElse("")
 	
-	/*def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
+	def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
 		Html(XML.loadString(html1 + data("code").head + html2 + Misc.concatList(data("interpreter")) + html3))
-	}*/
+	}
 	// TEMPORARY CODE FOR TESTING INCORPORATION OF EXT JS LIBRARY
 	
-	def view(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
-		Html(XML.loadString(html1 + data("code").head + html4))
+	def view2(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
+		Html(XML.loadString(html5 + data("code").head + html4))
 	}
 	
 	def resetResultData = { 
