@@ -64,8 +64,10 @@ object Misc {
 	  
 	  
 	  
-	  def formatResults(l : Seq[ String ]) : String = {
-		  "<div id='command_1'><span class='label labelInput'>Input</span><div class='well well-small'>val l = List(1,2,3)</div><span class='label label-info labelOutput'>Output</span><div class='well'>Here would be the widget for the output of the input above.</div></div>"
+	  def formatResults(l : Seq[ String ]) : String =  l match {
+		  //"<div id='command_1'><span class='label labelInput'>Input</span><div class='well well-small'>val l = List(1,2,3)</div><span class='label label-info labelOutput'>Output</span><div class='well'>Here would be the widget for the output of the input above.</div></div>"
+		  case Nil => ""
+		  case _ => l.head + "<br/>" + formatResults(l.tail)
 	  }
 	   
 }

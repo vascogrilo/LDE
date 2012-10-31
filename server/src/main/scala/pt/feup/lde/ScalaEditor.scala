@@ -25,11 +25,10 @@ object ScalaEditor extends ServerPlan2 {
 	println("Creating a new Intepreter instance...")
 	val interpreter = MyInterpreter(intpCfg)
 	
-	/*
+
 	println("Reading and loading Conversions onto the Interpreter...")
 	Misc.injectConversions(interpreter)
 	println("\nDone. Interpreter is ready!\nWaiting for requests...")
-	*/
     
 	def intent = {
 		case GET(Path("/scala")) =>
@@ -63,17 +62,21 @@ object ScalaEditor extends ServerPlan2 {
 	def evaluateSingle(code : String) = {
 		
 		var resultString : String = ""
+		
+		resultString = resultString + "<div><span class='label label-info labelInput'>Input</span><div class='well well-small'>" +
+										code + "</div>"
+		
 		val res = interpreter.interpret(code)
 		res match {
 			case Success( name, value ) => {
 				val res1 = interpreter.interpret(name + ".toHtml",true)
 				res1 match {
-					case Success( name1, value1 ) => resultString = value1
-					case _ => resultString = "There is no conversion available for " + code
+					case Success( name1, value1 ) => resultString = resultString + "<span class='label label-success labelOutput'>Output</span><div class='well'>" + value1.toString + "</div></div>"
+					case _ => resultString = resultString + "<span class='label label-warning labelOutput'>Output</span><div class='well'>" + value.toString + "</div></div>"
 				}
 			}
-			case Error( _ ) => resultString = "There was an error in: " + code
-			case Incomplete => resultString = "Incomplete instruction"
+			case Error( _ ) => resultString = resultString + "<span class='label label-important labelOutput'>Output</span><div class='well'> There was an error in your code! </div></div>"
+			case Incomplete => resultString = resultString + "<span class='label label-warning labelOutput'>Output</span><div class='well'> Incomplete instruction! </div></div>"
 		}
 		EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
 	}
