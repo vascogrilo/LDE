@@ -2,6 +2,7 @@
 *.log
 *.*~
 
+bootstrap/*
 ScalaInterpreterPane/*
 editor/*
 target/*
