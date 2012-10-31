@@ -25,15 +25,10 @@ object Conversions {
 		
 		def toHtml = <ul> { l.map(e => <li> { e } </li>) } </ul> toString
     }
-    
-    implicit def fromSeq[A](s : Seq[A]) = new Object {
-		
-		def toHtml = <ul> { s.map(e => <li> { e } </li>) } </ul> toString
-	}
 	
 	implicit def fromMap[A,B](m : Map[A,B]) = new Object {
 	
-		def toHtml = <table> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1 } </td> <td> { keyValue._2 } </td> </tr> ) } </table> toString 
+		def toHtml = <table class='table table-stripped'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1 } </td> <td> { keyValue._2 } </td> </tr> ) } </table> toString 
 	}
 }
 
