@@ -1,0 +1,18 @@
+body#body {
+	margin: 30px 200px 10px;
+}
+
+div#header {
+	text-align: center;
+}
+
+div#outputBody {
+	min-height: 350px;
+}
+
+textarea#code {
+	wrap: off;
+	resize: none;
+	width: 100%;
+	overflow: auto;
+}

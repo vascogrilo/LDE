@@ -20,34 +20,38 @@ object ScalaEditor extends ServerPlan2 {
 	
 	println("Setting up Interpreter's configuration...")
 	val intpCfg = MyInterpreter.Config()
-	intpCfg.out = Some(results)
+	//intpCfg.out = Some(results)
 	
 	println("Creating a new Intepreter instance...")
 	val interpreter = MyInterpreter(intpCfg)
+	
+	/*
 	println("Reading and loading Conversions onto the Interpreter...")
 	Misc.injectConversions(interpreter)
 	println("\nDone. Interpreter is ready!\nWaiting for requests...")
+	*/
     
 	def intent = {
 		case GET(Path("/scala")) =>
-			Redirect("/editor")
+			Redirect("/repl")
 		case GET(Path("/editor")) => 
 			logger.debug("GET /editor")
-			EditorView.view(EditorView.data)(NodeSeq.Empty)
+			Redirect("/repl")
+			//EditorView.view(EditorView.data)(NodeSeq.Empty)
 		case POST(Path("/editor") & Params(data)) =>
 			logger.debug("POST /editor")
-			
-			//interpreter.resetAndLoad
+			Redirect("/repl")
+			/*//interpreter.resetAndLoad
 			evaluateAllCode(data("code").head)
 			//Misc.printOutIds(results.toString)
 			
 			EditorView.data("code") = data("code")
-			EditorView.view(EditorView.data)(NodeSeq.Empty)
-		
-		
-		case GET(Path("/editor2")) =>
-			logger.debug("GET /editor2")
-			EditorView.view2(EditorView.data)(NodeSeq.Empty)
+			EditorView.view(EditorView.data)(NodeSeq.Empty)*/
+			
+		case GET(Path("/repl")) =>
+			logger.debug("GET /repl")
+			EditorView.view3(EditorView.data)(NodeSeq.Empty)
+			
 	}
 	
     /**

@@ -13,25 +13,6 @@
 	resize: none;
 }
 
-table
-{
-border-collapse:collapse;
-}
-table, td, th
-{
-border:1px solid black;
-}
-
-p.int {
-	color: gray;
-	font-style: italic;
-}
-
-p.string {
-	color: gray;
-	font-style: italic;
-}
-
 .CodeMirror {
   line-height: 1em;
   font-family: "Lucida Console";

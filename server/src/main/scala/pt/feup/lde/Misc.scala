@@ -109,6 +109,7 @@ object EditorView {
 	val html3 : String = Misc.readFromFile(getClass,"/html/View1_part3.html")
 	val html4 : String = Misc.readFromFile(getClass,"/html/View2_part1.html")
 	val html5 : String = Misc.readFromFile(getClass,"/html/View2_part2.html")
+	val html6 : String = Misc.readFromFile(getClass,"/html/View3_part1.html")
 	
 	def content(k: String) = data.get(k).flatMap { _.headOption } getOrElse("")
 	
@@ -119,6 +120,10 @@ object EditorView {
 	
 	def view2(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
 		Html(XML.loadString(html4 + data("code").head + html5))
+	}
+	
+	def view3(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
+		Html(XML.loadString(html6))
 	}
 	
 	def resetResultData = { 
