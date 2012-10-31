@@ -17,6 +17,7 @@ object ScalaEditor extends ServerPlan2 {
 	var results = new StringWriter()
 	val output = new OutputStreamWriter(System.out)
 	var ids = Seq.empty[ String ]
+	var i_counter = 0
 	
 	println("Setting up Interpreter's configuration...")
 	val intpCfg = MyInterpreter.Config()
@@ -61,8 +62,9 @@ object ScalaEditor extends ServerPlan2 {
 
 	def evaluateSingle(code : String) = {
 		
-		var resultString : String = ""
+		i_counter = i_counter + 1
 		
+		var resultString : String = ""
 		resultString = resultString + "<div><span class='label label-info labelInput'>Input</span><div class='well well-small'>" +
 										code + "</div>"
 		
@@ -71,12 +73,12 @@ object ScalaEditor extends ServerPlan2 {
 			case Success( name, value ) => {
 				val res1 = interpreter.interpret(name + ".toHtml",true)
 				res1 match {
-					case Success( name1, value1 ) => resultString = resultString + "<span class='label label-success labelOutput'>Output</span><div class='well'>" + value1.toString + "</div></div>"
-					case _ => resultString = resultString + "<span class='label label-warning labelOutput'>Output</span><div class='well'>" + value.toString + "</div></div>"
+					case Success( name1, value1 ) => resultString = resultString + "<button class='btn btn-mini btn-success labelOutput' data-toggle='collapse' data-target='#out" + i_counter + "'>Output: " + name + "</button><div class='well'><div id='out" + i_counter + "' class='collapse in'>" + value1.toString + "</div></div></div>"
+					case _ => resultString = resultString + "<button class='btn btn-mini btn-warning labelOutput' data-toggle='collapse' data-target='#out" + i_counter + "'>Output: " + name + "</button><div class='well'><div id='out" + i_counter + "' class='collapse in'>" + value.toString + "</div></div></div>"
 				}
 			}
-			case Error( _ ) => resultString = resultString + "<span class='label label-important labelOutput'>Output</span><div class='well'> There was an error in your code! </div></div>"
-			case Incomplete => resultString = resultString + "<span class='label label-warning labelOutput'>Output</span><div class='well'> Incomplete instruction! </div></div>"
+			case Error( _ ) => resultString = resultString + "<button class='btn btn-mini btn-important labelOutput' data-toggle='collapse' data-target='#out" + i_counter + "'>Output</button><div class='well'><div id='out" + i_counter + "' class='collapse in'>There was an error in your code!</div></div></div>"
+			case Incomplete => resultString = resultString + "<button class='btn btn-mini btn-warning labelOutput' data-toggle='collapse' data-target='#out" + i_counter + "'>Output</button><div class='well'><div id='out" + i_counter + "' class='collapse in'>Incomplete instruction!</div></div></div>"
 		}
 		EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
 	}
