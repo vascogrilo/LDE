@@ -1,5 +1,5 @@
 body#body {
-	margin: 30px 200px 10px;
+	margin: 50px 200px 10px;
 }
 
 div#header {
@@ -7,12 +7,31 @@ div#header {
 }
 
 div#outputBody {
+	overflow: auto;
 	min-height: 350px;
+}
+
+div#inputBody {
+	display: block;
 }
 
 textarea#code {
 	wrap: off;
 	resize: none;
-	width: 100%;
+	width: 89%;
 	overflow: auto;
+}
+
+button#buttonSubmit {
+   height: 50px; 
+	width: 10%;
+	margin-bottom: 10px;
+}
+
+.labelInput {
+	margin-bottom: 5px;
+}
+
+.labelOutput {
+	margin-bottom: 5px;
 }

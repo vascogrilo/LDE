@@ -51,10 +51,42 @@ object ScalaEditor extends ServerPlan2 {
 		case GET(Path("/repl")) =>
 			logger.debug("GET /repl")
 			EditorView.view3(EditorView.data)(NodeSeq.Empty)
+		case POST(Path("/repl") & Params(data)) =>
+		
+			evaluateSingle(data("code").head)
 			
+			EditorView.data("code") = data("code")
+			EditorView.view3(EditorView.data)(NodeSeq.Empty)
 	}
 	
-    /**
+
+	def evaluateSingle(code : String) = {
+		
+		var resultString : String = ""
+		val res = interpreter.interpret(code)
+		res match {
+			case Success( name, value ) => {
+				val res1 = interpreter.interpret(name + ".toHtml",true)
+				res1 match {
+					case Success( name1, value1 ) => resultString = value1
+					case _ => resultString = "There is no conversion available for " + code
+				}
+			}
+			case Error( _ ) => resultString = "There was an error in: " + code
+			case Incomplete => resultString = "Incomplete instruction"
+		}
+		EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/**
 	 * evaluateCode
 	 * This function will iterate over every instuction on the parameter received
 	 * and evaluate it one by one.
@@ -64,6 +96,12 @@ object ScalaEditor extends ServerPlan2 {
 	 * 
 	 * TEMPORARY: CONSTANTLY REFACTOR THIS AND IMPROVE IT
 	 */
+	
+	/**
+	 * 
+	 * GARBAGE CODE
+	 * 
+	 * 
 	def evaluateAllCode(code : String) = {
 		EditorView.resetResultData
 		results.getBuffer().setLength(0)
@@ -121,5 +159,5 @@ object ScalaEditor extends ServerPlan2 {
 				EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>> " + resultString + "</p>")
 			}
 		}
-	}
+	}*/
 }

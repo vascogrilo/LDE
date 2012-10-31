@@ -61,6 +61,12 @@ object Misc {
 		}
 		  ids
 	  }
+	  
+	  
+	  
+	  def formatResults(l : Seq[ String ]) : String = {
+		  "<div id='command_1'><span class='label labelInput'>Input</span><div class='well well-small'>val l = List(1,2,3)</div><span class='label label-info labelOutput'>Output</span><div class='well'>Here would be the widget for the output of the input above.</div></div>"
+	  }
 	   
 }
 
@@ -101,34 +107,33 @@ object EditorView {
 							"Type in expressions and hit (Cmd/Ctrl)+S to have them evaluated.<p/>"
 								
 	var data = scala.collection.mutable.Map(
-		"code" -> Seq("val l = List(1,2,3)\n\nval ll = List(\"Item 1\",\"Item 2\",\"Item 3\")"),
-		"interpreter" -> Seq(interpreter_head))
+		"code" -> Seq(""),
+		"interpreter" -> Seq(""))
 								
-	val html1 : String = Misc.readFromFile(getClass,"/html/View1_part1.html")
-	val html2 : String = Misc.readFromFile(getClass,"/html/View1_part2.html")
-	val html3 : String = Misc.readFromFile(getClass,"/html/View1_part3.html")
-	val html4 : String = Misc.readFromFile(getClass,"/html/View2_part1.html")
-	val html5 : String = Misc.readFromFile(getClass,"/html/View2_part2.html")
-	val html6 : String = Misc.readFromFile(getClass,"/html/View3_part1.html")
+	//val html1 : String = Misc.readFromFile(getClass,"/html/View1_part1.html")
+	//val html2 : String = Misc.readFromFile(getClass,"/html/View1_part2.html")
+	//val html3 : String = Misc.readFromFile(getClass,"/html/View1_part3.html")
+	val html4 : String = Misc.readFromFile(getClass,"/html/View3_part1.html")
+	val html5 : String = Misc.readFromFile(getClass,"/html/View3_part2.html")
+	val html6 : String = Misc.readFromFile(getClass,"/html/View3_part3.html")
 	
 	def content(k: String) = data.get(k).flatMap { _.headOption } getOrElse("")
 	
-	def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
-		Html(XML.loadString(html1 + data("code").head + html2 + Misc.concatList(data("interpreter")) + html3))
-	}
-	// TEMPORARY CODE FOR TESTING INCORPORATION OF EXT JS LIBRARY
+	//def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
+	//	Html(XML.loadString(html1 + data("code").head + html2 + Misc.concatList(data("interpreter")) + html3))
+	//}
 	
-	def view2(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
-		Html(XML.loadString(html4 + data("code").head + html5))
-	}
+	//def view2(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
+	//	Html(XML.loadString(html4 + data("code").head + html5))
+	//}
 	
 	def view3(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
-		Html(XML.loadString(html6))
+		Html(XML.loadString(html4 + Misc.formatResults(data("interpreter")) + html5 + data("code").head + html6))
 	}
 	
 	def resetResultData = { 
 		data("interpreter") = Seq(interpreter_head)
-	} 
+	}
   
 }
 
