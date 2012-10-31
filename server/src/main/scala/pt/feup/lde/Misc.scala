@@ -104,11 +104,11 @@ object EditorView {
 		"code" -> Seq("val l = List(1,2,3)\n\nval ll = List(\"Item 1\",\"Item 2\",\"Item 3\")"),
 		"interpreter" -> Seq(interpreter_head))
 								
-	val html1 : String = Misc.readFromFile(getClass,"/html/part1.html")
-	val html2 : String = Misc.readFromFile(getClass,"/html/part2.html")
-	val html3 : String = Misc.readFromFile(getClass,"/html/part3.html")
-	val html4 : String = Misc.readFromFile(getClass,"/html/part4.html")
-	val html5 : String = Misc.readFromFile(getClass,"/html/part5.html")
+	val html1 : String = Misc.readFromFile(getClass,"/html/View1_part1.html")
+	val html2 : String = Misc.readFromFile(getClass,"/html/View1_part2.html")
+	val html3 : String = Misc.readFromFile(getClass,"/html/View1_part3.html")
+	val html4 : String = Misc.readFromFile(getClass,"/html/View2_part1.html")
+	val html5 : String = Misc.readFromFile(getClass,"/html/View2_part2.html")
 	
 	def content(k: String) = data.get(k).flatMap { _.headOption } getOrElse("")
 	
@@ -118,7 +118,7 @@ object EditorView {
 	// TEMPORARY CODE FOR TESTING INCORPORATION OF EXT JS LIBRARY
 	
 	def view2(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
-		Html(XML.loadString(html5 + data("code").head + html4))
+		Html(XML.loadString(html4 + data("code").head + html5))
 	}
 	
 	def resetResultData = { 
