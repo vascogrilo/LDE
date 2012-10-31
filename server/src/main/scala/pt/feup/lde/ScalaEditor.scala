@@ -38,11 +38,13 @@ object ScalaEditor extends ServerPlan2 {
 			logger.debug("POST /editor")
 			
 			//interpreter.resetAndLoad
-			evaluateCode(data("code").head,true)
+			evaluateAllCode(data("code").head)
 			//Misc.printOutIds(results.toString)
 			
 			EditorView.data("code") = data("code")
 			EditorView.view(EditorView.data)(NodeSeq.Empty)
+		
+		
 		case GET(Path("/editor2")) =>
 			logger.debug("GET /editor2")
 			EditorView.view2(EditorView.data)(NodeSeq.Empty)
@@ -58,51 +60,62 @@ object ScalaEditor extends ServerPlan2 {
 	 * 
 	 * TEMPORARY: CONSTANTLY REFACTOR THIS AND IMPROVE IT
 	 */
-	def evaluateCode(code : String, all: Boolean) = {
+	def evaluateAllCode(code : String) = {
 		EditorView.resetResultData
 		results.getBuffer().setLength(0)
-		if(all){
-			val res = interpreter.interpret(code)
-			var resultString : String = ""
-			res match {
-				case Success( name, value ) => {
-					ids = Misc.extractIds(results.toString)
-					//ids.map { id => println(id) }
-					ids.map { id => {
-						//println("IDENTIFIER: " + id)
-						val res1 = interpreter.interpret(id + ".toHtml")
-						res1 match {
-							case Success( name1, value1 ) => resultString = id + " = " + value1
-							case _ => resultString = id + " = " + value
-						}
-						EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>> " + resultString + "</p>")
-					  }
+		
+		val res = interpreter.interpret(code)
+		
+		var resultString : String = ""
+		res match {
+			case Success( name, value ) => {
+				ids = Misc.extractIds(results.toString)
+				ids.map { id => {
+					
+					val res1 = interpreter.interpret(id + ".toHtml")
+					
+					res1 match {
+						case Success( name1, value1 ) => resultString = id + " = " + value1
+						case _ => resultString = id + " = " + value
 					}
-				}
-				case _ => println("ERROR OR INCOMPLETE")
-			}
-		}
-		else {
-			val splited = code.split("\n")
-			splited.foreach { command =>
-				if(!(command.trim).isEmpty) {
-					val res = interpreter.interpret(command)
-					var resultString : String = ""
-					res match {
-						case Success( name, value ) => {
-							ids = ids :+ name
-							val res1 = interpreter.interpret(name + ".toHtml",true)
-							res1 match {
-								case Success( name1, value1 ) => resultString = name + " = " + value1
-								case _ => resultString = name + " = " + value
-							}
-						}
-						case Error( _ ) => resultString = "There was an error in: " + command
-						case Incomplete => resultString = "Incomplete instruction: " + command
-					}
+					
 					EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>> " + resultString + "</p>")
+				  }
 				}
 			}
+			case _ => {
+				println("ERROR OR INCOMPLETE")
+				EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>> There was an error in your code! </p>")
+			}
 		}
-   }
+	}
+	
+	def evaluateSplitCode(code : String) = {
+		val splited = code.split("\n")
+		
+		splited.foreach { command =>
+			
+			if(!(command.trim).isEmpty) {
+				
+				val res = interpreter.interpret(command)
+				var resultString : String = ""
+				
+				res match {
+					case Success( name, value ) => {
+						
+						ids = ids :+ name
+						val res1 = interpreter.interpret(name + ".toHtml",true)
+						
+						res1 match {
+							case Success( name1, value1 ) => resultString = name + " = " + value1
+							case _ => resultString = name + " = " + value
+						}
+					}
+					case Error( _ ) => resultString = "There was an error in: " + command
+					case Incomplete => resultString = "Incomplete instruction: " + command
+				}
+				EditorView.data("interpreter") = EditorView.data("interpreter") :+ ("<p>> " + resultString + "</p>")
+			}
+		}
+	}
 }
