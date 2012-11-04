@@ -89,3 +89,9 @@ var keyUpHandler = function(event) {
     if(event.which == 17 || event.which == 224 || event.which == 91 || event.which == 93)
 		isCtrl=false;
 }
+
+
+var onClickLabelHandler = function(event) {
+	
+	//$('#).slideUp();
+}

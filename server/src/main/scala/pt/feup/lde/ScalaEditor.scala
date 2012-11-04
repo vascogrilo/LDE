@@ -65,22 +65,29 @@ object ScalaEditor extends ServerPlan2 {
 		i_counter = i_counter + 1
 		
 		var resultString : String = ""
-		resultString = resultString + "<div><span class='label label-info labelInput'>Input</span><div class='well well-small'>" +
-										code + "</div>"
 		
 		val res = interpreter.interpret(code)
 		res match {
 			case Success( name, value ) => {
 				val res1 = interpreter.interpret(name + ".toHtml",true)
 				res1 match {
-					case Success( name1, value1 ) => resultString = resultString + "<button class='btn btn-mini btn-success labelOutput' data-toggle='collapse' data-target='#out" + i_counter + "'>Output: " + name + "</button><div class='well'><div id='out" + i_counter + "' class='collapse in'>" + value1.toString + "</div></div></div>"
-					case _ => resultString = resultString + "<button class='btn btn-mini btn-warning labelOutput' data-toggle='collapse' data-target='#out" + i_counter + "'>Output: " + name + "</button><div class='well'><div id='out" + i_counter + "' class='collapse in'>" + value.toString + "</div></div></div>"
+					case Success( name1, value1 ) => resultString = composeHtmlResult(code, name, value1.toString, i_counter)
+					case _ => resultString = composeHtmlResult(code, name, value.toString, i_counter)
 				}
 			}
 			case Error( _ ) => resultString = resultString + "<button class='btn btn-mini btn-important labelOutput' data-toggle='collapse' data-target='#out" + i_counter + "'>Output</button><div class='well'><div id='out" + i_counter + "' class='collapse in'>There was an error in your code!</div></div></div>"
 			case Incomplete => resultString = resultString + "<button class='btn btn-mini btn-warning labelOutput' data-toggle='collapse' data-target='#out" + i_counter + "'>Output</button><div class='well'><div id='out" + i_counter + "' class='collapse in'>Incomplete instruction!</div></div></div>"
 		}
 		EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
+	}
+	
+	
+	def composeHtmlResult( code: String, name: String, value: String, result: Int) : String = { 
+		"<p><div>" +
+		"<span class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + name + ": " + code + "</span>" + 
+		"<div id='" + name + "' class='collapse in'>" + 
+		"<div class='well'>" + value +
+		"</div></div></div></p>"
 	}
 	
 	

@@ -67,7 +67,7 @@ object Misc {
 	  def formatResults(l : Seq[ String ]) : String =  l match {
 		  //"<div id='command_1'><span class='label labelInput'>Input</span><div class='well well-small'>val l = List(1,2,3)</div><span class='label label-info labelOutput'>Output</span><div class='well'>Here would be the widget for the output of the input above.</div></div>"
 		  case Nil => ""
-		  case _ => l.head + "<br/>" + formatResults(l.tail)
+		  case _ => l.head + formatResults(l.tail)
 	  }
 	   
 }
@@ -110,7 +110,7 @@ object EditorView {
 								
 	var data = scala.collection.mutable.Map(
 		"code" -> Seq(""),
-		"interpreter" -> Seq(""))
+		"interpreter" -> Seq.empty[String])
 								
 	//val html1 : String = Misc.readFromFile(getClass,"/html/View1_part1.html")
 	//val html2 : String = Misc.readFromFile(getClass,"/html/View1_part2.html")
