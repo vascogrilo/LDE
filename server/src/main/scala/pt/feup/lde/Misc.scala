@@ -15,6 +15,8 @@ import java.util.StringTokenizer
  */
 object Misc {
 	
+	import scala.util.matching._
+	
 	/**
 	 * readFromFile : reads and returns the contents of a file from the resource path
 	 *
@@ -48,13 +50,26 @@ object Misc {
 	   * 
 	   * This function will extract the Identifier and Type value from the string provided
 	   */ 
-	  def extractIds(s : String) : (String,String) = {
+	  def extractIds(s : String) = {
+		  
 		  val lines = s.split("\n")
-		  lines.foreach{ line =>
-			//println(new StringTokenizer(line,":").nextToken())
-			println(line)
+		  lines.foreach{ line => 
+		    println("\nLINE TO BE PARSED: " + line)
+			matchIdOrErrortoString(line) match {
+				case Some((a,b)) => println("Got " + a + " " + b)
+				case None => println("Got nothing")
+			}
 		  }
-		  ("a","b")
+	  }
+	  
+	  def matchIdOrErrortoString(s : String) : Option[(String,String)] = {
+		  val Id = new Regex("""(\w+):\s+(.*)\s+=\s+.*""")
+		  val Error = new Regex("""<console>:\d+:\s+error:\s+(.*)""")
+		  s match {
+			  case Id(a,b) => Some((a,b))
+			  case Error(e) => Some(("Error",e))
+			  case _ => None
+		  }
 	  }
 	  
 	  
@@ -128,13 +143,11 @@ object EditorView {
 								
 	var data = scala.collection.mutable.Map(
 		"code" -> Seq(""),
-		"interpreter" -> Seq.empty[String])
+		"interpreter" -> Seq(""))
 								
 	val html4 : String = readFromFile(getClass,"/html/View3_part1.html")
 	val html5 : String = readFromFile(getClass,"/html/View3_part2.html")
 	val html6 : String = readFromFile(getClass,"/html/View3_part3.html")
-	
-	def content(k: String) = data.get(k).flatMap { _.headOption } getOrElse("")
 	
 	def view(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
 		Html(XML.loadString(html4 + data("interpreter").reduceLeft(_ + _) + html5 + data("code").head + html6))

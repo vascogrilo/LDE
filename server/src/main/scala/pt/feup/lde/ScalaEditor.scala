@@ -9,17 +9,17 @@ import collection.mutable._
 import java.io._
 
 import pt.feup.lde.MyInterpreter._
-import pt.feup.lde.Misc._
 
 object ScalaEditor extends ServerPlan2 {
 	
 	import QParams._
+	import Misc._
+	
 	val logger = org.clapper.avsl.Logger(getClass)
-	var results = new StringWriter()
+	val results = new StringWriter()
 	val output = new OutputStreamWriter(System.out)
 	
 	var ids = Map.empty[ String, String ]
-	var i_counter = 0
 	
 	println("Setting up Interpreter's configuration...")
 	val intpCfg = MyInterpreter.Config()
@@ -65,15 +65,11 @@ object ScalaEditor extends ServerPlan2 {
 
 	def evaluateSingle(code : String) : String = {
 		
-		i_counter = i_counter + 1
-		
 		var resultString : String = ""
 		
 		val res = interpreter.interpret(code)
 		res match {
 			case Success( name, value ) => {
-				
-				extractIds(results.toString)
 				
 				val res1 = interpreter.interpret(name + ".toHtml",true)
 				res1 match {
@@ -84,6 +80,7 @@ object ScalaEditor extends ServerPlan2 {
 			case Error( _ ) => resultString = composeFailedEvaluation(true)
 			case Incomplete => resultString = composeFailedEvaluation(false)
 		}
+		extractIds(results.toString)
 		EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
 		resultString
 	}
