@@ -20,6 +20,5 @@ $(document).ready(function() {
 	 */
 	$('textarea').keydown(keyDownHandler);
 	$('textarea').keyup(keyUpHandler);
-	//$('#buttonSubmit').click(onClickEvaluateHandler);
 });
 

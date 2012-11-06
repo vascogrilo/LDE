@@ -47,22 +47,17 @@ object ScalaEditor extends ServerPlan2 {
 			EditorView.view3(EditorView.data)(NodeSeq.Empty)
 		case POST(Path("/repl") & Params(data)) =>
 		
-			println("Data: " + data)
-			println("Code: " + data("code"))
+			//println("Data: " + data)
+			//println("Code: " + data("code"))
 			
 			if(data("code").length > 0) {
-				//EditorView.data("code") = data("code")
 				println("I'm going to interpret " + data("code").head + "\n\n")
 				ResponseString(evaluateSingle(data("code").head))
 			}
 			else {
 				println("Got data with 0 length. Showing view with same data.\n\n")
-				EditorView.view3(EditorView.data)(NodeSeq.Empty)
+				EditorView.view(EditorView.data)(NodeSeq.Empty)
 			}
-			
-			//EditorView.data("code") = data("code")
-			//evaluateSingle(data("code").head)
-			//EditorView.view3(EditorView.data)(NodeSeq.Empty)
 	}
 	
 

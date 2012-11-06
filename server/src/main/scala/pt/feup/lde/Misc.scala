@@ -112,24 +112,13 @@ object EditorView {
 		"code" -> Seq(""),
 		"interpreter" -> Seq.empty[String])
 								
-	//val html1 : String = Misc.readFromFile(getClass,"/html/View1_part1.html")
-	//val html2 : String = Misc.readFromFile(getClass,"/html/View1_part2.html")
-	//val html3 : String = Misc.readFromFile(getClass,"/html/View1_part3.html")
 	val html4 : String = Misc.readFromFile(getClass,"/html/View3_part1.html")
 	val html5 : String = Misc.readFromFile(getClass,"/html/View3_part2.html")
 	val html6 : String = Misc.readFromFile(getClass,"/html/View3_part3.html")
 	
 	def content(k: String) = data.get(k).flatMap { _.headOption } getOrElse("")
 	
-	//def view(data: scala.collection.mutable.Map[String, Seq[String]])(body: NodeSeq) = {
-	//	Html(XML.loadString(html1 + data("code").head + html2 + Misc.concatList(data("interpreter")) + html3))
-	//}
-	
-	//def view2(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
-	//	Html(XML.loadString(html4 + data("code").head + html5))
-	//}
-	
-	def view3(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
+	def view(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
 		Html(XML.loadString(html4 + Misc.formatResults(data("interpreter")) + html5 + data("code").head + html6))
 	}
 	

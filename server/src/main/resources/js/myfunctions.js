@@ -34,7 +34,6 @@ function elementSupportsAttribute(element, attribute) {
  */
 function textareaApplyPlaceHolder() {
 	if (!elementSupportsAttribute('textarea', 'placeholder')) {
-	//alert('entrou1');
 	// Fallback for browsers that don't support HTML5 placeholder attribute
 	$('#code')
 		.data('Type your instruction here...', $('#code').text())
@@ -53,7 +52,6 @@ function textareaApplyPlaceHolder() {
 	}
 	else {
 		// Browser does support HTML5 placeholder attribute, so use it.
-		//alert('entrou');
 		$('#code').attr('placeholder', 'Type your instruction here...');
 	}
 }
@@ -76,9 +74,7 @@ var keyDownHandler = function(event) {
 		if(isCtrl && ($.trim( $('#code').val() )) ) {
 			console.log($('#code').val())
 			console.log("entrou");
-			//$('#form').submit(submitHandler);
-			//$('#form').submit();
-			submitHandler();
+			requestEvaluation();
 			return false;
 		}
     }
@@ -90,16 +86,7 @@ var keyUpHandler = function(event) {
 		isCtrl=false;
 }
 
-var onClickEvaluateHandler = function(event) {
-	//$('#form').submit(submitHandler);
-	submitHandler();
-}
-
-var submitHandler = function() {
-		
-		//event.preventDefault();
-		
-		console.log("entrou no submitHandler com " + $('#code').val());
+var requestEvaluation = function() {
 		
 		$.ajax({
 			type: 'POST',
