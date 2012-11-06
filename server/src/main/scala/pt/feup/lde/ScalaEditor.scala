@@ -9,6 +9,7 @@ import collection.mutable._
 import java.io._
 
 import pt.feup.lde.MyInterpreter._
+import pt.feup.lde.Misc._
 
 object ScalaEditor extends ServerPlan2 {
 	
@@ -22,7 +23,7 @@ object ScalaEditor extends ServerPlan2 {
 	
 	println("Setting up Interpreter's configuration...")
 	val intpCfg = MyInterpreter.Config()
-	//intpCfg.out = Some(results)
+	intpCfg.out = Some(results)
 	
 	println("Creating a new Intepreter instance...")
 	val interpreter = MyInterpreter(intpCfg)
@@ -52,7 +53,7 @@ object ScalaEditor extends ServerPlan2 {
 			//println("Code: " + data("code"))
 			
 			if(data("code").length > 0) {
-				println("I'm going to interpret " + data("code").head + "\n\n")
+				println("\n\nI'm going to interpret " + data("code").head)
 				ResponseString(evaluateSingle(data("code").head))
 			}
 			else {
@@ -71,10 +72,13 @@ object ScalaEditor extends ServerPlan2 {
 		val res = interpreter.interpret(code)
 		res match {
 			case Success( name, value ) => {
+				
+				extractIds(results.toString)
+				
 				val res1 = interpreter.interpret(name + ".toHtml",true)
 				res1 match {
-					case Success( name1, value1 ) => resultString = composeHtmlResult(code, name, value1.toString, i_counter)
-					case _ => resultString = composeHtmlResult(code, name, value.toString, i_counter)
+					case Success( name1, value1 ) => resultString = composeHtmlResult(code, name, value1.toString)
+					case _ => resultString = composeHtmlResult(code, name, value.toString)
 				}
 			}
 			case Error( _ ) => resultString = composeFailedEvaluation(true)
@@ -83,26 +87,6 @@ object ScalaEditor extends ServerPlan2 {
 		EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
 		resultString
 	}
-	
-	
-	def composeHtmlResult( code: String, name: String, value: String, result: Int) : String = { 
-		"<!doctype html>" +
-		"<p><div>" +
-		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + name + ": " + code + "</span>" + 
-		"<div id='" + name + "' class='collapse in'>" + 
-		"<div class='well well-small'>" + value +
-		"</div></div></div></p>"
-	}
-	
-	def composeFailedEvaluation( error: Boolean ) : String = {
-		"<!doctype html>" +
-		"<div class='alert" + ( if(error) " alert-error" else "" ) + "'>" +
-		"<button type='button' class='close' data-dismiss='alert'>x</button>" +
-		"<strong>" + ( if(error) "Error!" else "Warning!" ) + "</strong> " +
-		( if(error) "There was an error in your code!" else "Your instruction was incomplete!" ) +
-		"</div>"
-	}
-	
 	
 	
 	

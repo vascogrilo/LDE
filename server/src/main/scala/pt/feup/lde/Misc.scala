@@ -27,15 +27,6 @@ object Misc {
 		        io.Source.fromInputStream(stream,"utf-8").getLines().mkString("\n")
 		}
 	}
-	
-	/**
-	 * concatList : concatenates a list of strings into a single string
-	 * 
-	 */
-	 def concatList(l : Seq[String]) : String = l match {
-		 case Nil => ""
-		 case _ => l.head + concatList(l.tail)
-	 }
 	 
 	 /**
 	  * injectConversions
@@ -52,23 +43,48 @@ object Misc {
 	  }
 	  
 	  
-	  def extractIds(s : String) = {
-		  var ids = scala.collection.mutable.Seq.empty[ String ]
+	  /**
+	   * extractIds
+	   * 
+	   * This function will extract the Identifier and Type value from the string provided
+	   */ 
+	  def extractIds(s : String) : (String,String) = {
 		  val lines = s.split("\n")
 		  lines.foreach{ line =>
 			//println(new StringTokenizer(line,":").nextToken())
-			ids = ids :+ (new StringTokenizer(line,":").nextToken())
-		}
-		  ids
+			println(line)
+		  }
+		  ("a","b")
 	  }
 	  
 	  
-	  
-	  def formatResults(l : Seq[ String ]) : String =  l match {
-		  //"<div id='command_1'><span class='label labelInput'>Input</span><div class='well well-small'>val l = List(1,2,3)</div><span class='label label-info labelOutput'>Output</span><div class='well'>Here would be the widget for the output of the input above.</div></div>"
-		  case Nil => ""
-		  case _ => l.head + formatResults(l.tail)
-	  }
+	  /**
+	   * composeHtmlResult and composeFailedEvaluation
+	   * 
+	   * composeHtmlResult receives the input code, the name of the identifier, the value of the result and the instruction counter
+	   * and returns a string representing a DOM element for the obtained result.
+	   * 
+	   * composeFailedEvaluation receives a Boolean representing an error message or not
+	   * and returns a string representing a DOM element containing the aler message for the specific case (error or incomplete instruction)
+	   * 
+	   */ 
+	  def composeHtmlResult( code: String, name: String, value: String) : String = { 
+		"<!doctype html>" +
+		"<p><div>" +
+		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + name + ": " + code + "</span>" + 
+		"<div id='" + name + "' class='collapse in'>" + 
+		"<div class='well well-small'>" + value +
+		"</div></div></div></p>"
+	}
+	
+	def composeFailedEvaluation( error: Boolean ) : String = {
+		"<!doctype html>" +
+		"<div class='alert" + ( if(error) " alert-error" else "" ) + "'>" +
+		"<button type='button' class='close' data-dismiss='alert'>x</button>" +
+		"<strong>" + ( if(error) "Error!" else "Warning!" ) + "</strong> " +
+		( if(error) "There was an error in your code!" else "Your instruction was incomplete!" ) +
+		"</div>"
+	}
 	   
 }
 
@@ -104,6 +120,8 @@ object MemoryExecutor {
 
 object EditorView {
 	
+	import Misc._
+	
 	val interpreter_head = "Welcome to Scala Worksheet Live Development Environment version 0.1.<p/>" +
 							"Running under Scala version 2.9.2 (OpenJDK Server VM, Java 1.6.0_24).<p/>" +
 							"Type in expressions and hit (Cmd/Ctrl)+S to have them evaluated.<p/>"
@@ -112,14 +130,14 @@ object EditorView {
 		"code" -> Seq(""),
 		"interpreter" -> Seq.empty[String])
 								
-	val html4 : String = Misc.readFromFile(getClass,"/html/View3_part1.html")
-	val html5 : String = Misc.readFromFile(getClass,"/html/View3_part2.html")
-	val html6 : String = Misc.readFromFile(getClass,"/html/View3_part3.html")
+	val html4 : String = readFromFile(getClass,"/html/View3_part1.html")
+	val html5 : String = readFromFile(getClass,"/html/View3_part2.html")
+	val html6 : String = readFromFile(getClass,"/html/View3_part3.html")
 	
 	def content(k: String) = data.get(k).flatMap { _.headOption } getOrElse("")
 	
 	def view(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
-		Html(XML.loadString(html4 + Misc.formatResults(data("interpreter")) + html5 + data("code").head + html6))
+		Html(XML.loadString(html4 + data("interpreter").reduceLeft(_ + _) + html5 + data("code").head + html6))
 	}
 	
 	def resetResultData = { 
