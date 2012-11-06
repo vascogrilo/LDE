@@ -7,7 +7,6 @@ import unfiltered.netty._
 import scala.xml._
 import java.io.FileNotFoundException
 import pt.feup.lde.MyInterpreter._
-import java.util.StringTokenizer
 
 /**
  * Miscellaneous object containing utility functions
@@ -24,7 +23,8 @@ object Misc {
 	def readFromFile(klass: Class[_], path: String) : String = {
 		klass.getResourceAsStream(path) match {
 			case null =>
-				throw new FileNotFoundException(path)
+				//throw new FileNotFoundException(path)
+				""
 			case stream =>
 		        io.Source.fromInputStream(stream,"utf-8").getLines().mkString("\n")
 		}
@@ -87,7 +87,7 @@ object Misc {
 		"<!doctype html>" +
 		"<p><div>" +
 		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + name + ": " + code + "</span>" + 
-		"<div id='" + name + "' class='collapse in'>" + 
+		"<div id='" + name + "' class='collapse'>" + 
 		"<div class='well well-small'>" + value +
 		"</div></div></div></p>"
 	}

@@ -53,7 +53,7 @@ object ScalaEditor extends ServerPlan2 {
 			//println("Code: " + data("code"))
 			
 			if(data("code").length > 0) {
-				println("\n\nI'm going to interpret " + data("code").head)
+				//println("\n\nI'm going to interpret " + data("code").head)
 				ResponseString(evaluateSingle(data("code").head))
 			}
 			else {
