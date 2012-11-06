@@ -74,10 +74,12 @@ var keyDownHandler = function(event) {
 	// KEY CODE FOR ENTER
     if(event.which == 13) {
 		if(isCtrl && ($.trim( $('#code').val() )) ) {
+			console.log($('#code').val())
 			console.log("entrou");
 			//$('#form').submit(submitHandler);
-			$('#form').submit();
-			return true;
+			//$('#form').submit();
+			submitHandler();
+			return false;
 		}
     }
 }
@@ -90,16 +92,23 @@ var keyUpHandler = function(event) {
 
 var onClickEvaluateHandler = function(event) {
 	//$('#form').submit(submitHandler);
-	$('#form').submit();
+	submitHandler();
 }
 
-var submitHandler = function(event) {
+var submitHandler = function() {
 		
-		event.preventDefault();
+		//event.preventDefault();
 		
-		$.post( 'http://localhost:8080/repl', { code: $('#code').val() },
-			function(data) {
+		console.log("entrou no submitHandler com " + $('#code').val());
+		
+		$.ajax({
+			type: 'POST',
+			url: 'http://localhost:8080/repl',
+			data: { 
+				code: $('#code').val()
+			},
+			success: function(data) {
 				$('#outputBody').append(data);
 			}
-		);
+		});
 }

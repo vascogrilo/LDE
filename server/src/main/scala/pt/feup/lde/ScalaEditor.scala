@@ -34,10 +34,10 @@ object ScalaEditor extends ServerPlan2 {
 	def intent = {
 		case GET(Path("/scala")) =>
 			Redirect("/repl")
+		
 		case GET(Path("/editor")) => 
 			logger.debug("GET /editor")
 			Redirect("/repl")
-			//EditorView.view(EditorView.data)(NodeSeq.Empty)
 		case POST(Path("/editor") & Params(data)) =>
 			logger.debug("POST /editor")
 			Redirect("/repl")
@@ -50,23 +50,19 @@ object ScalaEditor extends ServerPlan2 {
 			println("Data: " + data)
 			println("Code: " + data("code"))
 			
-			/*if(data("code").length > 0) {
-				EditorView.data("code") = data("code")
+			if(data("code").length > 0) {
+				//EditorView.data("code") = data("code")
 				println("I'm going to interpret " + data("code").head + "\n\n")
 				ResponseString(evaluateSingle(data("code").head))
 			}
 			else {
 				println("Got data with 0 length. Showing view with same data.\n\n")
 				EditorView.view3(EditorView.data)(NodeSeq.Empty)
-			}*/
+			}
 			
-			EditorView.data("code") = data("code")
-			evaluateSingle(data("code").head)
-			EditorView.view3(EditorView.data)(NodeSeq.Empty)
-			
+			//EditorView.data("code") = data("code")
+			//evaluateSingle(data("code").head)
 			//EditorView.view3(EditorView.data)(NodeSeq.Empty)
-			
-			//ResponseString(EditorView.data("interpreter").last)
 	}
 	
 
@@ -94,7 +90,7 @@ object ScalaEditor extends ServerPlan2 {
 	
 	
 	def composeHtmlResult( code: String, name: String, value: String, result: Int) : String = { 
-		//"<!doctype html>" +
+		"<!doctype html>" +
 		"<p><div>" +
 		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + name + ": " + code + "</span>" + 
 		"<div id='" + name + "' class='collapse in'>" + 
@@ -103,7 +99,7 @@ object ScalaEditor extends ServerPlan2 {
 	}
 	
 	def composeFailedEvaluation( error: Boolean ) : String = {
-		//"<!doctype html>" +
+		"<!doctype html>" +
 		"<div class='alert" + ( if(error) " alert-error" else "" ) + "'>" +
 		"<button type='button' class='close' data-dismiss='alert'>x</button>" +
 		"<strong>" + ( if(error) "Error!" else "Warning!" ) + "</strong> " +
