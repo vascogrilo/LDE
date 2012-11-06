@@ -16,7 +16,7 @@ import unfiltered.netty._
  * bootstrap/js
  * 
  */
-object ExtJsLoader extends async.Plan with ServerErrorResponse {
+object BootstrapLoader extends async.Plan with ServerErrorResponse {
 	
 	val logger = org.clapper.avsl.Logger(getClass)
 	

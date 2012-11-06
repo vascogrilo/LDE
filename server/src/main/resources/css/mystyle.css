@@ -1,5 +1,5 @@
 body#body {
-	margin: 50px 200px 10px;
+	margin: 25px 200px 5px;
 }
 
 div#header {
@@ -29,6 +29,7 @@ button#buttonSubmit {
 }
 
 .labelInput {
+	cursor: pointer;
 	margin-bottom: 5px;
 }
 

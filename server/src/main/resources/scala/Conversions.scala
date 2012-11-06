@@ -23,7 +23,7 @@ object Conversions {
 	
 	implicit def fromList[A](l : List[A]) = new Object {
 		
-		def toHtml = <ul> { l.map(e => <li> { e } </li>) } </ul> toString
+		def toHtml = <div class='pagination'> <ul> <li><a href='#'>Prev</a></li> { l.map(e => <li><a href='#'>{ e }</a></li>) } <li><a href='#'>Next</a></li> </ul> </div> toString
     }
 	
 	implicit def fromMap[A,B](m : Map[A,B]) = new Object {

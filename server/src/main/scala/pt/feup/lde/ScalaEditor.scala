@@ -41,26 +41,36 @@ object ScalaEditor extends ServerPlan2 {
 		case POST(Path("/editor") & Params(data)) =>
 			logger.debug("POST /editor")
 			Redirect("/repl")
-			/*//interpreter.resetAndLoad
-			evaluateAllCode(data("code").head)
-			//Misc.printOutIds(results.toString)
-			
-			EditorView.data("code") = data("code")
-			EditorView.view(EditorView.data)(NodeSeq.Empty)*/
 			
 		case GET(Path("/repl")) =>
 			logger.debug("GET /repl")
 			EditorView.view3(EditorView.data)(NodeSeq.Empty)
 		case POST(Path("/repl") & Params(data)) =>
 		
-			evaluateSingle(data("code").head)
+			println("Data: " + data)
+			println("Code: " + data("code"))
+			
+			/*if(data("code").length > 0) {
+				EditorView.data("code") = data("code")
+				println("I'm going to interpret " + data("code").head + "\n\n")
+				ResponseString(evaluateSingle(data("code").head))
+			}
+			else {
+				println("Got data with 0 length. Showing view with same data.\n\n")
+				EditorView.view3(EditorView.data)(NodeSeq.Empty)
+			}*/
 			
 			EditorView.data("code") = data("code")
+			evaluateSingle(data("code").head)
 			EditorView.view3(EditorView.data)(NodeSeq.Empty)
+			
+			//EditorView.view3(EditorView.data)(NodeSeq.Empty)
+			
+			//ResponseString(EditorView.data("interpreter").last)
 	}
 	
 
-	def evaluateSingle(code : String) = {
+	def evaluateSingle(code : String) : String = {
 		
 		i_counter = i_counter + 1
 		
@@ -75,22 +85,31 @@ object ScalaEditor extends ServerPlan2 {
 					case _ => resultString = composeHtmlResult(code, name, value.toString, i_counter)
 				}
 			}
-			case Error( _ ) => resultString = resultString + "<button class='btn btn-mini btn-important labelOutput' data-toggle='collapse' data-target='#out" + i_counter + "'>Output</button><div class='well'><div id='out" + i_counter + "' class='collapse in'>There was an error in your code!</div></div></div>"
-			case Incomplete => resultString = resultString + "<button class='btn btn-mini btn-warning labelOutput' data-toggle='collapse' data-target='#out" + i_counter + "'>Output</button><div class='well'><div id='out" + i_counter + "' class='collapse in'>Incomplete instruction!</div></div></div>"
+			case Error( _ ) => resultString = composeFailedEvaluation(true)
+			case Incomplete => resultString = composeFailedEvaluation(false)
 		}
 		EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
+		resultString
 	}
 	
 	
 	def composeHtmlResult( code: String, name: String, value: String, result: Int) : String = { 
+		//"<!doctype html>" +
 		"<p><div>" +
-		"<span class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + name + ": " + code + "</span>" + 
+		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + name + ": " + code + "</span>" + 
 		"<div id='" + name + "' class='collapse in'>" + 
-		"<div class='well'>" + value +
+		"<div class='well well-small'>" + value +
 		"</div></div></div></p>"
 	}
 	
-	
+	def composeFailedEvaluation( error: Boolean ) : String = {
+		//"<!doctype html>" +
+		"<div class='alert" + ( if(error) " alert-error" else "" ) + "'>" +
+		"<button type='button' class='close' data-dismiss='alert'>x</button>" +
+		"<strong>" + ( if(error) "Error!" else "Warning!" ) + "</strong> " +
+		( if(error) "There was an error in your code!" else "Your instruction was incomplete!" ) +
+		"</div>"
+	}
 	
 	
 	

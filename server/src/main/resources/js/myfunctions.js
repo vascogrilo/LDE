@@ -67,31 +67,39 @@ function textareaApplyPlaceHolder() {
 var isCtrl = false;
 var keyDownHandler = function(event) {
 	
-	//console.log('Key Down triggered.');
-	
 	// KEY CODES FOR CTRL/CMD BUTTON ON DIFFERENT BROWSERS
 	if(event.which == 17 || event.which == 224 || event.which == 91 || event.which == 93) 
 		isCtrl=true;
 
 	// KEY CODE FOR ENTER
     if(event.which == 13) {
-		if(isCtrl == true) {
+		if(isCtrl && ($.trim( $('#code').val() )) ) {
+			console.log("entrou");
+			//$('#form').submit(submitHandler);
 			$('#form').submit();
-			return false;
+			return true;
 		}
     }
 }
 
 var keyUpHandler = function(event) {
 	
-	//console.log('Key Up triggered.');
-	
     if(event.which == 17 || event.which == 224 || event.which == 91 || event.which == 93)
 		isCtrl=false;
 }
 
+var onClickEvaluateHandler = function(event) {
+	//$('#form').submit(submitHandler);
+	$('#form').submit();
+}
 
-var onClickLabelHandler = function(event) {
-	
-	//$('#).slideUp();
+var submitHandler = function(event) {
+		
+		event.preventDefault();
+		
+		$.post( 'http://localhost:8080/repl', { code: $('#code').val() },
+			function(data) {
+				$('#outputBody').append(data);
+			}
+		);
 }
