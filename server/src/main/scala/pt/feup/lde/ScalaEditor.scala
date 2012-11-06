@@ -16,7 +16,8 @@ object ScalaEditor extends ServerPlan2 {
 	val logger = org.clapper.avsl.Logger(getClass)
 	var results = new StringWriter()
 	val output = new OutputStreamWriter(System.out)
-	var ids = Seq.empty[ String ]
+	
+	var ids = Map.empty[ String, String ]
 	var i_counter = 0
 	
 	println("Setting up Interpreter's configuration...")
@@ -44,7 +45,7 @@ object ScalaEditor extends ServerPlan2 {
 			
 		case GET(Path("/repl")) =>
 			logger.debug("GET /repl")
-			EditorView.view3(EditorView.data)(NodeSeq.Empty)
+			EditorView.view(EditorView.data)(NodeSeq.Empty)
 		case POST(Path("/repl") & Params(data)) =>
 		
 			//println("Data: " + data)
