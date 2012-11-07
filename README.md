@@ -6,6 +6,14 @@ A live Scala worksheet for development
 Current Status
 -----------------
 
+ * New Interface. REPL like. One top area for displaying results and a box down to input one instruction.
+ * Apart from Interface improvements, it now supports a new syntax for evaluating the desired code.
+   * Provide additional conversion to the instruction, like this: yourinstruction :!: conversion. For example: List(12,22,55) :!: toD3BarChart
+   * Provide no aditional conversion and the toHtml default conversion is applied.
+ * I'll post later the available conversion option parameters.
+
+
+
  * Live code interpretation is enabled. Code is interpreted every 10sec for now.
  * Conversions are working. So far we have conversions for List,Seq,Map,Int and String.
  * Output is parsed and results identifiers are extracted and stored successfully.
