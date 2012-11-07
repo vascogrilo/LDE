@@ -31,10 +31,52 @@ object Conversions {
 			d3BarChartCounter = d3BarChartCounter + 1
 			"<div class='bar-chart" + d3BarChartCounter + "'></div>" +
 			"<script type='text/javascript'>" +
-				"var w = 500;" +
+				"var w = 800;" +
 				"var h = 200;" + 
 				"var barPadding = 1;" +
 				"var dataset = [ " + { l map{ case e => "%d" format (e) }  mkString("",",",",") } + " 0 ];" +
+				"var svg = d3.select('.bar-chart" + d3BarChartCounter + "')" +
+							".append('svg')" +
+							".attr('width', w)" +
+							".attr('height', h);" +
+				"svg.selectAll('rect')" +
+				   ".data(dataset)" + 
+				   ".enter()" + 
+				   ".append('rect')" + 
+				   ".attr('x', function(d, i) {" + 
+				   		" return i * (w / dataset.length);" + 
+				   "})" + 
+				   ".attr('y', function(d) {" + 
+				   		" return h - d;" +
+				   "})" + 
+				   ".attr('width', w / dataset.length - barPadding)" + 
+				   ".attr('height', function(d) { " +
+				   		"return d * 4; })" +
+				   ".attr('fill', function(d) { return 'rgb(0,' + (128 - d) + ',' + (128 - d) + ')'; });" + 
+				"svg.selectAll('text')" + 
+				   ".data(dataset)" + 
+				   ".enter()" + 
+				   ".append('text')" + 
+				   ".text(function(d) { return d; })" + 
+				   ".attr('x', function(d, i) { return i * (w / dataset.length) + 5; })" +
+				   ".attr('y', function(d) { return h - d + 15; })" + 
+				   ".attr('font-family', 'sans-serif')" + 
+				   ".attr('font-size', '11px')" + 
+				   ".attr('fill', 'white');" +
+				   "</script>"
+		}
+    }
+    
+    implicit def fromRange(r : Range) = new Object {
+		
+		def toD3BarChart = {
+			d3BarChartCounter = d3BarChartCounter + 1
+			"<div class='bar-chart" + d3BarChartCounter + "'></div>" +
+			"<script type='text/javascript'>" +
+				"var w = 800;" +
+				"var h = 200;" + 
+				"var barPadding = 1;" +
+				"var dataset = [ " + { r map{ case e => "%d" format (e) }  mkString("",",",",") } + " 0 ];" +
 				"var svg = d3.select('.bar-chart" + d3BarChartCounter + "')" +
 							".append('svg')" +
 							".attr('width', w)" +
