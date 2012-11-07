@@ -11,7 +11,7 @@
 
 object Conversions {
 	
-	var counter = 0
+	var d3BarChartCounter = 0
 	
 	implicit def fromString(s : String) = new Object {
 		
@@ -28,14 +28,14 @@ object Conversions {
 		def toHtml = <div class='pagination'> <ul> <li><a href='#'>Prev</a></li> { l.map(e => <li><a href='#'>{ e }</a></li>) } <li><a href='#'>Next</a></li> </ul> </div> toString
     
 		def toD3BarChart = {
-			counter = counter + 1
-			"<div class='bar-chart" + counter + "'></div>" +
+			d3BarChartCounter = d3BarChartCounter + 1
+			"<div class='bar-chart" + d3BarCharCounter + "'></div>" +
 			"<script type='text/javascript'>" +
 				"var w = 500;" +
 				"var h = 200;" + 
 				"var barPadding = 1;" +
 				"var dataset = [ " + { l map{ case e => "%d" format (e) }  mkString("",",",",") } + " 0 ];" +
-				"var svg = d3.select('.bar-chart" + counter + "')" +
+				"var svg = d3.select('.bar-chart" + d3BarChartCounter + "')" +
 							".append('svg')" +
 							".attr('width', w)" +
 							".attr('height', h);" +
