@@ -16,6 +16,9 @@ object Misc {
 	
 	import scala.util.matching._
 	
+	val Id = new Regex("""(\w+):\s+(.*)\s+=\s+.*""")
+	val Error = new Regex("""<console>:\d+:\s+error:\s+(.*)""")
+	
 	/**
 	 * readFromFile : reads and returns the contents of a file from the resource path
 	 *
@@ -63,8 +66,6 @@ object Misc {
 	  }
 	  
 	  def matchIdOrErrortoString(s : String) : Option[(String,String)] = {
-		  val Id = new Regex("""(\w+):\s+(.*)\s+=\s+.*""")
-		  val Error = new Regex("""<console>:\d+:\s+error:\s+(.*)""")
 		  s match {
 			  case Id(a,b) => Some((a,b))
 			  case Error(e) => Some(("Error",e))

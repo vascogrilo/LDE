@@ -69,33 +69,28 @@ object ScalaEditor extends ServerPlan2 {
 		
 		val lines = code.split(":!:")
 		
-		val res = interpreter.interpret(lines.apply(0))
+		val res = interpreter.interpret(lines apply(0))
 		res match {
+			case Success( name, null ) => resultString = composeHtmlResult(code, name, "()" )
 			case Success( name, value ) => {
-				if(name!=null && value!=null){
-					println("Success: " + name + " " + value.toString)
+					println("Success: " + name + " " + value toString)
 					
-					val res1 = interpreter.interpret(name + "." + ( if(lines.length > 1) lines.apply(1) else "toHtml" ),true)
+					val res1 = interpreter interpret(name + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true)
 					res1 match {
 						case Success( name1, value1 ) => {
-							println("Success converting " + name + ". " + name1 + " = " + value1.toString)
-							resultString = composeHtmlResult(code, name, value1.toString)
+							println("Success converting " + name + ". " + name1 + " = " + value1 toString)
+							resultString = composeHtmlResult(code, name, value1 toString)
 						}
 						case _ => {
-							println("No conversion for " + name + ". Value is " + value.toString)
-							resultString = composeHtmlResult(code, name, value.toString)
+							println("No conversion for " + name + ". Value is " + value toString)
+							resultString = composeHtmlResult(code, name, value toString)
 						}
 					}
 				}
-				else {
-					if (value==null) println("Value null")
-					if (name==null) println("Name null")
-				}
-			}
 			case Error( _ ) => resultString = composeFailedEvaluation(true)
 			case Incomplete => resultString = composeFailedEvaluation(false)
 		}
-		extractIds(results.toString)
+		extractIds(results toString)
 		EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
 		resultString
 	}
