@@ -31,7 +31,7 @@ object Conversions {
 			d3BarChartCounter = d3BarChartCounter + 1
 			"<div class='bar-chart" + d3BarChartCounter + "'></div>" +
 			"<script type='text/javascript'>" +
-				"var w = 800;" +
+				"var w = 700;" +
 				"var h = 200;" + 
 				"var barPadding = 1;" +
 				"var dataset = [ " + { l map{ case e => "%d" format (e) }  mkString("",",",",") } + " 0 ];" +
@@ -73,7 +73,7 @@ object Conversions {
 			d3BarChartCounter = d3BarChartCounter + 1
 			"<div class='bar-chart" + d3BarChartCounter + "'></div>" +
 			"<script type='text/javascript'>" +
-				"var w = 800;" +
+				"var w = 700;" +
 				"var h = 200;" + 
 				"var barPadding = 1;" +
 				"var dataset = [ " + { r map{ case e => "%d" format (e) }  mkString("",",",",") } + " 0 ];" +
