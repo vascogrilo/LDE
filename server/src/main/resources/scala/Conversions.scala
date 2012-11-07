@@ -29,7 +29,7 @@ object Conversions {
     
 		def toD3BarChart = {
 			d3BarChartCounter = d3BarChartCounter + 1
-			"<div class='bar-chart" + d3BarCharCounter + "'></div>" +
+			"<div class='bar-chart" + d3BarChartCounter + "'></div>" +
 			"<script type='text/javascript'>" +
 				"var w = 500;" +
 				"var h = 200;" + 
@@ -53,6 +53,16 @@ object Conversions {
 				   ".attr('height', function(d) { " +
 				   		"return d * 4; })" +
 				   ".attr('fill', function(d) { return 'rgb(0,' + (128 - d) + ',' + (128 - d) + ')'; });" + 
+				"svg.selectAll('text')" + 
+				   ".data(dataset)" + 
+				   ".enter()" + 
+				   ".append('text')" + 
+				   ".text(function(d) { return d; })" + 
+				   ".attr('x', function(d, i) { return i * (w / dataset.length) + 5; })" +
+				   ".attr('y', function(d) { return h - d + 15; })" + 
+				   ".attr('font-family', 'sans-serif')" + 
+				   ".attr('font-size', '11px')" + 
+				   ".attr('fill', 'white');" +
 				   "</script>"
 		}
     }
