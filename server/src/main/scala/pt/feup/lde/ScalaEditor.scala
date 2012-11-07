@@ -54,7 +54,7 @@ object ScalaEditor extends ServerPlan2 {
 			
 			if(data("code").length > 0) {
 				//println("\n\nI'm going to interpret " + data("code").head)
-				ResponseString(evaluateSingle(data("code").head))
+				ResponseString(evaluateSingle(data("code").head,"toD3BarChart"))
 			}
 			else {
 				println("Got data with 0 length. Showing view with same data.\n\n")
@@ -63,18 +63,33 @@ object ScalaEditor extends ServerPlan2 {
 	}
 	
 
-	def evaluateSingle(code : String) : String = {
+	def evaluateSingle(code : String, conversion: String) : String = {
 		
 		var resultString : String = ""
 		
-		val res = interpreter.interpret(code)
+		val lines = code.split(":!:")
+		
+		val res = interpreter.interpret(lines.apply(0))
 		res match {
 			case Success( name, value ) => {
-				
-				val res1 = interpreter.interpret(name + ".toHtml",true)
-				res1 match {
-					case Success( name1, value1 ) => resultString = composeHtmlResult(code, name, value1.toString)
-					case _ => resultString = composeHtmlResult(code, name, value.toString)
+				if(name!=null && value!=null){
+					println("Success: " + name + " " + value.toString)
+					
+					val res1 = interpreter.interpret(name + "." + ( if(lines.length > 1) lines.apply(1) else "toHtml" ),true)
+					res1 match {
+						case Success( name1, value1 ) => {
+							println("Success converting " + name + ". " + name1 + " = " + value1.toString)
+							resultString = composeHtmlResult(code, name, value1.toString)
+						}
+						case _ => {
+							println("No conversion for " + name + ". Value is " + value.toString)
+							resultString = composeHtmlResult(code, name, value.toString)
+						}
+					}
+				}
+				else {
+					if (value==null) println("Value null")
+					if (name==null) println("Name null")
 				}
 			}
 			case Error( _ ) => resultString = composeFailedEvaluation(true)
