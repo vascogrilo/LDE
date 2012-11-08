@@ -86,11 +86,11 @@ object Misc {
 	   */ 
 	  def composeHtmlResult( code: String, name: String, value: String) : String = { 
 		"<!doctype html>" +
-		"<p><div>" +
+		"<div id='#div_" + name + "'>" +
 		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + name + ": " + code + "</span>" + 
 		"<div id='" + name + "' class='collapse'>" + 
-		"<div class='well well-small'>" + value +
-		"</div></div></div></p>"
+		"<div id='well_" + name + "' class='well well-small'>" + value +
+		"</div></div></div>"
 	}
 	
 	def composeFailedEvaluation( error: Boolean ) : String = {

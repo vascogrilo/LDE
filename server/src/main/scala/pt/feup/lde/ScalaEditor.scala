@@ -73,8 +73,12 @@ object ScalaEditor extends ServerPlan2 {
 		
 		val res = interpreter.interpret(lines apply(0))
 		res match {
-			case Success( auxName, null ) => resultString = composeHtmlResult(code, auxName, "()" )
+			case Success( auxName, null ) => {
+				println("\nENTREI NO SUCCESS VALUE NULL\n")
+				resultString = composeHtmlResult(code, auxName, "()" )
+			}
 			case Success( auxName, value ) => {
+				println("\nENTREI NO SUCCESS COM VALUE\n")
 				firstName = auxName
 				println("Success: " + firstName + " " + value toString)
 				
@@ -100,22 +104,31 @@ object ScalaEditor extends ServerPlan2 {
 					case _ => lastName = firstName
 				}
 				
-				interpreter.interpret(lastName + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true) match {
-					case Success( auxName2, auxValue2 ) => {
-						println("Success converting " + firstName + ". " + auxName2 + " = " + auxValue2 toString)
-						resultString = composeHtmlResult(code, firstName, auxValue2 toString)
-					}
-					case _ => {
-						println("No conversion for " + firstName + ". Value is " + value toString)
-						resultString = composeHtmlResult(code, firstName, value toString)
+				if(value!=null) {
+					interpreter.interpret(lastName + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true) match {
+						case Success( auxName2, auxValue2 ) => {
+							println("Success converting " + firstName + ". " + auxName2 + " = " + auxValue2 toString)
+							resultString = composeHtmlResult(code, firstName, auxValue2 toString)
+						}
+						case _ => {
+							println("No conversion for " + firstName + ". Value is " + value toString)
+							resultString = composeHtmlResult(code, firstName, value toString)
+						}
 					}
 				}
 			}
-			case Error( _ ) => resultString = composeFailedEvaluation(true)
-			case Incomplete => resultString = composeFailedEvaluation(false)
+			case Incomplete => {
+				println("\nENTREI NO INCOMPLETE!!!\n")
+				resultString = composeFailedEvaluation(false)
+			}
+			case _ => {
+				println("\nENTREI NO DEFAULT\n")
+				resultString = composeFailedEvaluation(true)
+			}
 		}
-		extractIds(results toString)
-		EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
+		//extractIds(results toString)
+		println("\n\n" + results.toString + "\n\n")
+		//EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
 		resultString
 	}
 	
