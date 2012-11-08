@@ -85,11 +85,10 @@ object ScalaEditor extends ServerPlan2 {
 				 * LIKE SLICING AN ITERABLE FOR EXAMPLE.
 				 * 
 				 */
-				 
+				
 				//STARTING WITH TESTING IT THE RESULT IS ITERABLE
 				//If it is we start by truncating the result to only 10 items
-				val res2 = interpreter.interpret(firstName + ".isInstanceOf[Iterable[Any]]",true)
-				res2 match {
+				interpreter.interpret(firstName + ".isInstanceOf[Iterable[Any]]",true) match {
 					case Success(auxName1, auxResult1) => {
 						if(auxResult1.asInstanceOf[Boolean]) {
 							interpreter.interpret(firstName + ".slice(0,10)",true) match {
@@ -101,11 +100,10 @@ object ScalaEditor extends ServerPlan2 {
 					case _ => lastName = firstName
 				}
 				
-				val res1 = interpreter interpret(lastName + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true)
-				res1 match {
-					case Success( name1, value1 ) => {
-						println("Success converting " + firstName + ". " + name1 + " = " + value1 toString)
-						resultString = composeHtmlResult(code, firstName, value1 toString)
+				interpreter.interpret(lastName + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true) match {
+					case Success( auxName2, auxValue2 ) => {
+						println("Success converting " + firstName + ". " + auxName2 + " = " + auxValue2 toString)
+						resultString = composeHtmlResult(code, firstName, auxValue2 toString)
 					}
 					case _ => {
 						println("No conversion for " + firstName + ". Value is " + value toString)
