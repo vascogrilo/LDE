@@ -12,6 +12,7 @@
 object Conversions {
 	
 	var d3BarChartCounter = 0
+	var htmlListCounter = 0
 	
 	implicit def fromString(s : String) = new Object {
 		
@@ -25,7 +26,23 @@ object Conversions {
 	
 	implicit def fromList[A](l : List[A]) = new Object {
 		
-		def toHtml = <div class='pagination'> <ul> <li><a href='#'>Prev</a></li> { l.map(e => <li><a href='#'>{ e }</a></li>) } <li><a href='#'>Next</a></li> </ul> </div> toString
+		def toHtml = {
+			htmlListCounter = htmlListCounter + 1
+			"<div class='html_list" + htmlListCounter + " paginated-list'></div>" +
+			"<script type='text/javascript'>" +
+				"var html_list" + htmlListCounter + " = [" + { l.map{ case e => "%d" format(e) } mkString("",",","") } + "];" +
+				"var populateList" + htmlListCounter + " = function(values,length) { " +
+					"$('.html_ul" + htmlListCounter + "').empty();" +
+					"for(var i=0; i<length; i++) { " +  
+					"$('.html_ul" + htmlListCounter + "').append(\"<li>\" + values[i] + \"</li>\");" +
+					"}" +
+				"};" + 
+				"$('.html_list" + htmlListCounter + "').append(\"<ul class='ul_control'> <li id='html_listPrev" + htmlListCounter + "' class='list-controls'>«</li> </ul> \");" +
+				"$('.html_list" + htmlListCounter + "').append(\"<ul class='html_ul" + htmlListCounter + "'></ul>\");" + 
+				"$('.html_list" + htmlListCounter + "').append(\" <ul class='ul_control'> <li id='html_listNext" + htmlListCounter + "' class='list-controls'>»</li></ul>\");" +
+				"populateList" + htmlListCounter + "(html_list" + htmlListCounter + ",html_list" + htmlListCounter + ".length);" + 
+			"</script>"
+		}
     
 		def toD3BarChart = {
 			d3BarChartCounter = d3BarChartCounter + 1
@@ -34,7 +51,7 @@ object Conversions {
 				"var w = 700;" +
 				"var h = 200;" + 
 				"var barPadding = 1;" +
-				"var dataset = [ " + { l map{ case e => "%d" format (e) }  mkString("",",",",") } + " 0 ];" +
+				"var dataset = [ " + { l map{ case e => "%d" format (e) }  mkString("",",","") } + "];" +
 				"var svg = d3.select('.bar-chart" + d3BarChartCounter + "')" +
 							".append('svg')" +
 							".attr('width', w)" +
@@ -111,7 +128,7 @@ object Conversions {
 	
 	implicit def fromMap[A,B](m : Map[A,B]) = new Object {
 	
-		def toHtml = <table class='table table-stripped'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1 } </td> <td> { keyValue._2 } </td> </tr> ) } </table> toString 
+		def toHtml = <table class='table table-hover table-condensed'> <tr> <th> # </th> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1 } </td> <td> { keyValue._2 } </td> </tr> ) } </table> toString 
 	}
 }
 

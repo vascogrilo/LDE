@@ -68,25 +68,51 @@ object ScalaEditor extends ServerPlan2 {
 		var resultString : String = ""
 		
 		val lines = code.split(":!:")
+		var firstName : String = ""
+		var lastName : String = ""
 		
 		val res = interpreter.interpret(lines apply(0))
 		res match {
-			case Success( name, null ) => resultString = composeHtmlResult(code, name, "()" )
-			case Success( name, value ) => {
-					println("Success: " + name + " " + value toString)
-					
-					val res1 = interpreter interpret(name + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true)
-					res1 match {
-						case Success( name1, value1 ) => {
-							println("Success converting " + name + ". " + name1 + " = " + value1 toString)
-							resultString = composeHtmlResult(code, name, value1 toString)
-						}
-						case _ => {
-							println("No conversion for " + name + ". Value is " + value toString)
-							resultString = composeHtmlResult(code, name, value toString)
+			case Success( auxName, null ) => resultString = composeHtmlResult(code, auxName, "()" )
+			case Success( auxName, value ) => {
+				firstName = auxName
+				println("Success: " + firstName + " " + value toString)
+				
+				/*
+				 * DETECTION OF TYPES.
+				 * IT MUST FIRST TEST THE TYPE/TRAIT INSPECTED TO SEE IF THERE ARE ADDITIONAL
+				 * OPERATIONS THAT MUST BE DONE TO THE RESULT PREVIOUS TO RENDERING IT.
+				 * LIKE SLICING AN ITERABLE FOR EXAMPLE.
+				 * 
+				 */
+				 
+				//STARTING WITH TESTING IT THE RESULT IS ITERABLE
+				//If it is we start by truncating the result to only 10 items
+				val res2 = interpreter.interpret(firstName + ".isInstanceOf[Iterable[Any]]",true)
+				res2 match {
+					case Success(auxName1, auxResult1) => {
+						if(auxResult1.asInstanceOf[Boolean]) {
+							interpreter.interpret(firstName + ".slice(0,10)",true) match {
+								case Success(auxName2,auxResult2) => lastName = auxName2
+								case _ => lastName = firstName
+							}
 						}
 					}
+					case _ => lastName = firstName
 				}
+				
+				val res1 = interpreter interpret(lastName + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true)
+				res1 match {
+					case Success( name1, value1 ) => {
+						println("Success converting " + firstName + ". " + name1 + " = " + value1 toString)
+						resultString = composeHtmlResult(code, firstName, value1 toString)
+					}
+					case _ => {
+						println("No conversion for " + firstName + ". Value is " + value toString)
+						resultString = composeHtmlResult(code, firstName, value toString)
+					}
+				}
+			}
 			case Error( _ ) => resultString = composeFailedEvaluation(true)
 			case Incomplete => resultString = composeFailedEvaluation(false)
 		}
