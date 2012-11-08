@@ -81,21 +81,36 @@ var keyDownHandler = function(event) {
 }
 
 var keyUpHandler = function(event) {
-	
     if(event.which == 17 || event.which == 224 || event.which == 91 || event.which == 93)
 		isCtrl=false;
 }
 
 var requestEvaluation = function() {
-		
-		$.ajax({
-			type: 'POST',
-			url: 'http://localhost:8080/repl',
-			data: { 
-				code: $('#code').val()
-			},
-			success: function(data) {
-				$('#outputBody').append(data);
-			}
-		});
+	$.ajax({
+		type: 'POST',
+		url: 'http://localhost:8080/repl',
+		data: { 
+			code: $('#code').val()
+		},
+		beforeSend: function(xhr,opts) {
+			$('.btn').hide();
+			$('#loaderG').show();
+		},
+		success: function(data) {
+			$('#outputBody').append(data);
+		},
+		complete: function() {
+			$('#loaderG').hide();
+			$('.btn').show();
+		}
+	});
+}
+
+var showProgress = function() {
+    $('body').append('<div id="progress"><img src="/assets/images/loading.gif" alt="" width="16" height="11" /> Loading...</div>');
+    $('#progress').center();
+}
+
+var hideProgress = function() {
+    $('#progress').remove();
 }

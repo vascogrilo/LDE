@@ -146,12 +146,14 @@ object EditorView {
 		"code" -> Seq(""),
 		"interpreter" -> Seq(""))
 								
-	val html4 : String = readFromFile(getClass,"/html/View3_part1.html")
-	val html5 : String = readFromFile(getClass,"/html/View3_part2.html")
-	val html6 : String = readFromFile(getClass,"/html/View3_part3.html")
+	//val html4 : String = readFromFile(getClass,"/html/View3_part1.html")
+	//val html5 : String = readFromFile(getClass,"/html/View3_part2.html")
+	//val html6 : String = readFromFile(getClass,"/html/View3_part3.html")
+	val replView = readFromFile(getClass,"/html/REPLView.html")
 	
 	def view(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
-		Html(XML.loadString(html4 + data("interpreter").reduceLeft(_ + _) + html5 + data("code").head + html6))
+		//Html(XML.loadString(html4 + data("interpreter").reduceLeft(_ + _) + html5 + data("code").head + html6))
+		Html(XML.loadString(replView))
 	}
 	
 	def resetResultData = { 
