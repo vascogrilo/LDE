@@ -41,8 +41,17 @@ button#buttonSubmit {
 	border: solid 1px #CCCCCC;
 	background-color: #FFFFFF;
 	color: #2F4F4F;
-	padding: 10px 10px 10px 10px;
+	padding: 10px 15px 10px 15px;
 	display: inline;
+	text-align: center;
+}
+
+li:nth-child(even) {
+	background-color: #F5F5F5;
+}
+
+li:nth-child(odd) {
+	background-color: #FFFFFF;
 }
 
 .paginated-list ul {
@@ -61,6 +70,7 @@ button#buttonSubmit {
 	cursor: pointer;
 	margin-top: 5px;
 	margin-bottom: 5px;
+	background-color: #FFFFFF;
 }
 
 ul {
