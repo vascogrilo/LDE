@@ -2,9 +2,5 @@
 *.log
 *.*~
 
-bootstrap/*
-ScalaInterpreterPane/*
-editor/*
 target/*
-server/project/*
-server/target/*
+project/*
