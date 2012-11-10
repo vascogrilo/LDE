@@ -142,7 +142,7 @@ object Conversions {
 	
 	implicit def fromMap[A,B](m : Map[A,B]) = new Object {
 	
-		def toHtml = <table class='table table-hover table-condensed'> <tr> <th> # </th> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1 } </td> <td> { keyValue._2 } </td> </tr> ) } </table> toString 
+		def toHtml = <table class='table table-hover table-condensed'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1 } </td> <td> { keyValue._2 } </td> </tr> ) } </table> toString 
 	}
 }
 
