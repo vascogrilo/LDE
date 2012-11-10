@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>Scala Worksheet</title>
+
+<!-- TWITTER BOOTSTRAP LIBRARY -->
+<link rel="stylesheet" href="bootstrap/css/bootstrap.css" media="screen"/>
+<script src="bootstrap/js/jquery-1.8.2.js"></script>
+<script src="bootstrap/js/bootstrap.js"></script>
+
+
+<link rel="stylesheet" href="css/codemirror.css"/>
+<link rel="stylesheet" href="css/eclipse.css"/>
+<link rel="stylesheet" href="css/docs.css"/>
+<script type="text/javascript" src="js/codemirror.js"></script>
+<script type="text/javascript" src="js/clike.js"></script>
+<script type="text/javascript" src="js/css.js"></script>
+<script type='text/javascript'>
+
+window.onload = function(){
+	styleEditor('code','eclipse');
+}
+
+document.onkeyup=function(e) {
+    if(e.which == 17 || e.which == 224 || e.which == 91 || e.which == 93) isCtrl=false;
+}
+
+document.onkeydown=function(e){
+    
+    if(e.which == 17 || e.which == 224 || e.which == 91 || e.which == 93) 
+		isCtrl=true;
+    
+    if(e.which == 83) {
+		if(isCtrl == true) {
+			document.getElementById('form').submit();
+			return false;
+		}
+    }
+    
+    if(e.which == 88) {
+		if(isCtrl == true) {
+			clearInterval(interval);
+			return false;
+		}
+	}
+}
+</script>
+</head>
+<body>
+<h1>Live Development Environment</h1>
+<h3>Scala Worksheet</h3>
+
+<form id="form" name="form" method="POST">
+<textarea id="code" name="code" class="CodeMirror">
