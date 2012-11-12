@@ -1,6 +1,6 @@
-import com.typesafe.startscript.StartScriptPlugin
+//import com.typesafe.startscript.StartScriptPlugin
 
-seq(StartScriptPlugin.startScriptForClassesSettings: _*)
+//seq(StartScriptPlugin.startScriptForClassesSettings: _*)
 
 organization := "pt.feup.lde"
 

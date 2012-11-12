@@ -52,9 +52,13 @@ object ScalaEditor extends ServerPlan2 {
 			//println("Data: " + data)
 			//println("Code: " + data("code"))
 			
+			val args = data("code").head.split(":!:")
+			
 			if(data("code").length > 0) {
 				//println("\n\nI'm going to interpret " + data("code").head)
-				ResponseString(evaluateSingle(data("code").head,"toD3BarChart"))
+				if(args.length > 2 && args.apply(2).trim.equals("partial"))
+					ResponseString(evaluatePartial(data("code").head))
+				else ResponseString(evaluateSingle(data("code").head))
 			}
 			else {
 				println("Got data with 0 length. Showing view with same data.\n\n")
@@ -62,8 +66,24 @@ object ScalaEditor extends ServerPlan2 {
 			}
 	}
 	
+	
+	def evaluatePartial(code : String) : String = {
+		
+		val lines = code.split(":!:")
+		interpreter.interpret(lines apply(0),true) match {
+			case Success(name,value) => {
+				interpreter.interpret(name + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true) match {
+					case Success(name1,value1) => "<!doctype html>" + value1.toString
+					case _ => "<!doctype html>" + value.toString
+				}
+			}
+			case Error(e) => composeFailedEvaluation(true)
+			case Incomplete => composeFailedEvaluation(false)
+			case _ => composeFailedEvaluation(true)
+		}
+	}
 
-	def evaluateSingle(code : String, conversion: String) : String = {
+	def evaluateSingle(code : String) : String = {
 		
 		var resultString : String = ""
 		

@@ -28,34 +28,46 @@ object Conversions {
 		
 		def toHtml = {
 			htmlListCounter = htmlListCounter + 1
-			"<div class='html_list" + htmlListCounter + " paginated-list'></div>" +
-			"<script type='text/javascript'>" +
-				"var step" + htmlListCounter + " = 0;" + 
-				"var html_list" + htmlListCounter + " = [" + { l.map{ case e => "%d" format(e) } mkString("",",","") } + "];" +
-				"var populateList" + htmlListCounter + " = function(values,length) { " +
-					"$('.html_ul" + htmlListCounter + "').empty();" +
-					"for(var i=0; i<length; i++) { " +  
-					"$('.html_ul" + htmlListCounter + "').append(\"<li>\" + values[i] + \"</li>\");" +
-					"}" +
-				"};" + 
-				"var moreElements" + htmlListCounter + " = function() { " + 
-					"if(step" + htmlListCounter + " < html_list" + htmlListCounter + ".length) {" +
-						"step" + htmlListCounter + " += 3;" +
-						"$.ajax({ " +
-							"type: 'POST'," + 
-							"url: 'http://localhost:8080/repl'," + 
-							"data: { code: \"val\" + step + \" = 1\" }," + 
-							"success: function(data) { console.log($('.html_list" + htmlListCounter + "').parent().parent().attr('id')); }" +
-						"});" + 
-					"}" + 
-					"else step" + htmlListCounter + " = html_list" + htmlListCounter + ".length;" + 
-				"};" + 
-				"$('.html_list" + htmlListCounter + "').append(\"<ul class='ul_control'> <li id='html_listPrev" + htmlListCounter + "' class='list-controls'>«</li> </ul> \");" +
-				"$('.html_list" + htmlListCounter + "').append(\"<ul class='html_ul" + htmlListCounter + "'></ul>\");" + 
-				"$('.html_list" + htmlListCounter + "').append(\" <ul class='ul_control'> <li id='html_listNext" + htmlListCounter + "' class='list-controls'>»</li></ul>\");" +
-				"populateList" + htmlListCounter + "(html_list" + htmlListCounter + ",html_list" + htmlListCounter + ".length);" + 
-				"$('#html_listNext" + htmlListCounter + "').click(moreElements" + htmlListCounter + ");" + 
-			"</script>"
+			List("<div class='html_list", htmlListCounter,"'> <div> <ul class='ul_control'> <li id='html_listPrev",htmlListCounter,"' class='list-controls'>«</li> </ul> </div>",
+				"<div class='html_inner", htmlListCounter, " paginated-list'> <ul class='html_ul", htmlListCounter, "'> </ul> </div>",
+				"<div> <ul class='ul_control'> <li id='html_listNext", htmlListCounter, "' class='list-controls'>»</li> </ul> </div> </div>", 
+				"<script type='text/javascript'>", 
+					"var step", htmlListCounter, " = 0;", 
+					"var html_list", htmlListCounter, " = [", { l.map{ case e => "%d" format(e) } mkString("",",","") }, "];",
+					"var populateList", htmlListCounter, " = function(values,length) { ",
+						"$('.html_ul", htmlListCounter, "').empty();",
+						"for(var i=0; i<length; i++) { ",  
+						"$('.html_ul", htmlListCounter, "').append(\"<li>\" + values[i] + \"</li>\"); } };", 
+					"var moreElements", htmlListCounter, " = function() { ", 
+					"if(window.step", htmlListCounter, " < html_list", htmlListCounter, ".length) {",
+						"window.step", htmlListCounter, " += 3;",
+						"$.ajax({ ",
+							"type: 'POST',", 
+							"url: 'http://localhost:8080/repl',", 
+							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toPartialHtml :!: partial\" },", 
+							"success: function(data) { console.log(data); $('.html_ul", htmlListCounter, "').empty(); $('.html_ul", htmlListCounter, "').append(data); }",
+						"});", 
+					"}",
+				"};",
+				"var lessElements", htmlListCounter, " = function() { ",
+					"if(window.step", htmlListCounter, " > 0) { ",
+						"window.step", htmlListCounter, " -= 3;", 
+						"$.ajax({ ",
+							"type: 'POST',", 
+							"url: 'http://localhost:8080/repl',", 
+							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toPartialHtml :!: partial\" },", 
+							"success: function(data) { console.log(data); $('.html_ul", htmlListCounter, "').empty(); $('.html_ul", htmlListCounter, "').append(data); }",
+						"});",
+					"} else window.step", htmlListCounter, "=0;",
+				"};",
+				"populateList", htmlListCounter, "(html_list", htmlListCounter, ",html_list", htmlListCounter, ".length);", 
+				"$('#html_listNext", htmlListCounter, "').click(moreElements", htmlListCounter, ");",
+				"$('#html_listPrev", htmlListCounter, "').click(lessElements", htmlListCounter, ");",
+			"</script>").mkString("")
+		}
+		
+		def toPartialHtml = {
+			l.map{ case e => "<li>%d</li>" format(e) } mkString("","","")
 		}
     
 		def toD3BarChart = {
