@@ -28,9 +28,9 @@ object Conversions {
 		
 		def toHtml = {
 			htmlListCounter = htmlListCounter + 1
-			List("<div class='html_list", htmlListCounter,"'> <div> <ul class='ul_control'> <li id='html_listPrev",htmlListCounter,"' class='list-controls'>«</li> </ul> </div>",
-				"<div class='html_inner", htmlListCounter, " paginated-list'> <ul class='html_ul", htmlListCounter, "'> </ul> </div>",
-				"<div> <ul class='ul_control'> <li id='html_listNext", htmlListCounter, "' class='list-controls'>»</li> </ul> </div> </div>", 
+			List("<div class='pagination-box'><div class='paginated-list html_list", htmlListCounter,"'><ul class='ul_control'> <li id='html_listPrev",htmlListCounter,"' class='list-controls'>«</li> </ul>",
+				"<ul class='html_ul", htmlListCounter, "'> </ul>",
+				"<ul class='ul_control'> <li id='html_listNext", htmlListCounter, "' class='list-controls'>»</li> </ul></div></div>", 
 				"<script type='text/javascript'>", 
 					"var step", htmlListCounter, " = 0;", 
 					"var html_list", htmlListCounter, " = [", { l.map{ case e => "%d" format(e) } mkString("",",","") }, "];",
@@ -44,7 +44,7 @@ object Conversions {
 						"$.ajax({ ",
 							"type: 'POST',", 
 							"url: 'http://localhost:8080/repl',", 
-							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toPartialHtml :!: partial\" },", 
+							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toPartialHtml :!: partial\" },", 
 							"success: function(data) { console.log(data); $('.html_ul", htmlListCounter, "').empty(); $('.html_ul", htmlListCounter, "').append(data); }",
 						"});", 
 					"}",
@@ -55,7 +55,7 @@ object Conversions {
 						"$.ajax({ ",
 							"type: 'POST',", 
 							"url: 'http://localhost:8080/repl',", 
-							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toPartialHtml :!: partial\" },", 
+							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toPartialHtml :!: partial\" },", 
 							"success: function(data) { console.log(data); $('.html_ul", htmlListCounter, "').empty(); $('.html_ul", htmlListCounter, "').append(data); }",
 						"});",
 					"} else window.step", htmlListCounter, "=0;",

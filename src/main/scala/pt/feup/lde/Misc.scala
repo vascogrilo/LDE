@@ -87,7 +87,7 @@ object Misc {
 	  def composeHtmlResult( code: String, name: String, value: String) : String = { 
 		"<!doctype html>" +
 		"<div id='#div_" + name + "'>" +
-		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + name + ": " + code + "</span>" + 
+		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'><big>" + name + "</big>: " + code + "</span>" + 
 		"<div id='" + name + "' class='collapse'>" + 
 		"<div id='well_" + name + "' class='well well-small'>" + value +
 		"</div></div></div>"

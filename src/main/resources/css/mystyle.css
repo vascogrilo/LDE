@@ -37,21 +37,23 @@ button#buttonSubmit {
 	margin-bottom: 5px;
 }
 
-.paginated-list li {
-	border: solid 1px #CCCCCC;
-	background-color: #FFFFFF;
-	color: #2F4F4F;
-	padding: 10px 15px 10px 15px;
-	display: inline;
-	text-align: center;
-}
-
 li:nth-child(even) {
 	background-color: #F5F5F5;
 }
 
 li:nth-child(odd) {
 	background-color: #FFFFFF;
+}
+
+.pagination-box {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.paginated-list {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline;
 }
 
 .paginated-list ul {
@@ -61,10 +63,13 @@ li:nth-child(odd) {
 	display: inline;
 }
 
-.paginated-list {
-	margin-top: 10px;
-	margin-bottom: 10px;
+.paginated-list li {
+	border: solid 1px #CCCCCC;
+	background-color: #FFFFFF;
+	color: #2F4F4F;
+	padding: 10px 15px 10px 15px;
 	display: inline;
+	text-align: center;
 }
 
 .list-controls {
@@ -72,10 +77,6 @@ li:nth-child(odd) {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	background-color: #FFFFFF;
-}
-
-ul {
-	margin: 0;
 }
 
 /*
