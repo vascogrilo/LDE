@@ -8,7 +8,7 @@ object Server {
   val http = new dispatch.nio.Http
 
   def main(args: Array[String]) {
-    Http(8080)
+    Http(31926)
 		.handler(ScalaEditor)
 		.handler(ResourceLoader)
 		.handler(BootstrapLoader)
