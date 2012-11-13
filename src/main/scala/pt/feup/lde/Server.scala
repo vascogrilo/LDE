@@ -15,7 +15,7 @@ object Server {
 		.handler(BootstrapLoader)
 		.handler(D3Loader)
 		.run { s =>
-			println("Starting Unfiltered Server on port %s".format(s.port))
+			println("Started Unfiltered Server on port %s".format(s.port))
 		}
     http.shutdown()
   }

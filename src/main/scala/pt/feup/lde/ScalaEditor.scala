@@ -34,6 +34,8 @@ object ScalaEditor extends ServerPlan2 {
 	println("\nDone. Interpreter is ready!\nWaiting for requests...")
     
 	def intent = {
+		case GET(Path("/")) =>
+			Redirect("/repl")
 		case GET(Path("/scala")) =>
 			Redirect("/repl")
 		

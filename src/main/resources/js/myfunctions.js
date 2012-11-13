@@ -88,7 +88,7 @@ var keyUpHandler = function(event) {
 var requestEvaluation = function() {
 	$.ajax({
 		type: 'POST',
-		url: 'http://localhost:8080/repl',
+		url: 'http://evening-beach-6577.herokuapp.com/repl',
 		data: { 
 			code: $('#code').val()
 		},
