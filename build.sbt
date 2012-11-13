@@ -19,10 +19,12 @@ libraryDependencies ++= Seq(
    "net.databinder" %% "dispatch-nio" % "0.8.8",
    "org.clapper" %% "avsl" % "0.4",
    "net.databinder" %% "unfiltered-spec" % "0.6.4" % "test",
-   "de.sciss" % "scalainterpreterpane_2.9.2" % "1.1.0"
+   "de.sciss" % "scalainterpreterpane_2.9.2" % "1.1.0",
+   "jsyntaxpane" % "jsyntaxpane" % "0.9.5-b29"
 )
 
 resolvers ++= Seq(
-  "jboss repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/"
+	"Clojars Repository" at "http://clojars.org/repo",
+    "jboss repo" at "http://repository.jboss.org/nexus/content/groups/public-jboss/"
 )
 
