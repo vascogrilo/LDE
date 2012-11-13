@@ -48,7 +48,7 @@ object Conversions {
 							"$.ajax({ ",
 								"type: 'POST',", 
 								"url: 'http://localhost:8080/repl',", 
-								"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toJsArray :!: partial\" },", 
+								"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 								"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.split(\",\"); window.populateList",htmlListCounter,"(); }",
 							"});",
 					"}",
@@ -61,7 +61,7 @@ object Conversions {
 						"$.ajax({ ",
 							"type: 'POST',", 
 							"url: 'http://localhost:8080/repl',", 
-							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toJsArray :!: partial\" },", 
+							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.split(\",\"); window.populateList",htmlListCounter,"(); }",
 						"});",
 					"}",
@@ -72,7 +72,7 @@ object Conversions {
 			"</script>").mkString("")
 		}
 		
-		def toJsArray = {
+		def toCSV = {
 			l.map{ case e => "%d" format(e) } mkString("",",","")
 		}
     
