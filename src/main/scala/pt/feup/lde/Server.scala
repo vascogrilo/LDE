@@ -6,9 +6,10 @@ import unfiltered.netty.Http
 object Server {
   val logger = org.clapper.avsl.Logger(Server.getClass)
   val http = new dispatch.nio.Http
-
+  val port = Option(System.getenv("PORT")) map { s => Integer.parseInt(s) }
+  
   def main(args: Array[String]) {
-    Http($PORT)
+    Http(port.getOrElse(8080))
 		.handler(ScalaEditor)
 		.handler(ResourceLoader)
 		.handler(BootstrapLoader)
