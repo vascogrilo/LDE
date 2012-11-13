@@ -37,11 +37,11 @@ button#buttonSubmit {
 	margin-bottom: 5px;
 }
 
-li:nth-child(even) {
+.paginated-list-ul li:nth-child(even) {
 	background-color: #F5F5F5;
 }
 
-li:nth-child(odd) {
+.paginated-list-ul li:nth-child(odd) {
 	background-color: #FFFFFF;
 }
 

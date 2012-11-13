@@ -73,8 +73,8 @@ object ScalaEditor extends ServerPlan2 {
 		interpreter.interpret(lines apply(0),true) match {
 			case Success(name,value) => {
 				interpreter.interpret(name + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true) match {
-					case Success(name1,value1) => "<!doctype html>" + value1.toString
-					case _ => "<!doctype html>" + value.toString
+					case Success(name1,value1) => value1.toString
+					case _ => value.toString
 				}
 			}
 			case Error(e) => composeFailedEvaluation(true)
