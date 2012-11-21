@@ -9,10 +9,13 @@
  * so we can inject this at runtime into the Scala's Interpreter
  */
 
+/* http://evening-beach-6577.herokuapp.com/repl */  
+
 object Conversions {
 	
 	var d3BarChartCounter = 0
 	var htmlListCounter = 0
+	var d3HeapTreeCounter = 0
 	
 	implicit def fromString(s : String) = new Object {
 		
@@ -24,16 +27,16 @@ object Conversions {
 		def toHtml = i toString
 	}
 	
-	implicit def fromList[A](l : List[A]) = new Object {
+	implicit def fromIterable[A](l : Iterable[A]) = new Object {
 		
 		def toHtml = {
 			htmlListCounter = htmlListCounter + 1
-			List("<div class='pagination-box'><div class='paginated-list html_list", htmlListCounter,"'><ul class='ul_control'> <li id='html_listPrev",htmlListCounter,"' class='list-controls'>«</li> </ul>",
+			List("<div class='pagination-box'><div class='paginated-list html_list", htmlListCounter,"'><button id='html_listPrev",htmlListCounter,"' class='btn btn-info list-controls-left'>«</button>",
 				"<ul class='html_ul", htmlListCounter, " paginated-list-ul'> </ul>",
-				"<ul class='ul_control'> <li id='html_listNext", htmlListCounter, "' class='list-controls'>»</li> </ul></div></div>", 
+				"<button id='html_listNext", htmlListCounter, "' class='btn btn-info list-controls-right'>»</button></div></div>", 
 				"<script type='text/javascript'>", 
 					"var step", htmlListCounter, " = 0;", 
-					"var html_list", htmlListCounter, " = [", { l.map{ case e => "%d" format(e) } mkString("",",","") }, "];",
+					"var html_list", htmlListCounter, " = [", { l.map{ case e => "%s" format(e) } mkString("",",","") }, "];",
 					"var populateList", htmlListCounter, " = function() { ",
 						"$('.html_ul", htmlListCounter, "').empty();",
 						"console.log(\"vou popular\");",
@@ -110,6 +113,59 @@ object Conversions {
 				   ".attr('font-size', '11px')",
 				   ".attr('fill', 'white');",
 				   "</script>").mkString("")
+		}
+		
+		def toHeapTree = {
+			d3HeapTreeCounter = d3HeapTreeCounter + 1
+			List("<div class='d3tree",d3HeapTreeCounter,"'></div>",
+				"<style type='text/css'>",
+				".node {  fill: #fff; stroke: #000;  stroke-width: 1px; } .link { fill: none;  stroke: #000; }</style>",
+				"<script type='text/javascript'>",
+				"var index",d3HeapTreeCounter," = 1;",
+				"var vals",d3HeapTreeCounter," = [", l map {case e => "%s" format(e) } mkString("",",",""),"];",
+				"var w = 750,h = 500,root = {},data = [root],tree = d3.layout.tree().size([w - 20, h - 20]),diagonal = d3.svg.diagonal(),duration = 500,timer",d3HeapTreeCounter," = setInterval(update",d3HeapTreeCounter,", duration);",
+				"var vis = d3.select('.d3tree",d3HeapTreeCounter,"').append('svg:svg').attr('width', w).attr('height', h).append('svg:g').attr('transform', 'translate(10, 10)');",
+				"vis.selectAll('circle').data(tree(root)).enter().append('svg:circle').attr('class', 'node').attr('r', 10).attr('cx', x).attr('cy', y).append('svg:title').text(vals",d3HeapTreeCounter,"[0]);",
+				"function update",d3HeapTreeCounter,"() {",
+				  "if (index",d3HeapTreeCounter," == vals",d3HeapTreeCounter,".length) return clearInterval(timer",d3HeapTreeCounter,");",
+				  "var d = {id: index",d3HeapTreeCounter,", value: vals",d3HeapTreeCounter,"[index",d3HeapTreeCounter,"]}, parent = data[Math.floor((index",d3HeapTreeCounter,"-1)/2)];",
+				  "if (parent.children) parent.children.push(d); else parent.children = [d];",
+				  "data.push(d);",
+				  "index",d3HeapTreeCounter," = index",d3HeapTreeCounter," + 1;",
+				  "var nodes = tree(root);",
+				  "var node = vis.selectAll('circle.node').data(nodes, nodeId);",
+				  "node.enter().append('svg:circle').attr('class', 'node').attr('r', 10).attr('cx', function(d) { return d.parent.data.x0; }).attr('cy', function(d) { return d.parent.data.y0; }).append('svg:title').text(d.value).transition().duration(duration).attr('cx', x).attr('cy', y);",
+				  "node.transition().duration(duration).attr('cx', x).attr('cy', y);",
+				  "var link = vis.selectAll('path.link').data(tree.links(nodes), linkId);",
+				  "link.enter().insert('svg:path', 'circle').attr('class', 'link').attr('d', function(d) { var o = {x: d.source.data.x0, y: d.source.data.y0}; return diagonal({source: o, target: o}); }).transition().duration(duration).attr('d', diagonal);",
+				  "link.transition().duration(duration).attr('d', diagonal);",
+				"}",
+				"function linkId(d) {",
+				  "return d.source.data.id + '-' + d.target.data.id;",
+				"}",
+				"function nodeId(d) {",
+				  "return d.data.id;",
+				"}",
+				"function x(d) {",
+				  "return d.data.x0 = d.x;",
+				"}",
+				"function y(d) {",
+				  "return d.data.y0 = d.y;",
+				"}</script>"
+			).mkString("")
+			/*
+			 * 				  "if (data.length >= 10) return clearInterval(timer);",
+				  "var d = {id: data.length}, parent = data[~~(Math.random() * data.length)];",
+				  "if (parent.children) parent.children.push(d); else parent.children = [d];",
+				  "data.push(d);",
+				  "var nodes = tree(root);",
+				  "var node = vis.selectAll('circle.node').data(nodes, nodeId);",
+				  "node.enter().append('svg:circle').attr('class', 'node').attr('r', 3.5).attr('cx', function(d) { return d.parent.data.x0; }).attr('cy', function(d) { return d.parent.data.y0; }).transition().duration(duration).attr('cx', x).attr('cy', y);",
+				  "node.transition().duration(duration).attr('cx', x).attr('cy', y);",
+				  "var link = vis.selectAll('path.link').data(tree.links(nodes), linkId);",
+				  "link.enter().insert('svg:path', 'circle').attr('class', 'link').attr('d', function(d) { var o = {x: d.source.data.x0, y: d.source.data.y0}; return diagonal({source: o, target: o}); }).transition().duration(duration).attr('d', diagonal);",
+				  "link.transition().duration(duration).attr('d', diagonal);",
+			* */
 		}
     }
     

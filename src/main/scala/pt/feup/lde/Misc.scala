@@ -87,8 +87,18 @@ object Misc {
 	  def composeHtmlResult( code: String, name: String, value: String) : String = { 
 		"<!doctype html>" +
 		"<div id='#div_" + name + "'>" +
+		"<div style='display:inline;'>" + 
 		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'><big>" + name + "</big>: " + code + "</span>" + 
-		"<div id='" + name + "' class='collapse'>" + 
+		"<span class='dropdown-span' data-dropdown='#dropdown-1'>View as</span>" + 
+		"</div>"+
+		"<div id='dropdown-1' class='dropdown-menu'>" + 
+			"<ul>" +  
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toD3BarChart\");'>toD3BarChart</a></li>" + 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toHeapTree\");'>toHeapTree</a></li>" + 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toHtml\");'>toHtml</a></li>" + 
+			"</ul>" +  
+		"</div>" + 
+		"<div id='" + name + "' class='collapse in'>" + 
 		"<div id='well_" + name + "' class='well well-small'>" + value +
 		"</div></div></div>"
 	}

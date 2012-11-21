@@ -51,8 +51,6 @@ button#buttonSubmit {
 }
 
 .paginated-list {
-	padding-top: 20px;
-	padding-bottom: 20px;
 	display: inline;
 }
 
@@ -72,12 +70,56 @@ button#buttonSubmit {
 	text-align: center;
 }
 
-.list-controls {
+.list-controls-left {
 	cursor: pointer;
-	margin-top: 5px;
+	margin-left: 35px;
 	margin-bottom: 5px;
-	background-color: #FFFFFF;
+	display: inline;
 }
+
+.list-controls-right {
+	cursor: pointer;
+	margin-left: 25px;
+	margin-bottom: 5px;
+	display: inline;
+}
+
+.dropdown-span {
+	color: #08C;
+	cursor: pointer;
+	border-radius: 4px;
+	padding-left: 5px;
+	float: right;
+}
+
+.dropdown-span:after {
+	font-family: Consolas, Courier New, Arial, sans-serif;
+	content: '↓';
+	margin-left: 6px;
+	color: #08C;
+}
+
+.dropdown-span:hover {
+	background: #F2F2F2;
+}
+
+.dropdown-span.dropdown-open {
+	background: #888;
+	color: #FFF;
+}
+
+.dropdown-span.dropdown-open:after {
+	color: #FFF;
+}
+
+A {
+	color: #08C;
+}
+
+A:hover {
+	color: #0CF;
+}
+
 
 /*
  * LOADER FOR AJAX

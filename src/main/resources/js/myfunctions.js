@@ -89,11 +89,12 @@ var requestEvaluation = function() {
 	$.ajax({
 		type: 'POST',
 		url: 'http://evening-beach-6577.herokuapp.com/repl',
+		//url: 'http://localhost:8080/repl',
 		data: { 
 			code: $('#code').val()
 		},
 		beforeSend: function(xhr,opts) {
-			$('.btn').hide();
+			$('#buttonSubmit').hide();
 			$('#loaderG').show();
 		},
 		success: function(data) {
@@ -101,7 +102,32 @@ var requestEvaluation = function() {
 		},
 		complete: function() {
 			$('#loaderG').hide();
-			$('.btn').show();
+			$('#buttonSubmit').show();
+		}
+	});
+}
+
+var requestConversion = function(div_id,instr) {
+	//console.log(div_id);
+	//console.log(instr);
+	$.ajax({
+		type: 'POST',
+		url: 'http://evening-beach-6577.herokuapp.com/repl',
+		//url: 'http://localhost:8080/repl',
+		data: { 
+			code: instr + " :!: partial"
+		},
+		beforeSend: function(xhr,opts) {
+			$('#buttonSubmit').hide();
+			$('#loaderG').show();
+		},
+		success: function(data) {
+			$('#well_' + div_id).empty();
+			$('#well_' + div_id).append(data);
+		},
+		complete: function() {
+			$('#loaderG').hide();
+			$('#buttonSubmit').show();
 		}
 	});
 }
