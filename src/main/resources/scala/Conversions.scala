@@ -50,7 +50,7 @@ object Conversions {
 							"window.step", htmlListCounter, " += 3;",
 							"$.ajax({ ",
 								"type: 'POST',", 
-								"url: 'http://evening-beach-6577.herokuapp.com/repl',", 
+								"url: 'http://localhost:8080/repl',", 
 								"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 								"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.split(\",\"); window.populateList",htmlListCounter,"(); }",
 							"});",
@@ -63,7 +63,7 @@ object Conversions {
 						"window.step", htmlListCounter, " -= 3;",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://evening-beach-6577.herokuapp.com/repl',", 
+							"url: 'http://localhost:8080/repl',", 
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",10 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.split(\",\"); window.populateList",htmlListCounter,"(); }",
 						"});",
@@ -82,36 +82,39 @@ object Conversions {
 		def toD3BarChart = {
 			d3BarChartCounter = d3BarChartCounter + 1
 			List("<div class='bar-chart", d3BarChartCounter, "'></div>",
-				"<script type='text/javascript'>", "var w = 700;", "var h = 200;", "var barPadding = 1;",
-				"var dataset = [ ", { l map{ case e => "%d" format (e) }  mkString("",",","") }, "];", 
+				"<script type='text/javascript'>", "var w = 700;", "var h = 300;", "var barPadding = 1;",
+				"var dataset",d3BarChartCounter," = [ ", { l map{ case e => "%d" format (e) }  mkString("",",","") }, "];", 
+				"var maxValue",d3BarChartCounter,"= Math.max.apply(Math, dataset",d3BarChartCounter,");",
+				"var ratio",d3BarChartCounter," = 280/maxValue",d3BarChartCounter,";",
+				"console.log(ratio",d3BarChartCounter,");",
 				"var svg = d3.select('.bar-chart", d3BarChartCounter, "')",
 							".append('svg')",
 							".attr('width', w)",
 							".attr('height', h);",
 				"svg.selectAll('rect')",
-				   ".data(dataset)",
+				   ".data(dataset",d3BarChartCounter,")",
 				   ".enter()",
 				   ".append('rect')", 
 				   ".attr('x', function(d, i) {", 
-				   		" return i * (w / dataset.length);", 
+				   		" return i * (w / dataset",d3BarChartCounter,".length);", 
 				   "})",
 				   ".attr('y', function(d) {", 
-				   		" return h - d;",
+				   		" return h - (d * ratio",d3BarChartCounter,");",
 				   "})",
-				   ".attr('width', w / dataset.length - barPadding)",
+				   ".attr('width', w / dataset",d3BarChartCounter,".length - barPadding)",
 				   ".attr('height', function(d) { ",
-				   		"return d * 4; })",
-				   ".attr('fill', function(d) { return 'rgb(0,' + (128 - d) + ',' + (128 - d) + ')'; });", 
+				   		"return d * ratio",d3BarChartCounter,"; })",
+				   ".attr('fill', function(d) { return 'rgb(0,' + (128 - (d)) + ',' + (128 - (d)) + ')'; });", 
 				"svg.selectAll('text')",
-				   ".data(dataset)",
+				   ".data(dataset",d3BarChartCounter,")",
 				   ".enter()",
 				   ".append('text')",
 				   ".text(function(d) { return d; })",
-				   ".attr('x', function(d, i) { return i * (w / dataset.length) + 5; })",
-				   ".attr('y', function(d) { return h - d + 15; })",
+				   ".attr('x', function(d, i) { return i * (w / dataset",d3BarChartCounter,".length) + 5; })",
+				   ".attr('y', function(d) { return h - ( (d * ratio",d3BarChartCounter,") + 5); })",
 				   ".attr('font-family', 'sans-serif')",
-				   ".attr('font-size', '11px')",
-				   ".attr('fill', 'white');",
+				   ".attr('font-size', '12px')",
+				   ".attr('fill', 'black');",
 				   "</script>").mkString("")
 		}
 		
@@ -153,19 +156,6 @@ object Conversions {
 				  "return d.data.y0 = d.y;",
 				"}</script>"
 			).mkString("")
-			/*
-			 * 				  "if (data.length >= 10) return clearInterval(timer);",
-				  "var d = {id: data.length}, parent = data[~~(Math.random() * data.length)];",
-				  "if (parent.children) parent.children.push(d); else parent.children = [d];",
-				  "data.push(d);",
-				  "var nodes = tree(root);",
-				  "var node = vis.selectAll('circle.node').data(nodes, nodeId);",
-				  "node.enter().append('svg:circle').attr('class', 'node').attr('r', 3.5).attr('cx', function(d) { return d.parent.data.x0; }).attr('cy', function(d) { return d.parent.data.y0; }).transition().duration(duration).attr('cx', x).attr('cy', y);",
-				  "node.transition().duration(duration).attr('cx', x).attr('cy', y);",
-				  "var link = vis.selectAll('path.link').data(tree.links(nodes), linkId);",
-				  "link.enter().insert('svg:path', 'circle').attr('class', 'link').attr('d', function(d) { var o = {x: d.source.data.x0, y: d.source.data.y0}; return diagonal({source: o, target: o}); }).transition().duration(duration).attr('d', diagonal);",
-				  "link.transition().duration(duration).attr('d', diagonal);",
-			* */
 		}
     }
     
@@ -173,41 +163,41 @@ object Conversions {
 		
 		def toD3BarChart = {
 			d3BarChartCounter = d3BarChartCounter + 1
-			"<div class='bar-chart" + d3BarChartCounter + "'></div>" +
-			"<script type='text/javascript'>" +
-				"var w = 700;" +
-				"var h = 200;" + 
-				"var barPadding = 1;" +
-				"var dataset = [ " + { r map{ case e => "%d" format (e) }  mkString("",",",",") } + " 0 ];" +
-				"var svg = d3.select('.bar-chart" + d3BarChartCounter + "')" +
-							".append('svg')" +
-							".attr('width', w)" +
-							".attr('height', h);" +
-				"svg.selectAll('rect')" +
-				   ".data(dataset)" + 
-				   ".enter()" + 
-				   ".append('rect')" + 
-				   ".attr('x', function(d, i) {" + 
-				   		" return i * (w / dataset.length);" + 
-				   "})" + 
-				   ".attr('y', function(d) {" + 
-				   		" return h - d;" +
-				   "})" + 
-				   ".attr('width', w / dataset.length - barPadding)" + 
-				   ".attr('height', function(d) { " +
-				   		"return d * 4; })" +
-				   ".attr('fill', function(d) { return 'rgb(0,' + (128 - d) + ',' + (128 - d) + ')'; });" + 
-				"svg.selectAll('text')" + 
-				   ".data(dataset)" + 
-				   ".enter()" + 
-				   ".append('text')" + 
-				   ".text(function(d) { return d; })" + 
-				   ".attr('x', function(d, i) { return i * (w / dataset.length) + 5; })" +
-				   ".attr('y', function(d) { return h - d + 15; })" + 
-				   ".attr('font-family', 'sans-serif')" + 
-				   ".attr('font-size', '11px')" + 
-				   ".attr('fill', 'white');" +
-				   "</script>"
+			List("<div class='bar-chart",d3BarChartCounter,"'></div>",
+			"<script type='text/javascript'>",
+				"var w = 700;",
+				"var h = 200;", 
+				"var barPadding = 1;",
+				"var dataset = [ ",{ r map{ case e => "%d" format (e) }  mkString("",",",",") }," 0 ];",
+				"var svg = d3.select('.bar-chart",d3BarChartCounter,"')",
+							".append('svg')",
+							".attr('width', w)",
+							".attr('height', h);",
+				"svg.selectAll('rect')",
+				   ".data(dataset)",
+				   ".enter()",
+				   ".append('rect')", 
+				   ".attr('x', function(d, i) {", 
+				   		" return i * (w / dataset.length);", 
+				   "})",
+				   ".attr('y', function(d) {", 
+				   		" return h - d;",
+				   "})",
+				   ".attr('width', w / dataset.length - barPadding)", 
+				   ".attr('height', function(d) { ",
+				   		"return d * 4; })",
+				   ".attr('fill', function(d) { return 'rgb(0,' + (128 - d) + ',' + (128 - d) + ')'; });", 
+				"svg.selectAll('text')",
+				   ".data(dataset)",
+				   ".enter()",
+				   ".append('text')", 
+				   ".text(function(d) { return d; })", 
+				   ".attr('x', function(d, i) { return i * (w / dataset.length) + 5; })",
+				   ".attr('y', function(d) { return h - d + 15; })",
+				   ".attr('font-family', 'sans-serif')",
+				   ".attr('font-size', '11px')",
+				   ".attr('fill', 'white');",
+				   "</script>").mkString("")
 		}
     }
 	

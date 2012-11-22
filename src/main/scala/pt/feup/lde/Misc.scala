@@ -89,13 +89,13 @@ object Misc {
 		"<div id='#div_" + name + "'>" +
 		"<div style='display:inline;'>" + 
 		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'><big>" + name + "</big>: " + code + "</span>" + 
-		"<span class='dropdown-span' data-dropdown='#dropdown-1'>View as</span>" + 
+		"<span class='dropdown-span' data-dropdown='#dropdown-" + name + "'>View as</span>" + 
 		"</div>"+
-		"<div id='dropdown-1' class='dropdown-menu'>" + 
+		"<div id='dropdown-" + name + "' class='dropdown-menu'>" + 
 			"<ul>" +  
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toD3BarChart\");'>toD3BarChart</a></li>" + 
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toHeapTree\");'>toHeapTree</a></li>" + 
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toHtml\");'>toHtml</a></li>" + 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toD3BarChart\");'>Bar Chart</a></li>" + 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toHeapTree\");'>Heap Tree</a></li>" + 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toHtml\");'>Html</a></li>" + 
 			"</ul>" +  
 		"</div>" + 
 		"<div id='" + name + "' class='collapse in'>" + 

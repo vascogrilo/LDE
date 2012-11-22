@@ -3,6 +3,7 @@
 	position: absolute;
 	z-index: 9999999;
 	display: none;
+	padding: 0;
 }
 
 .dropdown-menu UL {
