@@ -85,7 +85,7 @@ object Misc {
 	   * 
 	   */ 
 	  def composeHtmlResult( code: String, name: String, value: String) : String = { 
-		"<!doctype html>" +
+		//"<!doctype html>" +
 		"<div id='#div_" + name + "'>" +
 		"<div style='display:inline;'>" + 
 		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'><big>" + name + "</big>: " + code + "</span>" + 
@@ -104,7 +104,7 @@ object Misc {
 	}
 	
 	def composeFailedEvaluation( error: Boolean ) : String = {
-		"<!doctype html>" +
+		//"<!doctype html>" +
 		"<div class='alert" + ( if(error) " alert-error" else "" ) + "'>" +
 		"<button type='button' class='close' data-dismiss='alert'>x</button>" +
 		"<strong>" + ( if(error) "Error!" else "Warning!" ) + "</strong> " +
