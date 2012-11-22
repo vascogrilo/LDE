@@ -83,7 +83,7 @@ object Conversions {
 		def toD3BarChart = {
 			d3BarChartCounter = d3BarChartCounter + 1
 			List("<div class='bar-chart", d3BarChartCounter, "'></div>",
-				"<script type='text/javascript'>", "var w = 750;", "var h = 300;", "var barPadding = 1;",
+				"<script type='text/javascript'>", "var w = 770;", "var h = 300;", "var barPadding = 1;",
 				"var dataset",d3BarChartCounter," = [ ", { l map{ case e => "%d" format (e) }  mkString("",",","") }, "];", 
 				"var maxValue",d3BarChartCounter,"= Math.max.apply(Math, dataset",d3BarChartCounter,");",
 				"var ratio",d3BarChartCounter," = 280/maxValue",d3BarChartCounter,";",
@@ -156,50 +156,6 @@ object Conversions {
 				  "return d.data.y0 = d.y;",
 				"}</script>"
 			).mkString("")
-		}
-    }
-    
-    implicit def fromRange(r : Range) = new Object {
-		
-		def toD3BarChart = {
-			d3BarChartCounter = d3BarChartCounter + 1
-			List("<div class='bar-chart",d3BarChartCounter,"'></div>",
-			"<script type='text/javascript'>",
-				"var w = 750;",
-				"var h = 300;", 
-				"var barPadding = 1;",
-				"var dataset",d3BarChartCounter," = [ ",{ r map{ case e => "%d" format (e) }  mkString("",",","") },"];",
-				"var maxValue",d3BarChartCounter,"= Math.max.apply(Math, dataset",d3BarChartCounter,");",
-				"var ratio",d3BarChartCounter," = (h - 20)/maxValue",d3BarChartCounter,";",
-				"var svg = d3.select('.bar-chart",d3BarChartCounter,"')",
-							".append('svg')",
-							".attr('width', w)",
-							".attr('height', h);",
-				"svg.selectAll('rect')",
-				   ".data(dataset",d3BarChartCounter,")",
-				   ".enter()",
-				   ".append('rect')", 
-				   ".attr('x', function(d, i) {", 
-				   		" return i * (w / dataset",d3BarChartCounter,".length);", 
-				   "})",
-				   ".attr('y', function(d) {", 
-				   		" return h - (d * ratio",d3BarChartCounter,");",
-				   "})",
-				   ".attr('width', w / dataset",d3BarChartCounter,".length - barPadding)", 
-				   ".attr('height', function(d) { ",
-				   		"return d * ratio",d3BarChartCounter,"; })",
-				   ".attr('fill', function(d) { return 'rgb(0,' + (128 - d) + ',' + (128 - d) + ')'; });", 
-				"svg.selectAll('text')",
-				   ".data(dataset",d3BarChartCounter,")",
-				   ".enter()",
-				   ".append('text')", 
-				   ".text(function(d) { return d; })", 
-				   ".attr('x', function(d, i) { return i * (w / dataset",d3BarChartCounter,".length) + 5; })",
-				   ".attr('y', function(d) { return ( h - (d * ratio",d3BarChartCounter," + 5) ); })",
-				   ".attr('font-family', 'sans-serif')",
-				   ".attr('font-size', '12px')",
-				   ".attr('fill', 'black');",
-				   "</script>").mkString("")
 		}
     }
 	
