@@ -42,7 +42,7 @@ object Conversions {
 						"window.step", htmlListCounter, " += step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://localhost:8080/repl',",
+							"url: 'http://evening-beach-6577.herokuapp.com/repl',",
 							"dataType: 'html',", 
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -56,7 +56,7 @@ object Conversions {
 						"window.step", htmlListCounter, " -= step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://localhost:8080/repl',", 
+							"url: 'http://evening-beach-6577.herokuapp.com/repl',", 
 							"dataType: 'html',",
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -84,11 +84,13 @@ object Conversions {
     
 		def toD3BarChart = {
 			d3BarChartCounter = d3BarChartCounter + 1
-			List("<div class='bar-chart", d3BarChartCounter, "'></div>",
-				"<script type='text/javascript'>", "var w = 770;", "var h = 300;", "var barPadding = 1;",
+			List("<div style='overflow-x:auto' class='bar-chart", d3BarChartCounter, "'></div>",
+				"<script type='text/javascript'>",
 				"var dataset",d3BarChartCounter," = [ ", { l map{ case e => "%d" format (e) }  mkString("",",","") }, "];", 
 				"var maxValue",d3BarChartCounter,"= Math.max.apply(Math, dataset",d3BarChartCounter,");",
 				"var ratio",d3BarChartCounter," = 280/maxValue",d3BarChartCounter,";",
+				"var w = dataset",d3BarChartCounter,".length * 19;", "var h = 300;", "var barPadding = 1;",
+				"if(w < 770) w = 770;",
 				"var svg = d3.select('.bar-chart", d3BarChartCounter, "')",
 							".append('svg')",
 							".attr('width', w)",

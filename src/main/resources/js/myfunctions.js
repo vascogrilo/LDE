@@ -88,8 +88,8 @@ var keyUpHandler = function(event) {
 var requestEvaluation = function() {
 	$.ajax({
 		type: 'POST',
-		//url: 'http://evening-beach-6577.herokuapp.com/repl',
-		url: 'http://localhost:8080/repl',
+		url: 'http://evening-beach-6577.herokuapp.com/repl',
+		//url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: $('#code').val()
@@ -113,8 +113,8 @@ var requestConversion = function(div_id,instr) {
 	//console.log(instr);
 	$.ajax({
 		type: 'POST',
-		//url: 'http://evening-beach-6577.herokuapp.com/repl',
-		url: 'http://localhost:8080/repl',
+		url: 'http://evening-beach-6577.herokuapp.com/repl',
+		//url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: instr + " :!: partial"
@@ -132,13 +132,4 @@ var requestConversion = function(div_id,instr) {
 			$('#buttonSubmit').show();
 		}
 	});
-}
-
-var showProgress = function() {
-    $('body').append('<div id="progress"><img src="/assets/images/loading.gif" alt="" width="16" height="11" /> Loading...</div>');
-    $('#progress').center();
-}
-
-var hideProgress = function() {
-    $('#progress').remove();
 }
