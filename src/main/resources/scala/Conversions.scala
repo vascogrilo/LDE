@@ -46,7 +46,7 @@ object Conversions {
 							"$('.html_ul", htmlListCounter, "').append(\"<li>\" + window.html_list",htmlListCounter,"[i] + \"</li>\"); } };", 
 					"var moreElements", htmlListCounter, " = function() { ", 
 						"console.log(\"entrou moreElements com step = \" + window.step", htmlListCounter," + \" e length = \" + window.html_list",htmlListCounter,".length);",
-						"if(window.html_list",htmlListCounter,".length == 10) {",
+						"if(window.html_list",htmlListCounter,".length == 20) {",
 							"console.log(\"if!\");",
 							"window.step", htmlListCounter, " += step_incr",htmlListCounter,";",
 							"$.ajax({ ",

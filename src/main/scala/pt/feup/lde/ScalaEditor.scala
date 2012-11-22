@@ -21,6 +21,8 @@ object ScalaEditor extends ServerPlan2 {
 	
 	var ids = Map.empty[ String, String ]
 	
+	val iterableSlicing = 20;
+	
 	println("Setting up Interpreter's configuration...")
 	val intpCfg = MyInterpreter.Config()
 	intpCfg.out = Some(results)
@@ -117,7 +119,7 @@ object ScalaEditor extends ServerPlan2 {
 				interpreter.interpret(firstName + ".isInstanceOf[Iterable[Any]]",true) match {
 					case Success(auxName1, auxResult1) => {
 						if(auxResult1.asInstanceOf[Boolean]) {
-							interpreter.interpret(firstName + ".slice(0,10)",true) match {
+							interpreter.interpret(firstName + ".slice(0," + iterableSlicing + ")",true) match {
 								case Success(auxName2,auxResult2) => lastName = auxName2
 								case _ => lastName = firstName
 							}
