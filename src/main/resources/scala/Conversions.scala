@@ -43,7 +43,7 @@ object Conversions {
 						"$.ajax({ ",
 							"type: 'POST',", 
 							"url: 'http://evening-beach-6577.herokuapp.com/repl',",
-							"dataType: 'text',", 
+							"dataType: 'html',", 
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
 						"});",
@@ -57,7 +57,7 @@ object Conversions {
 						"$.ajax({ ",
 							"type: 'POST',", 
 							"url: 'http://evening-beach-6577.herokuapp.com/repl',", 
-							"dataType: 'text',"
+							"dataType: 'html',",
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
 						"});",
