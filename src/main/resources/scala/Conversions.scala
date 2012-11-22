@@ -83,7 +83,7 @@ object Conversions {
 		def toD3BarChart = {
 			d3BarChartCounter = d3BarChartCounter + 1
 			List("<div class='bar-chart", d3BarChartCounter, "'></div>",
-				"<script type='text/javascript'>", "var w = 700;", "var h = 300;", "var barPadding = 1;",
+				"<script type='text/javascript'>", "var w = 750;", "var h = 300;", "var barPadding = 1;",
 				"var dataset",d3BarChartCounter," = [ ", { l map{ case e => "%d" format (e) }  mkString("",",","") }, "];", 
 				"var maxValue",d3BarChartCounter,"= Math.max.apply(Math, dataset",d3BarChartCounter,");",
 				"var ratio",d3BarChartCounter," = 280/maxValue",d3BarChartCounter,";",
@@ -165,7 +165,7 @@ object Conversions {
 			d3BarChartCounter = d3BarChartCounter + 1
 			List("<div class='bar-chart",d3BarChartCounter,"'></div>",
 			"<script type='text/javascript'>",
-				"var w = 700;",
+				"var w = 750;",
 				"var h = 300;", 
 				"var barPadding = 1;",
 				"var dataset",d3BarChartCounter," = [ ",{ r map{ case e => "%d" format (e) }  mkString("",",","") },"];",
