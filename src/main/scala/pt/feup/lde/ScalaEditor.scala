@@ -21,7 +21,7 @@ object ScalaEditor extends ServerPlan2 {
 	
 	var ids = Map.empty[ String, String ]
 	
-	val iterableSlicing = 13;
+	val iterableSlicing = 10;
 	
 	println("Setting up Interpreter's configuration...")
 	val intpCfg = MyInterpreter.Config()
