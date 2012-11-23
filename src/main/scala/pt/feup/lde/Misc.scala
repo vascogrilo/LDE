@@ -111,7 +111,7 @@ object Misc {
 		( if(error) "There was an error in your code!" else "Your instruction was incomplete!" ) +
 		"</div>"
 	}
-	   
+   
 }
 
 /**

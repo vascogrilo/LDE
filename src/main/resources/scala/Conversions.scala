@@ -71,7 +71,7 @@ object Conversions {
 					"console.log(\"vou popular\");",
 					"for(var i=0; i<window.html_list",htmlListCounter,".length; i++) { ",
 						"console.log(window.html_list",htmlListCounter,"[i]);",
-						"$('.html_ul", htmlListCounter, "').append(\"<li>\" + window.html_list",htmlListCounter,"[i] + \"</li>\"); } };",
+						"$('.html_ul", htmlListCounter, "').append(\"<li>\" + window.html_list",htmlListCounter,"[i].toString() + \"</li>\"); } };",
 				"populateList", htmlListCounter, "();", 
 				"$('#html_listNext", htmlListCounter, "').click(moreElements", htmlListCounter, ");",
 				"$('#html_listPrev", htmlListCounter, "').click(lessElements", htmlListCounter, ");",
@@ -79,7 +79,7 @@ object Conversions {
 		}
 		
 		def toCSV = {
-			l.map{ case e => "%d" format(e) } mkString("",",","")
+			l.map{ case e => "%s" format(e) } mkString("",",","")
 		}
     
 		def toD3BarChart = {
@@ -117,7 +117,8 @@ object Conversions {
 				   ".attr('x', function(d, i) { return i * (w / dataset",d3BarChartCounter,".length) + 5; })",
 				   ".attr('y', function(d) { return h - ( (d * ratio",d3BarChartCounter,") + 5); })",
 				   ".attr('font-family', 'sans-serif')",
-				   ".attr('font-size', '12px')",
+				   ".attr('font-size', '11px')",
+				   ".attr('font-style','bold')",
 				   ".attr('fill', 'black');",
 				   "</script>").mkString("")
 		}
@@ -130,7 +131,7 @@ object Conversions {
 				"<script type='text/javascript'>",
 				"var index",d3HeapTreeCounter," = 1;",
 				"var vals",d3HeapTreeCounter," = [", l map {case e => "%s" format(e) } mkString("",",",""),"];",
-				"var w = 750,h = 500,root = {},data = [root],tree = d3.layout.tree().size([w - 20, h - 20]),diagonal = d3.svg.diagonal(),duration = 500,timer",d3HeapTreeCounter," = setInterval(update",d3HeapTreeCounter,", duration);",
+				"var w = 800,h = 500,root = {},data = [root],tree = d3.layout.tree().size([w - 20, h - 20]),diagonal = d3.svg.diagonal(),duration = 500,timer",d3HeapTreeCounter," = setInterval(update",d3HeapTreeCounter,", duration);",
 				"var vis = d3.select('.d3tree",d3HeapTreeCounter,"').append('svg:svg').attr('width', w).attr('height', h).append('svg:g').attr('transform', 'translate(10, 10)');",
 				"vis.selectAll('circle').data(tree(root)).enter().append('svg:circle').attr('class', 'node').attr('r', 10).attr('cx', x).attr('cy', y).append('svg:title').text(vals",d3HeapTreeCounter,"[0]);",
 				"function update",d3HeapTreeCounter,"() {",
