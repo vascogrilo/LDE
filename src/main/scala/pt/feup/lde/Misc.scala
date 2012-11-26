@@ -74,6 +74,38 @@ object Misc {
 		  }
 	  }
 	  
+	  def fromStringtoHtml(s : String) : String = {
+		  s match {
+			  case "" => ""
+			  case _ => toHtmlInput(s.head) + fromStringtoHtml(s.tail)
+		  }
+	  }
+	  
+	  def toHtmlInput(c : Char) : String = {
+		  c match {
+			  case '<' => "&lt;"
+			  case '>' => "&gt;"
+			  case '&' => "&amp;"
+			  case '\n' => "<br/>"
+			  case ' ' => "&nbsp;"
+			  case _ => c toString
+		  }
+	  }
+	  
+	  def fromHtmltoString(s : String) : String = {
+		  s match {
+			  case "" => ""
+			  case _ => toHtmlDisplayed(s.head) + fromHtmltoString(s.tail)
+		  }
+	  }
+	  
+	  def toHtmlDisplayed(c : Char) : String = {
+		  c match {
+			  case '<' => "&lt;"
+			  case '>' => "&gt;"
+			  case _ => c toString
+		  }
+	  }
 	  
 	  /**
 	   * composeHtmlResult and composeFailedEvaluation
@@ -85,11 +117,11 @@ object Misc {
 	   * and returns a string representing a DOM element containing the aler message for the specific case (error or incomplete instruction)
 	   * 
 	   */ 
-	  def composeHtmlResult( code: String, name: String, value: String) : String = { 
+	  def composeHtmlResult( code: String, name: String, value: String, isHtml: Boolean) : String = { 
 		"<!doctype html>" +
 		"<div id='#div_" + name + "'>" +
 		"<div style='display:inline;'>" + 
-		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'><big>" + name + "</big>: " + code + "</span>" + 
+		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'><big>" + name + "</big>: " + fromHtmltoString(code) + "</span>" + 
 		"<span class='dropdown-span' data-dropdown='#dropdown-" + name + "'>View as</span>" + 
 		"</div>"+
 		"<div id='dropdown-" + name + "' class='dropdown-menu'>" + 
@@ -104,12 +136,13 @@ object Misc {
 		"</div></div></div>"
 	}
 	
-	def composeFailedEvaluation( error: Boolean ) : String = {
+	def composeFailedEvaluation( error: Boolean , msg: String) : String = {
+		println("fromstringtohtml:\n" + fromStringtoHtml(msg))
 		"<!doctype html>" +
 		"<div class='alert" + ( if(error) " alert-error" else "" ) + "'>" +
 		"<button type='button' class='close' data-dismiss='alert'>x</button>" +
-		"<strong>" + ( if(error) "Error!" else "Warning!" ) + "</strong> " +
-		( if(error) "There was an error in your code!" else "Your instruction was incomplete!" ) +
+		"<strong>" + ( if(error) "Error!" else "Warning!" ) + "</strong><br>" +
+		( if(error) fromStringtoHtml(msg) else "Your instruction was incomplete!" ) +
 		"</div>"
 	}
    

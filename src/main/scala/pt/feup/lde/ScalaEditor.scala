@@ -24,6 +24,7 @@ object ScalaEditor extends ServerPlan2 {
 	var ids = Map.empty[ String, String ]
 	var interpreterCounter = 0
 	var interpreterID = ""
+	var special = false;
 	//var interpreters = Seq[MyInterpreter]()
 	//var interpretersConfigs = Seq[Config]()
 	val interpreters = HashMap.empty[String,MyInterpreter]
@@ -137,9 +138,9 @@ object ScalaEditor extends ServerPlan2 {
 					case _ => value.toString
 				}
 			}
-			case Error(e) => composeFailedEvaluation(true)
-			case Incomplete => composeFailedEvaluation(false)
-			case _ => composeFailedEvaluation(true)
+			case Error(e) => composeFailedEvaluation(true,results.toString)
+			case Incomplete => composeFailedEvaluation(false,"")
+			case _ => composeFailedEvaluation(true,results.toString)
 		}
 	}
 
@@ -153,11 +154,13 @@ object ScalaEditor extends ServerPlan2 {
 		
 		val interpreter = interpreters(interpreterId)
 		
+		results.getBuffer().setLength(0)
+		
 		val res = interpreter.interpret(lines apply(0))
 		res match {
 			case Success( auxName, null ) => {
 				println("\nENTREI NO SUCCESS VALUE NULL\n")
-				resultString = composeHtmlResult(code, auxName, "()" )
+				resultString = composeHtmlResult(code, auxName, "()", false)
 			}
 			case Success( auxName, value ) => {
 				println("\nENTREI NO SUCCESS COM VALUE\n")
@@ -171,21 +174,7 @@ object ScalaEditor extends ServerPlan2 {
 				 * LIKE SLICING AN ITERABLE FOR EXAMPLE.
 				 * 
 				 */
-				
-				//STARTING WITH TESTING IT THE RESULT IS ITERABLE
-				//If it is we start by truncating the result to only 10 items
-				/*interpreter.interpret(firstName + ".asInstanceOf[AnyRef].isInstanceOf[Iterable[Any]]",true) match {
-					case Success(auxName1, auxResult1) => {
-						if(auxResult1.asInstanceOf[Boolean]) {
-							interpreter.interpret(firstName + ".slice(0," + iterableSlicing + ")",true) match {
-								case Success(auxName2,auxResult2) => lastName = auxName2
-								case _ => lastName = firstName
-							}
-						}
-					}
-					case _ => lastName = firstName
-				}*/
-				
+				special = false
 				interpreter.interpret("manOf(" + firstName + ").erasure.toString.split(' ').apply(1).trim",true) match {
 					case Success(auxName3,auxValue3) => {
 						println("FROM ERASURE : " + auxName3 + " -> " + auxValue3 + "\n")
@@ -200,13 +189,14 @@ object ScalaEditor extends ServerPlan2 {
 										case _ => lastName = firstName
 									}
 								}
+								case "scala.xml.Elem" => {
+									special = true
+								}
 								case _ => {
 									println("GOT OTHER TYPE. IGNORING.")
 									lastName = firstName
 								}
 						}
-						
-						
 					}
 					case _ => lastName = firstName
 				}
@@ -216,26 +206,26 @@ object ScalaEditor extends ServerPlan2 {
 					interpreter.interpret(lastName + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true) match {
 						case Success( auxName2, auxValue2 ) => {
 							println("Success converting " + firstName + ". " + auxName2 + " = " + auxValue2 toString)
-							resultString = composeHtmlResult(code, firstName, auxValue2 toString)
+							resultString = composeHtmlResult(code, firstName, auxValue2 toString, special)
 						}
 						case _ => {
 							println("No conversion for " + firstName + ". Value is " + value toString)
-							resultString = composeHtmlResult(code, firstName, value toString)
+							resultString = composeHtmlResult(code, firstName, value toString, special)
 						}
 					}
 				}
 			}
 			case Incomplete => {
 				println("\nENTREI NO INCOMPLETE!!!\n")
-				resultString = composeFailedEvaluation(false)
+				resultString = composeFailedEvaluation(false,"")
 			}
 			case _ => {
 				println("\nENTREI NO DEFAULT\n")
-				resultString = composeFailedEvaluation(true)
+				resultString = composeFailedEvaluation(true,results.toString)
 			}
 		}
 		//extractIds(results toString)
-		println("\n\n" + results.toString + "\n\n")
+		println("\n\n ========== OUTPUT =============\n" + results.toString + "\n ============================== \n")
 		//EditorView.data("interpreter") = EditorView.data("interpreter") :+ resultString
 		resultString
 	}

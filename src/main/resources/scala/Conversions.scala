@@ -48,8 +48,8 @@ object Conversions {
 						"window.step", htmlListCounter, " += step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://evening-beach-6577.herokuapp.com/repl',",
-							//"url: 'http://localhost:8080/repl',",
+							//"url: 'http://evening-beach-6577.herokuapp.com/repl',",
+							"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',", 
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -63,8 +63,8 @@ object Conversions {
 						"window.step", htmlListCounter, " -= step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://evening-beach-6577.herokuapp.com/repl',", 
-							//"url: 'http://localhost:8080/repl',",
+							//"url: 'http://evening-beach-6577.herokuapp.com/repl',", 
+							"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',",
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -174,7 +174,7 @@ object Conversions {
 	
 	implicit def fromMap[A,B](m : Map[A,B]) = new Object {
 	
-		def toHtml = <table class='table table-hover table-condensed'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1 } </td> <td> { keyValue._2 } </td> </tr> ) } </table> toString 
+		def toHtml = <table class='table table-hover'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1.toString } </td> <td> { keyValue._2.toString } </td> </tr> ) } </table> toString 
 	}
 }
 

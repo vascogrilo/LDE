@@ -84,6 +84,8 @@ var keyDownHandler = function(event) {
 		if(instruction_counter > 0){
 			instruction_counter--;
 			$('#code').val(instructions[instruction_counter]);
+			$('#code').keydown();
+			$('#code').autosize();
 		}
 		return false;
 	}
@@ -93,6 +95,8 @@ var keyDownHandler = function(event) {
 		if(instruction_counter < instructions.length){
 			instruction_counter++;
 			$('#code').val(instructions[instruction_counter]);
+			$('#code').keydown();
+			$('#code').autosize();
 		}
 		return false;
 	}
@@ -136,8 +140,8 @@ var addInstructionHistory = function(code) {
 var requestEvaluation = function() {
 	$.ajax({
 		type: 'POST',
-		url: 'http://evening-beach-6577.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://evening-beach-6577.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: $('#code').val()
@@ -147,7 +151,6 @@ var requestEvaluation = function() {
 			$('#loaderG').show();
 		},
 		success: function(data) {
-			$('#code').keydown();
 			$('#code').val('');
 			$('#outputBody').append(data);
 		},
@@ -163,8 +166,8 @@ var requestConversion = function(div_id,instr) {
 	//console.log(instr);
 	$.ajax({
 		type: 'POST',
-		url: 'http://evening-beach-6577.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://evening-beach-6577.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: instr + " :!: partial"
