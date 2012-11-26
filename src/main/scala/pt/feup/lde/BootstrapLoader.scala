@@ -3,6 +3,7 @@ package pt.feup.lde
 import unfiltered.request._
 import unfiltered.response._
 import unfiltered.netty._
+import pt.feup.lde.Utilities.Misc._
 
 /**
  * RESOURCE LOADER
@@ -23,12 +24,12 @@ object BootstrapLoader extends async.Plan with ServerErrorResponse {
 	def intent = {
 	
 		case req @ GET(Path(Seg("bootstrap" :: "css" :: file :: Nil))) =>
-			req.respond(ResponseString(Misc.readFromFile(getClass,"/bootstrap/css/" + file)))
+			req.respond(ResponseString(readFromFile(getClass,"/bootstrap/css/" + file)))
 		
 		case req @ GET(Path(Seg("bootstrap" :: "img" :: file :: Nil))) =>
-			req.respond(ResponseString(Misc.readFromFile(getClass,"/bootstrap/img/" + file)))
+			req.respond(ResponseString(readFromFile(getClass,"/bootstrap/img/" + file)))
 			
 		case req @ GET(Path(Seg("bootstrap" :: "js" :: file :: Nil))) =>
-			req.respond(ResponseString(Misc.readFromFile(getClass,"/bootstrap/js/" + file)))
+			req.respond(ResponseString(readFromFile(getClass,"/bootstrap/js/" + file)))
 	}
 }

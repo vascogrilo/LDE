@@ -3,6 +3,7 @@ package pt.feup.lde
 import unfiltered.request._
 import unfiltered.response._
 import unfiltered.netty._
+import pt.feup.lde.Utilities.Misc._
 
 object ResourceLoader extends async.Plan with ServerErrorResponse {
 	
@@ -16,7 +17,7 @@ object ResourceLoader extends async.Plan with ServerErrorResponse {
 		 */
 		case req @ GET(Path(Seg("js" :: file :: Nil))) =>
 			logger.debug("GET /js")
-			req.respond(ResponseString(Misc.readFromFile(getClass,"/js/" + file)))
+			req.respond(ResponseString(readFromFile(getClass,"/js/" + file)))
 		
 		
 		/**
@@ -25,7 +26,7 @@ object ResourceLoader extends async.Plan with ServerErrorResponse {
 		 */
 		case req @ GET(Path(Seg("css" :: file :: Nil))) =>
 			logger.debug("GET /css")
-			req.respond(ResponseString(Misc.readFromFile(getClass,"/css/" + file)))
+			req.respond(ResponseString(readFromFile(getClass,"/css/" + file)))
 		
 		
 		/**
@@ -37,6 +38,6 @@ object ResourceLoader extends async.Plan with ServerErrorResponse {
 		
 		case req @ GET(Path(Seg("html" :: file :: Nil))) =>
 			logger.debug("GET /html")
-			req.respond(ResponseString(Misc.readFromFile(getClass,"/html/" + file)))
+			req.respond(ResponseString(readFromFile(getClass,"/html/" + file)))
 	}
 }

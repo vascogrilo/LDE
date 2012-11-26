@@ -24,7 +24,6 @@ import tools.nsc.{Settings => CompilerSettings, ConsoleWriter, NewLinePrintWrite
 import java.io._
 import tools.nsc.interpreter.{Results, JLineCompletion, Completion, NamedParam, IMain}
 import java.util.concurrent.Executors
-import pt.feup.lde.Misc._
 
 object MyInterpreter {
    
@@ -157,12 +156,6 @@ object MyInterpreter {
       override def toString = "MyInterpreter@" + hashCode().toHexString
 
       def completer: Completion.ScalaCompleter = cmp.completer()
-
-	  def resetAndLoad = {
-		  in.reset
-		  in.resetClassLoader
-		  in.interpret(readFromFile(getClass,"/scala/Conversions.scala"))
-	  }
 	  
 	  def compileString(s : String) = in.compileString(s)
 
@@ -202,12 +195,6 @@ trait MyInterpreter {
    def interpret( code: String, quiet: Boolean = false ) : MyInterpreter.Result
    
    def compileString( code: String) : Boolean
-   
-   /**
-    * Resets the state of the Interpreter
-    * and loads the Conversions resource file
-    */ 
-   def resetAndLoad : Unit
 
    /**
     * Just as `interpret` but without evaluating the result value. That is, in the case

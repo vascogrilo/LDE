@@ -11,11 +11,12 @@ import scala.util.Random
 import java.io._
 
 import pt.feup.lde.MyInterpreter._
+import pt.feup.lde.Utilities._
+import pt.feup.lde.Utilities.Evaluation._
 
 object ScalaEditor extends ServerPlan2 {
 	
 	import QParams._
-	import Misc._
 	
 	val iterableSlicing = 13;
 	val logger = org.clapper.avsl.Logger(getClass)
@@ -68,7 +69,7 @@ object ScalaEditor extends ServerPlan2 {
 						interpreters += (interpreterID -> interpreter)
 					
 						println("Reading and loading Conversions onto the Interpreter (" + interpreterID + ") ...")
-						Misc.injectConversions(interpreter)
+						injectConversions(interpreter)
 						println("\nDone. Interpreter (" + interpreterID + ") is ready!\nWaiting for requests...")
 					}
 					
@@ -87,7 +88,7 @@ object ScalaEditor extends ServerPlan2 {
 					interpreters += (interpreterID -> interpreter)
 				
 					println("Reading and loading Conversions onto the Interpreter (" + interpreterID + ") ...")
-					Misc.injectConversions(interpreter)
+					injectConversions(interpreter)
 					println("\nDone. Interpreter (" + interpreterID + ") is ready!\nWaiting for requests...")
 					
 					EditorView.view(EditorView.data)(NodeSeq.Empty) ~> ResponseCookies(Cookie("session",interpreterID))
@@ -178,24 +179,23 @@ object ScalaEditor extends ServerPlan2 {
 				interpreter.interpret("val tmp_var_" + Math.abs(Random.nextInt()) + " = manOf(" + firstName + ").erasure.toString.split(' ').apply(1).trim",true) match {
 					case Success(auxName3,auxValue3) => {
 						println("FROM ERASURE : " + auxName3 + " -> " + auxValue3 + "\n")
-						auxValue3 match {
-								case "scala.collection.immutable.List" |
-										"scala.collection.mutable.List" |
-										"scala.collection.immutable.Range" |
-										"scala.collection.immutable.Range$Inclusive" => {
-									println("GOT LIST!!!!!! SLICING IT.")
-									interpreter.interpret("val tmp_var_" + Math.abs(Random.nextInt()) + " = " + firstName + ".slice(0," + iterableSlicing + ")",true) match {
-										case Success(auxName4,auxResult4) => lastName = auxName4
-										case _ => lastName = firstName
-									}
-								}
-								case "scala.xml.Elem" => {
+						
+						if(auxValue3.toString().contains("scala.collection.")){
+							interpreter.interpret("val tmp_var_" + Math.abs(Random.nextInt()) + " = " + firstName + ".slice(0," + iterableSlicing + ")",true) match {
+								case Success(auxName4,auxResult4) => lastName = auxName4
+								case _ => lastName = firstName
+							}
+						}
+						else {
+							auxValue3 match {
+								case "scala.lang.String" | "String" => {
 									special = true
 								}
 								case _ => {
 									println("GOT OTHER TYPE. IGNORING.")
 									lastName = firstName
 								}
+							}
 						}
 					}
 					case _ => lastName = firstName
