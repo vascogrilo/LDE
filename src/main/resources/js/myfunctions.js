@@ -140,8 +140,8 @@ var addInstructionHistory = function(code) {
 var requestEvaluation = function() {
 	$.ajax({
 		type: 'POST',
-		url: 'http://evening-beach-6577.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://evening-beach-6577.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: $('#code').val()
@@ -166,8 +166,8 @@ var requestConversion = function(div_id,instr) {
 	//console.log(instr);
 	$.ajax({
 		type: 'POST',
-		url: 'http://evening-beach-6577.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://evening-beach-6577.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: instr + " :!: partial"

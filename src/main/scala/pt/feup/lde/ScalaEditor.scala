@@ -132,7 +132,7 @@ object ScalaEditor extends ServerPlan2 {
 		val interpreter = interpreters(interpreterId)
 		interpreter.interpret(lines apply(0),true) match {
 			case Success(name,value) => {
-				val instruction = name + "." + ( if(lines.apply(1).trim.equals("toHtml")) ("slice(0," + iterableSlicing + ").toHtml") else lines.apply(1).trim )
+				val instruction = "val tmp_var_" + Random.nextInt() + " = " + name + "." + ( if(lines.apply(1).trim.equals("toHtml")) ("slice(0," + iterableSlicing + ").toHtml") else lines.apply(1).trim )
 				interpreter.interpret(instruction,true) match {
 					case Success(name1,value1) => value1.toString
 					case _ => value.toString
@@ -175,7 +175,7 @@ object ScalaEditor extends ServerPlan2 {
 				 * 
 				 */
 				special = false
-				interpreter.interpret("manOf(" + firstName + ").erasure.toString.split(' ').apply(1).trim",true) match {
+				interpreter.interpret("val tmp_var_" + Math.abs(Random.nextInt()) + " = manOf(" + firstName + ").erasure.toString.split(' ').apply(1).trim",true) match {
 					case Success(auxName3,auxValue3) => {
 						println("FROM ERASURE : " + auxName3 + " -> " + auxValue3 + "\n")
 						auxValue3 match {
@@ -184,7 +184,7 @@ object ScalaEditor extends ServerPlan2 {
 										"scala.collection.immutable.Range" |
 										"scala.collection.immutable.Range.Inclusive" => {
 									println("GOT LIST!!!!!! SLICING IT.")
-									interpreter.interpret(firstName + ".slice(0," + iterableSlicing + ")",true) match {
+									interpreter.interpret("val tmp_var_" + Math.abs(Random.nextInt()) + " = " + firstName + ".slice(0," + iterableSlicing + ")",true) match {
 										case Success(auxName4,auxResult4) => lastName = auxName4
 										case _ => lastName = firstName
 									}
@@ -203,7 +203,7 @@ object ScalaEditor extends ServerPlan2 {
 				
 				
 				if(value!=null) {
-					interpreter.interpret(lastName + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true) match {
+					interpreter.interpret("val tmp_var_" + Math.abs(Random.nextInt()) + " = " + lastName + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true) match {
 						case Success( auxName2, auxValue2 ) => {
 							println("Success converting " + firstName + ". " + auxName2 + " = " + auxValue2 toString)
 							resultString = composeHtmlResult(code, firstName, auxValue2 toString, special)
