@@ -5,6 +5,7 @@ import unfiltered.response._
 import unfiltered.netty._
 
 import scala.xml._
+import scala.util.Random
 import java.io.FileNotFoundException
 import pt.feup.lde.MyInterpreter._
 
@@ -126,9 +127,9 @@ object Misc {
 		"</div>"+
 		"<div id='dropdown-" + name + "' class='dropdown-menu'>" + 
 			"<ul>" +  
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toD3BarChart\");'>Bar Chart</a></li>" + 
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toHeapTree\");'>Heap Tree</a></li>" + 
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toHtml\");'>Html</a></li>" + 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"val tmp_var_" + Math.abs(Random.nextInt()) + " = " + name + " :!: toD3BarChart\");'>Bar Chart</a></li>" + 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"val tmp_var_" + Math.abs(Random.nextInt()) + " = " + name + " :!: toHeapTree\");'>Heap Tree</a></li>" + 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"val tmp_var_" + Math.abs(Random.nextInt()) + " = " + name + " :!: toHtml\");'>Html</a></li>" + 
 			"</ul>" +  
 		"</div>" + 
 		"<div id='" + name + "' class='collapse in'>" + 

@@ -182,7 +182,7 @@ object ScalaEditor extends ServerPlan2 {
 								case "scala.collection.immutable.List" |
 										"scala.collection.mutable.List" |
 										"scala.collection.immutable.Range" |
-										"scala.collection.immutable.Range.Inclusive" => {
+										"scala.collection.immutable.Range$Inclusive" => {
 									println("GOT LIST!!!!!! SLICING IT.")
 									interpreter.interpret("val tmp_var_" + Math.abs(Random.nextInt()) + " = " + firstName + ".slice(0," + iterableSlicing + ")",true) match {
 										case Success(auxName4,auxResult4) => lastName = auxName4
