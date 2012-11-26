@@ -12,13 +12,13 @@ $(document).ready(function() {
 	 */
 	textareaApplyPlaceHolder();
 	
-	$('textarea').autosize();
+	$('#code').autosize();
 	
 	
 	/**
 	 * HANDLERS FOR EVENTS
 	 */
-	$('textarea').keydown(keyDownHandler);
-	$('textarea').keyup(keyUpHandler);
+	$('#code').keydown(keyDownHandler);
+	$('#code').keyup(keyUpHandler);
 });
 

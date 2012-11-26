@@ -71,13 +71,31 @@ var keyDownHandler = function(event) {
 
 	// KEY CODE FOR ENTER
     if(event.which == 13) {
-		if(isCtrl && ($.trim( $('#code').val() )) ) {
-			console.log($('#code').val())
-			console.log("entrou");
+		if(!isCtrl && checkIfCanEvaluate($.trim($('#code').val()))){
+			addInstructionHistory($.trim($('#code').val()));
+			console.log(instructions);
 			requestEvaluation();
 			return false;
 		}
     }
+    
+    // KEY CODE FOR UP ARROW
+    if(event.which == 38) {
+		if(instruction_counter > 0){
+			instruction_counter--;
+			$('#code').val(instructions[instruction_counter]);
+		}
+		return false;
+	}
+	
+	// KEY CODE FOR DOWN ARROW
+	if(event.which == 40) {
+		if(instruction_counter < instructions.length){
+			instruction_counter++;
+			$('#code').val(instructions[instruction_counter]);
+		}
+		return false;
+	}
 }
 
 var keyUpHandler = function(event) {
@@ -85,11 +103,41 @@ var keyUpHandler = function(event) {
 		isCtrl=false;
 }
 
+var checkIfCanEvaluate = function(code) {
+	var can = false;
+	if( ((($.trim( $('#code').val() )).match(/{/g)||[]).length == (($.trim( $('#code').val() )).match(/}/g)||[]).length) &&
+		 ((($.trim( $('#code').val() )).match(/\(/g)||[]).length == (($.trim( $('#code').val() )).match(/\)/g)||[]).length) )
+		can = true;
+	return can;
+}
+
+/**
+ * FUNCTIONS FOR STORING AND GETTING PREVIOUS INSTRUCTIONS
+ * STORED IN MEMORY
+ * 
+ */
+var instructions = new Array();
+var instruction_counter = 0;
+	
+var addInstructionHistory = function(code) {
+	instructions[instruction_counter] = code;
+	instruction_counter++;
+}
+
+/**
+ * FUNCTIONS FOR SENDING CODE TO BE EVALUATED SERVERSIDE
+ * 
+ * requestEvaluation sends a code for evaluating and receives a new full response. It then appends it to the output body.
+ * 
+ * requestConversion sends a code for evaluating and receives a partial response to be appended to an existing result on the body.
+ * 
+ */
+
 var requestEvaluation = function() {
 	$.ajax({
 		type: 'POST',
-		url: 'http://evening-beach-6577.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://evening-beach-6577.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: $('#code').val()
@@ -99,6 +147,8 @@ var requestEvaluation = function() {
 			$('#loaderG').show();
 		},
 		success: function(data) {
+			$('#code').keydown();
+			$('#code').val('');
 			$('#outputBody').append(data);
 		},
 		complete: function() {
@@ -113,8 +163,8 @@ var requestConversion = function(div_id,instr) {
 	//console.log(instr);
 	$.ajax({
 		type: 'POST',
-		url: 'http://evening-beach-6577.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://evening-beach-6577.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: instr + " :!: partial"

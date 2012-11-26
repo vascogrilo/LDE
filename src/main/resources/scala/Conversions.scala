@@ -17,7 +17,9 @@ object Conversions {
 	var htmlListCounter = 0
 	var d3HeapTreeCounter = 0
 	
-	implicit def fromString(s : String) = new Object {
+	def manOf[T: Manifest](t: T): Manifest[T] = manifest[T]
+	
+	implicit def fromString(s : java.lang.String) = new Object {
 		
 		def toHtml = s
 	}
@@ -25,6 +27,10 @@ object Conversions {
 	implicit def fromInt(i : Int) = new Object {
 	
 		def toHtml = i toString
+	}
+	
+	implicit def fromElem(e : scala.xml.Elem) = new Object {
+		def toHtml = e toString
 	}
 	
 	implicit def fromIterable[A](l : Iterable[A]) = new Object {
@@ -42,7 +48,7 @@ object Conversions {
 						"window.step", htmlListCounter, " += step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://evening-beach-6577.herokuapp.com/repl',",
+							"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',", 
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -56,7 +62,7 @@ object Conversions {
 						"window.step", htmlListCounter, " -= step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://evening-beach-6577.herokuapp.com/repl',", 
+							"url: 'http://localhost:8080/repl',", 
 							"dataType: 'html',",
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",

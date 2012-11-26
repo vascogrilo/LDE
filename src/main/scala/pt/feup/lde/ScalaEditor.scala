@@ -32,23 +32,6 @@ object ScalaEditor extends ServerPlan2 {
     
 	def intent = {
 		case GET(Path("/")) =>
-			/*cookies("session") match {
-				case Some(Cookie(_,session,_,_,_,_)) => intepreterID = session
-				case _ => interpreterID = uniqueRandomKey((('a' to 'z') ++ ('A' to 'Z') ++ ('0' to '9') ++ ("-!£$")).mkString(""), 8, isUnique)
-			}
-			println("Setting up Interpreter's configuration...")
-			val intpCfg = MyInterpreter.Config()
-			intpCfg.out = Some(results)
-			
-			println("Creating a new Intepreter instance...")
-			val interpreter = MyInterpreter(intpCfg)
-			
-			interpreters += (interpreterID -> interpreter)
-		
-			println("Reading and loading Conversions onto the Interpreter...")
-			Misc.injectConversions(interpreter)
-			println("\nDone. Interpreter is ready!\nWaiting for requests...")
-			ResponseCookies(Cookie("session",interpreterID)) ~> */
 			Redirect("/repl")
 			
 		case GET(Path("/scala")) =>
@@ -71,7 +54,7 @@ object ScalaEditor extends ServerPlan2 {
 						interpreterID = session
 					}
 					else {
-						println("Key is unvalid. Creating new one and generating new interpreter.")
+						println("Key is invalid. Creating new one and generating new interpreter.")
 						interpreterID = Random.nextDouble().toString
 						println("New key generated. Value is '" + interpreterID + "'\n")
 						println("Setting up Interpreter's (" + interpreterID + ") configuration...")
@@ -191,7 +174,7 @@ object ScalaEditor extends ServerPlan2 {
 				
 				//STARTING WITH TESTING IT THE RESULT IS ITERABLE
 				//If it is we start by truncating the result to only 10 items
-				interpreter.interpret(firstName + ".isInstanceOf[Iterable[Any]]",true) match {
+				/*interpreter.interpret(firstName + ".asInstanceOf[AnyRef].isInstanceOf[Iterable[Any]]",true) match {
 					case Success(auxName1, auxResult1) => {
 						if(auxResult1.asInstanceOf[Boolean]) {
 							interpreter.interpret(firstName + ".slice(0," + iterableSlicing + ")",true) match {
@@ -201,7 +184,33 @@ object ScalaEditor extends ServerPlan2 {
 						}
 					}
 					case _ => lastName = firstName
+				}*/
+				
+				interpreter.interpret("manOf(" + firstName + ").erasure.toString.split(' ').apply(1).trim",true) match {
+					case Success(auxName3,auxValue3) => {
+						println("FROM ERASURE : " + auxName3 + " -> " + auxValue3 + "\n")
+						auxValue3 match {
+								case "scala.collection.immutable.List" |
+										"scala.collection.mutable.List" |
+										"scala.collection.immutable.Range" |
+										"scala.collection.immutable.Range.Inclusive" => {
+									println("GOT LIST!!!!!! SLICING IT.")
+									interpreter.interpret(firstName + ".slice(0," + iterableSlicing + ")",true) match {
+										case Success(auxName4,auxResult4) => lastName = auxName4
+										case _ => lastName = firstName
+									}
+								}
+								case _ => {
+									println("GOT OTHER TYPE. IGNORING.")
+									lastName = firstName
+								}
+						}
+						
+						
+					}
+					case _ => lastName = firstName
 				}
+				
 				
 				if(value!=null) {
 					interpreter.interpret(lastName + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),true) match {

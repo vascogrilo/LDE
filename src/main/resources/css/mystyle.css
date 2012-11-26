@@ -65,7 +65,7 @@ button#buttonSubmit {
 	border: solid 1px #CCCCCC;
 	background-color: #FFFFFF;
 	color: #2F4F4F;
-	padding: 10px 15px 10px 15px;
+	padding: 5px;
 	display: inline;
 	text-align: center;
 }
