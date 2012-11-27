@@ -177,8 +177,13 @@ var requestConversion = function(div_id,instr) {
 			$('#loaderG').show();
 		},
 		success: function(data) {
-			$('#well_' + div_id).empty();
-			$('#well_' + div_id).append(data);
+			if(data===""){
+				console.log("Got empty data from conversion. Something went wrong.");
+			}
+			else {
+				$('#well_' + div_id).empty();
+				$('#well_' + div_id).append(data);
+			}
 		},
 		complete: function() {
 			$('#loaderG').hide();

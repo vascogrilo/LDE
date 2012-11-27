@@ -87,65 +87,6 @@ object Utilities {
 			  }
 		  }
 	  }
-	  
-	  
-	  object Evaluation {
-		 
-		 import Utilities.Misc._
-		 
-		  /**
-		   * composeHtmlResult and composeFailedEvaluation
-		   * 
-		   * composeHtmlResult receives the input code, the name of the identifier, the value of the result and a value determining if there is an HTML or Literal String to be displayed
-		   * and returns a string representing a DOM element for the obtained result.
-		   * 
-		   * composeFailedEvaluation receives a Boolean representing an error message or not and a message containing (if any) the error message
-		   * and returns a string representing a DOM element containing the aler message for the specific case (error or incomplete instruction)
-		   * 
-		   */ 
-		  def composeHtmlResult( code: String, name: String, value: String, string: Boolean) : String = { 
-			"<!doctype html>" +
-			"<div id='#div_" + name + "'>" +
-			"<div style='display:inline;'>" + 
-			"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'><big>" + name + "</big>: " + ( if(code.length>150) (fromHtmltoString(code.substring(0,150) + "...")) else fromHtmltoString(code) ) + "</span>" + 
-			"<span class='dropdown-span' data-dropdown='#dropdown-" + name + "'>View as</span>" + 
-			"</div>"+
-			"<div id='dropdown-" + name + "' class='dropdown-menu'>" + 
-				"<ul>" +  
-				"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"val tmp_var_" + Math.abs(Random.nextInt()) + " = " + name + " :!: toD3BarChart\");'>Bar Chart</a></li>" + 
-				"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"val tmp_var_" + Math.abs(Random.nextInt()) + " = " + name + " :!: toHeapTree\");'>Heap Tree</a></li>" + 
-				"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"val tmp_var_" + Math.abs(Random.nextInt()) + " = " + name + " :!: toHtml\");'>Html</a></li>" + 
-				"</ul>" +  
-			"</div>" + 
-			"<div id='" + name + "' class='collapse in'>" + 
-			"<div id='well_" + name + "' class='well well-small'>" + ( if(string) fromHtmltoString(value) else value ) +
-			"</div></div></div>"
-		}
-		
-		def composeFailedEvaluation( error: Boolean , msg: String) : String = {
-			println("fromstringtohtml:\n" + fromStringtoHtml(msg))
-			"<!doctype html>" +
-			"<div class='alert" + ( if(error) " alert-error" else "" ) + "'>" +
-			"<button type='button' class='close' data-dismiss='alert'>x</button>" +
-			"<strong>" + ( if(error) "Error!" else "Warning!" ) + "</strong><br>" +
-			( if(error) fromStringtoHtml(msg) else "Your instruction was incomplete!" ) +
-			"</div>"
-		}
-		
-		/**
-		  * injectConversions
-		  * This function will inject the Conversions object
-		  * onto the MyInterpreter object
-		  * loading the Conversions from the Resources/scala folder
-		  */
-		  def injectConversions(i : MyInterpreter) : Boolean = {
-			  //still missing catching the exception from readFromFile...
-			  val code : String = readFromFile(getClass,"/scala/Conversions.scala")
-			  i.interpret(code,true)
-			  //i.compileString(code)
-			  true
-		  }
-	}
 	
 		/**
 	 *  User-defined views for HTML
