@@ -157,7 +157,7 @@ object Evaluation {
 				}
 				else {
 					auxValue3 match {
-						case "scala.lang.String" | "String" => {
+						case "java.lang.String" | "String" => {
 							special = true
 						}
 						case _ => {
@@ -306,6 +306,7 @@ object Evaluation {
 	   * 
 	   */
 	  def composeHtmlResult( code: String, name: String, value: String, string: Boolean, showName : Boolean) : String = { 
+		println("GOT IF IT IS STRING = " + string.toString)
 		"<!doctype html>" +
 		"<div id='#div_" + name + "'>" +
 		"<div style='display:inline;'>" + 
