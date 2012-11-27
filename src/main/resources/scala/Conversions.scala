@@ -73,7 +73,7 @@ object Conversions {
 				"};",
 				"var step", htmlListCounter, " = 0;",
 				"var step_incr", htmlListCounter, " = 5;",
-				"var html_list", htmlListCounter, " = [", { l.map{ case e => "%s" format(e) } mkString("",",","") }, "];",
+				"var html_list", htmlListCounter, " = [", { l.map{ e => "\"" + e.toString + "\"" } mkString("",",","") }, "];",
 				"var populateList", htmlListCounter, " = function() { ",
 					"$('.html_ul", htmlListCounter, "').empty();",
 					"console.log(\"vou popular\");",
