@@ -79,6 +79,17 @@ object Evaluation {
 		resultString
 	}
 	
+	
+	/**
+	 * evaluationPhase1
+	 * 
+	 * This method is part of a 3 step operation.
+	 * 
+	 * This phase 1 intends to interpret the original code submited by the user and if
+	 * the operation is successfull it then calls for evaluationPhase2
+	 * If the interpretation is not succesfull it returns a response with an error message.
+	 * 
+	 */
 	def evaluationPhase1(interpreter : MyInterpreter, code : String, lines : Array[java.lang.String]) : String = {
 		
 		var firstName : String = ""
@@ -108,6 +119,20 @@ object Evaluation {
 	}
 	
 	
+	
+	/**
+	 * evaluationPhase2
+	 * 
+	 * This method is part of a 3 step operation.
+	 * 
+	 * There are some pre-conversion additional operations to be applied to some certains types.
+	 * For example, slicing to a max limit an iterable for showing the paginated list.
+	 * 
+	 * This phase 2 intends to determine the value of the result from phase 1.
+	 * If the type has operations to be made previously to its convertion this methods applies those operations before calling for evaluationPhase3.
+	 * If not it immediately calls for evaluationPhase3
+	 * 
+	 */
 	def evaluationPhase2(interpreter : MyInterpreter, code : String, originalCode : String, firstNameA: String, lastNameA: String, value: Any, lines : Array[java.lang.String]) : String = {
 		
 		/*
@@ -150,6 +175,14 @@ object Evaluation {
 	
 	
 	
+	/**
+	 * evaluationPhase3
+	 * 
+	 * This method is part of a 3 step operation.
+	 * 
+	 * This phase intends to interpret the convertion toHtml to the result from interpreting the original code submited by the user.
+	 * It then returns a response containing the result from the conversion.
+	 */
 	def evaluationPhase3(interpreter : MyInterpreter, code : String, originalCode: String,firstName: String, value: Any,special: Boolean, lines : Array[java.lang.String]) : String = {
 		
 		interpreter.interpret(code,true) match {
