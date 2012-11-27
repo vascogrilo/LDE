@@ -29,11 +29,17 @@ object Conversions {
 		def toHtml = i toString
 	}
 	
-	implicit def fromElem(e : scala.xml.Elem) = new Object {
+	implicit def fromXmlElem(e : scala.xml.Elem) = new Object {
 		def toHtml = e toString
 	}
 	
+	implicit def fromXmlNodeBuffer(l : scala.xml.NodeBuffer) = new Object {
+		def toHtml = l.map{ e => e }.mkString("","","")
+	}
+	
 	implicit def fromIterable[A](l : Iterable[A]) = new Object {
+		
+		def toPlainText = l.map{ e => e }.mkString("","","")
 		
 		def toHtml = {
 			htmlListCounter = htmlListCounter + 1
