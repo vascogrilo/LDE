@@ -97,8 +97,8 @@ object Evaluation {
 		val res = interpreter.interpret(code)
 		res match {
 			case Success( auxName, () ) => {
-				println("\nENTREI NO SUCCESS VALUE ()\n")
-				composeHtmlResult(code, auxName, "()", false, false)
+				println("\nENTREI NO SUCCESS " + auxName + " COM VALUE ()\n")
+				composeHtmlResult(code, Math.abs(Random.nextInt()).toString, "()", false, false)
 			}
 			case Success( auxName, value ) => {
 				println("\nENTREI NO SUCCESS: " + auxName + " COM VALUE " + value.toString + "\n")
@@ -162,9 +162,9 @@ object Evaluation {
 						}
 						case _ => {
 							println("GOT OTHER TYPE. IGNORING.")
-							lastName = firstName
 						}
 					}
+					lastName = firstName
 				}
 			}
 			case _ => lastName = firstName
