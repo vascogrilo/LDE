@@ -292,6 +292,7 @@ object Evaluation {
 		  //still missing catching the exception from readFromFile...
 		  val code : String = readFromFile(getClass,"/scala/Conversions.scala")
 		  i.interpret(code,true)
+		  println("\n====================\n" + results.toString + "\n====================\n")
 		  //i.compileString(code)
 		  true
 	  }
@@ -323,7 +324,7 @@ object Evaluation {
 			"</ul>" +  
 		"</div>" + 
 		"<div id='" + name + "' class='collapse in'>" + 
-		"<div id='well_" + name + "' class='well well-small'>" + ( if(string) fromHtmltoString(value) else value ) +
+		"<div id='well_" + name + "' class='well well-small'>" + value +
 		"</div></div></div>"
 	}
 	
