@@ -9,7 +9,7 @@
  * so we can inject this at runtime into the Scala's Interpreter
  */
 
-/* http://evening-beach-6577.herokuapp.com/repl */  
+/* http://visual-scala.herokuapp.com/repl */  
 
 object Conversions {
 	

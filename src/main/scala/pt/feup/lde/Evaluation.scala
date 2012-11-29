@@ -324,7 +324,7 @@ object Evaluation {
 			"</ul>" +  
 		"</div>" + 
 		"<div id='" + name + "' class='collapse in'>" + 
-		"<div id='well_" + name + "' class='well well-small'>" + value +
+		"<div id='well_" + name + "' class='well well-small' style='overflow-x: auto;'>" + value +
 		"</div></div></div>"
 	}
 	

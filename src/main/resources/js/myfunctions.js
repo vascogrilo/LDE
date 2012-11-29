@@ -71,12 +71,13 @@ var keyDownHandler = function(event) {
 
 	// KEY CODE FOR ENTER
     if(event.which == 13) {
-		if(!isCtrl && checkIfCanEvaluate($.trim($('#code').val()))){
+		if(checkIfCanEvaluate($.trim($('#code').val()))){
 			addInstructionHistory($.trim($('#code').val()));
 			console.log(instructions);
 			requestEvaluation();
 			return false;
 		}
+		else return true;
     }
     
     // KEY CODE FOR UP ARROW
@@ -108,6 +109,7 @@ var keyUpHandler = function(event) {
 }
 
 var checkIfCanEvaluate = function(code) {
+	if(code == "") return false;
 	var can = false;
 	if( ((($.trim( $('#code').val() )).match(/{/g)||[]).length == (($.trim( $('#code').val() )).match(/}/g)||[]).length) &&
 		 ((($.trim( $('#code').val() )).match(/\(/g)||[]).length == (($.trim( $('#code').val() )).match(/\)/g)||[]).length) )
