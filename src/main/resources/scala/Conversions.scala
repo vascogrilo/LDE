@@ -149,7 +149,7 @@ object Conversions {
 			d3BarChartCounter = d3BarChartCounter + 1
 			List("<div style='overflow-x:auto' class='bar-chart", d3BarChartCounter, "'></div>",
 				"<script type='text/javascript'>",
-				"var dataset",d3BarChartCounter," = [ ", { l map{ case e => "%d" format (e) }  mkString("",",","") }, "];", 
+				"var dataset",d3BarChartCounter," = [", toCSVAux(l) , "];", 
 				"var maxValue",d3BarChartCounter,"= Math.max.apply(Math, dataset",d3BarChartCounter,");",
 				"var ratio",d3BarChartCounter," = 280/maxValue",d3BarChartCounter,";",
 				"var w = dataset",d3BarChartCounter,".length * 19;", "var h = 300;", "var barPadding = 1;",
@@ -193,7 +193,7 @@ object Conversions {
 				".node {  fill: #fff; stroke: #000;  stroke-width: 1px; } .link { fill: none;  stroke: #000; }</style>",
 				"<script type='text/javascript'>",
 				"var index",d3HeapTreeCounter," = 1;",
-				"var vals",d3HeapTreeCounter," = [", l map {case e => "%s" format(e) } mkString("",",",""),"];",
+				"var vals",d3HeapTreeCounter," = [",toCSVAux(l),"];",
 				"var w = 800,h = 500,root = {},data = [root],tree = d3.layout.tree().size([w - 20, h - 20]),diagonal = d3.svg.diagonal(),duration = 500,timer",d3HeapTreeCounter," = setInterval(update",d3HeapTreeCounter,", duration);",
 				"var vis = d3.select('.d3tree",d3HeapTreeCounter,"').append('svg:svg').attr('width', w).attr('height', h).append('svg:g').attr('transform', 'translate(10, 10)');",
 				"vis.selectAll('circle').data(tree(root)).enter().append('svg:circle').attr('class', 'node').attr('r', 10).attr('cx', x).attr('cy', y).append('svg:title').text(vals",d3HeapTreeCounter,"[0]);",
