@@ -98,14 +98,18 @@ object Evaluation {
 		res match {
 			case Success( auxName, () ) => {
 				println("\nENTREI NO SUCCESS " + auxName + " COM VALUE ()\n")
-				composeHtmlResult(code, Math.abs(Random.nextInt()).toString, "()", false, false)
+				composeHtmlResult(code, Math.abs(Random.nextInt()).toString, "()", false, false, 0)
+			}
+			case Success( auxName, null) => {
+				println("\n ENTREI NO VALUE NULL!!! O que esta no output: (" + results.toString + ")\n")
+				composeHtmlResult(code, Math.abs(Random.nextInt()).toString, results.toString, false, false, 0)
 			}
 			case Success( auxName, value ) => {
 				println("\nENTREI NO SUCCESS: " + auxName + " COM VALUE " + value.toString + "\n")
 				firstName = auxName
 				println("Success: " + firstName + " " + value toString)
 				
-				evaluationPhase2(interpreter, "val tmp_var_" + Math.abs(Random.nextInt()) + " = manOf(" + firstName + ").erasure.toString.split(' ').apply(1).trim",code,firstName,lastName,value,lines)
+				evaluationPhase2(interpreter, "val tmp_var_" + Math.abs(Random.nextInt()) + " = manOf(" + firstName + ").erasure.toString",code,firstName,lastName,value,lines)
 			}
 			case Incomplete => {
 				println("\nENTREI NO INCOMPLETE!!!\n")
@@ -142,14 +146,17 @@ object Evaluation {
 		 * LIKE SLICING AN ITERABLE FOR EXAMPLE.
 		 * 
 		 */
+		println("PHASE 2:\n TAMANHO DO LINES: " + lines.length + "\n CODE TO BE INTERPRETED: " + code + "\n")
 		var firstName = firstNameA
 		var lastName = lastNameA
 		var special = false
+		var category = 0;
 		interpreter.interpret(code,true) match {
 			case Success(auxName3,auxValue3) => {
 				println("FROM ERASURE : " + auxName3 + " -> " + auxValue3 + "\n")
 				
-				if(auxValue3.toString().contains("scala.collection.")){
+				/*if(auxValue3.toString().contains("scala.collection.")){
+					category = 1;
 					interpreter.interpret("val tmp_var_" + Math.abs(Random.nextInt()) + " = " + firstName + ".slice(0," + iterableSlicing + ")",true) match {
 						case Success(auxName4,auxResult4) => lastName = auxName4
 						case _ => lastName = firstName
@@ -165,12 +172,32 @@ object Evaluation {
 						}
 					}
 					lastName = firstName
+				}*/
+				auxValue3.toString match {
+					case x:String if(x.contains("Map")) => {
+						category = 0;
+						lastName = firstName
+					}
+					case x:String if(x.contains("scala.collection")) => {
+						category = 1;
+						interpreter.interpret("val tmp_var_" + Math.abs(Random.nextInt()) + " = " + firstName + ".slice(0," + iterableSlicing + ")",true) match {
+							case Success(auxName4,auxResult4) => lastName = auxName4
+							case _ => lastName = firstName
+						}
+					}
+					case x:String if(x.contains("java.lang.String")) => {
+						special = true
+						lastName = firstName
+					}
+					case _ => {
+						lastName = firstName
+					}
 				}
 			}
 			case _ => lastName = firstName
 		}
 		
-		evaluationPhase3(interpreter,"val tmp_var_" + Math.abs(Random.nextInt()) + " = " + lastName + "." + ( if(lines.length > 1) lines apply(1) trim else "toHtml" ),originalCode,firstName,value,special,lines)
+		evaluationPhase3(interpreter,"val tmp_var_" + Math.abs(Random.nextInt()) + " = " + lastName + "." + ( if(lines.length > 1) (lines apply(1) trim) else "toHtml" ),originalCode,firstName,value,special,lines,category)
 	}
 	
 	
@@ -183,16 +210,16 @@ object Evaluation {
 	 * This phase intends to interpret the convertion toHtml to the result from interpreting the original code submited by the user.
 	 * It then returns a response containing the result from the conversion.
 	 */
-	def evaluationPhase3(interpreter : MyInterpreter, code : String, originalCode: String,firstName: String, value: Any,special: Boolean, lines : Array[java.lang.String]) : String = {
+	def evaluationPhase3(interpreter : MyInterpreter, code : String, originalCode: String,firstName: String, value: Any,special: Boolean, lines : Array[java.lang.String], category: Int) : String = {
 		
 		interpreter.interpret(code,true) match {
 			case Success( auxName2, auxValue2 ) => {
 				println("Success converting " + firstName + ". " + auxName2 + " = " + auxValue2 toString)
-				composeHtmlResult(originalCode, firstName, auxValue2 toString, special, true)
+				composeHtmlResult(originalCode, firstName, auxValue2 toString, special, true, category)
 			}
 			case _ => {
 				println("No conversion for " + firstName + ". Value is " + value toString)
-				composeHtmlResult(originalCode, firstName, value toString, special, true)
+				composeHtmlResult(originalCode, firstName, value toString, special, true, category)
 			}
 		}
 	}
@@ -306,25 +333,27 @@ object Evaluation {
 	   * and returns a string representing a DOM element for the obtained result.
 	   * 
 	   */
-	  def composeHtmlResult( code: String, name: String, value: String, string: Boolean, showName : Boolean) : String = { 
+	  def composeHtmlResult( code: String, name: String, value: String, string: Boolean, showName : Boolean, category: Int) : String = { 
 		println("GOT IF IT IS STRING = " + string.toString)
 		"<!doctype html>" +
 		"<div id='#div_" + name + "'>" +
 		"<div style='display:inline;'>" + 
 		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + 
 		( if(showName) ("<big>" + name + "</big>: ") else "") + 
-		( if(code.length>150) (fromHtmltoString(code.substring(0,150) + "...")) else fromHtmltoString(code) ) + "</span>" + 
-		"<span class='dropdown-span' data-dropdown='#dropdown-" + name + "'>View as</span>" + 
-		"</div>"+
-		"<div id='dropdown-" + name + "' class='dropdown-menu'>" + 
-			"<ul>" +  
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toD3BarChart\");'>Bar Chart</a></li>" + 
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toHeapTree\");'>Heap Tree</a></li>" + 
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"" + name + "\",\"" + name + " :!: toHtml\");'>Html</a></li>" + 
-			"</ul>" +  
-		"</div>" + 
+		( if(code.length>150) (fromHtmltoString(code.substring(0,150) + "...",new java.lang.StringBuilder())) else fromHtmltoString(code,new java.lang.StringBuilder()) ) + "</span>" + 
+		{ category match {
+			case 1 => List("<span class='dropdown-span' data-dropdown='#dropdown-",name,"'>View as</span>","</div>","<div id='dropdown-",name,"' class='dropdown-menu'>", 
+			"<ul>",  
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toD3BarChart\");'>Bar Chart</a></li>", 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHeapTree\");'>Heap Tree</a></li>", 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHtml\");'>Paginated List</a></li>", 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHtmlList\");'>Plain HTML</a></li>",
+			"</ul>","</div>").mkString("")
+			case 0 => ""
+			}
+		} + 
 		"<div id='" + name + "' class='collapse in'>" + 
-		"<div id='well_" + name + "' class='well well-small' style='overflow-x: auto;'>" + value +
+		"<div id='well_" + name + "' class='well well-small' style='overflow-x: auto;'>" + toInterpretableString(value) +
 		"</div></div></div>"
 	}
 	
@@ -339,12 +368,12 @@ object Evaluation {
 	  * 
 	  */ 
 	def composeFailedEvaluation( error: Boolean , msg: String) : String = {
-		println("fromstringtohtml:\n" + fromStringtoHtml(msg))
+		println("fromstringtohtml:\n" + fromStringtoHtml(msg, new java.lang.StringBuilder()))
 		"<!doctype html>" +
 		"<div class='alert" + ( if(error) " alert-error" else "" ) + "'>" +
 		"<button type='button' class='close' data-dismiss='alert'>x</button>" +
 		"<strong>" + ( if(error) "Error!" else "Warning!" ) + "</strong><br>" +
-		( if(error) fromStringtoHtml(msg) else "Your instruction was incomplete!" ) +
+		( if(error) fromStringtoHtml(msg, new java.lang.StringBuilder()) else "Your instruction was incomplete!" ) +
 		"</div>"
 	}
 }

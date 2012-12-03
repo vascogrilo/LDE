@@ -38,8 +38,8 @@ object ScalaEditor extends ServerPlan2 {
 				//println("\n\nI'm going to interpret " + data("code").head)
 				val args = data("code").head.split(":!:")
 				if(args.length > 2 && args.apply(2).trim.equals("partial"))
-					ResponseString(Evaluation.evaluatePartial(data("code").head,Evaluation.getInterpreterID(cookies("session"))))
-				else ResponseString(Evaluation.evaluateSingle(data("code").head,Evaluation.getInterpreterID(cookies("session"))))
+					ResponseString(Evaluation.evaluatePartial(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
+				else ResponseString(Evaluation.evaluateSingle(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
 			}
 			else {
 				println("Got data with 0 length. Showing view with same data.\n\n")

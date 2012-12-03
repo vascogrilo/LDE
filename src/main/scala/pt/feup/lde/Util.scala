@@ -54,10 +54,10 @@ object Utilities {
 				}
 			}
 		  
-		  def fromStringtoHtml(s : String) : String = {
+		  def fromStringtoHtml(s : String, res: java.lang.StringBuilder) : String = {
 			  s match {
-				  case "" => ""
-				  case _ => toHtmlInput(s.head) + fromStringtoHtml(s.tail)
+				  case "" => res toString
+				  case _ => fromStringtoHtml(s.tail, res.append(toHtmlInput(s.head)))
 			  }
 		  }
 		  
@@ -72,10 +72,10 @@ object Utilities {
 			  }
 		  }
 		  
-		  def fromHtmltoString(s : String) : String = {
+		  def fromHtmltoString(s : String, res : java.lang.StringBuilder) : String = {
 			  s match {
-				  case "" => ""
-				  case _ => toHtmlDisplayed(s.head) + fromHtmltoString(s.tail)
+				  case "" => res toString
+				  case _ => fromHtmltoString(s.tail,res.append(toHtmlDisplayed(s.head)))
 			  }
 		  }
 		  
@@ -85,6 +85,10 @@ object Utilities {
 				  case '>' => "&gt;"
 				  case _ => c toString
 			  }
+		  }
+		  
+		  def toInterpretableString(s : String) : String = {
+			  s.replaceAll("&quot;","\"")
 		  }
 	  }
 	

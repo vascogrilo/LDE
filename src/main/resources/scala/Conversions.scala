@@ -18,45 +18,68 @@ object Conversions {
 	var d3HeapTreeCounter = 0
 	
 	def manOf[T: Manifest](t: T): Manifest[T] = manifest[T]
+
 	
 	implicit def fromString(s : java.lang.String) = new Object {
 		
-		def toHtml = toDisplayableString(s)
+		def toHtml = toDisplayableString(s, new java.lang.StringBuilder())
 		
-		def toDisplayableString( s : String ) : String = {
+		def toDisplayableString( s : String, res: java.lang.StringBuilder ) : String = {
 			s match {
-				case "" => ""
-				case _ => toDisplayableChar(s.head) + toDisplayableString(s.tail)
+				case "" => res toString
+				case _ => toDisplayableString(s.tail, res.append(toDisplayableChar(s.head)))
 			}
+			
 		}
 		
 		def toDisplayableChar( c : Char ) : String = {
 			c match {
 				case '<' => "&lt;"
 				case '>' => "&gt;"
+			    case '&' => "&amp;"
+			    case '\n' => "<br/>"
+			    //case ' ' => "&nbsp;"
 				case _ => c toString
 			}
 		}
 	}
+	
 	
 	implicit def fromInt(i : Int) = new Object {
 	
 		def toHtml = i toString
 	}
 	
+	
+	
 	implicit def fromXmlElem(e : scala.xml.Elem) = new Object {
 		def toHtml = e toString
 	}
+	
+	
 	
 	implicit def fromXmlNodeBuffer(l : scala.xml.NodeBuffer) = new Object {
 		def toHtml = l.map{ e => e }.mkString("","","")
 	}
 	
+	
+	
 	implicit def fromIterable[A](l : Iterable[A]) = new Object {
 		
-		def toPlainText = l.map{ e => e }.mkString("","","")
+		def toPlainText: String = l.map{ e => e }.mkString("","","")
 		
-		def toHtml = {
+		def toHtmlList : String = {
+			toPlainHtml(l) toString
+		}
+		
+		def toPlainHtml[A](l: Iterable[A]): xml.Elem = {
+			<ul>{ l.map(_ match {
+				case e:Iterable[_] => <li>{ toPlainHtml(e) }</li>
+				case e => <li>{ e }</li>
+			})}</ul>
+		}
+		
+		def toHtml: String = {
 			htmlListCounter = htmlListCounter + 1
 			List("<div class='pagination-box'><div class='paginated-list html_list", htmlListCounter,"'><button id='html_listPrev",htmlListCounter,"' class='btn btn-info list-controls-left'>«</button>",
 				"<ul class='html_ul", htmlListCounter, " paginated-list-ul'> </ul>",
@@ -94,7 +117,8 @@ object Conversions {
 				"};",
 				"var step", htmlListCounter, " = 0;",
 				"var step_incr", htmlListCounter, " = 5;",
-				"var html_list", htmlListCounter, " = [", { l.map{ e => "\"" + e + "\"" } mkString("",",","") }, "];",
+				//"var html_list", htmlListCounter, " = [", { l.map{ e => "\"" + e + "\"" } mkString("",",","") }, "];",
+				"var html_list",htmlListCounter," = [",toCSVAux(l),"];",
 				"var populateList", htmlListCounter, " = function() { ",
 					"$('.html_ul", htmlListCounter, "').empty();",
 					"console.log(\"vou popular\");",
@@ -107,11 +131,21 @@ object Conversions {
 			"</script>").mkString("")
 		}
 		
-		def toCSV = {
-			l.map{ case e => "%s" format(e) } mkString("",",","")
+		def toCSV : String = {
+			l.map( _ match {
+				case e:Iterable[_] => e.map{ case x => "%s" format(x) } mkString("",",","")
+				case e => e toString
+			}) mkString("",",","")
+		}
+		
+		def toCSVAux[A](l: Iterable[A]) : String = {
+			l.map( _ match {
+				case e:Iterable[_] => e.map{ case x => "%s" format(x) } mkString("",",","")
+				case e => e toString
+			}) mkString("",",","")
 		}
     
-		def toD3BarChart = {
+		def toD3BarChart : String = {
 			d3BarChartCounter = d3BarChartCounter + 1
 			List("<div style='overflow-x:auto' class='bar-chart", d3BarChartCounter, "'></div>",
 				"<script type='text/javascript'>",
@@ -152,7 +186,7 @@ object Conversions {
 				   "</script>").mkString("")
 		}
 		
-		def toHeapTree = {
+		def toHeapTree : String = {
 			d3HeapTreeCounter = d3HeapTreeCounter + 1
 			List("<div class='d3tree",d3HeapTreeCounter,"'></div>",
 				"<style type='text/css'>",
@@ -195,7 +229,7 @@ object Conversions {
 	
 	implicit def fromMap[A,B](m : Map[A,B]) = new Object {
 	
-		def toHtml = <table class='table table-hover'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1.toString } </td> <td> { keyValue._2.toString } </td> </tr> ) } </table> toString 
+		def toHtml: String = <table class='table table-hover'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1.toString } </td> <td> { keyValue._2.toString } </td> </tr> ) } </table> toString 
 	}
 }
 
