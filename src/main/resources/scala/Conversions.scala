@@ -192,7 +192,7 @@ object Conversions {
 			}
 		}
 		
-		def toHeapTree : String = {
+		def toBinaryTree : String = {
 			d3HeapTreeCounter = d3HeapTreeCounter + 1
 			List("<div id='tree",d3HeapTreeCounter,"'></div>",
 				"<style>",

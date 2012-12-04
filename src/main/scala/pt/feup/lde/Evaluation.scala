@@ -345,7 +345,7 @@ object Evaluation {
 			case 1 => List("<span class='dropdown-span' data-dropdown='#dropdown-",name,"'>View as</span>","</div>","<div id='dropdown-",name,"' class='dropdown-menu'>", 
 			"<ul>",  
 			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toD3BarChart\");'>Bar Chart</a></li>", 
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHeapTree\");'>Heap Tree</a></li>", 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toBinaryTree\");'>Binary Tree</a></li>", 
 			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHtml\");'>Paginated List</a></li>", 
 			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHtmlList\");'>Plain HTML</a></li>",
 			"</ul>","</div>").mkString("")
