@@ -117,7 +117,6 @@ object Conversions {
 				"};",
 				"var step", htmlListCounter, " = 0;",
 				"var step_incr", htmlListCounter, " = 5;",
-				//"var html_list", htmlListCounter, " = [", { l.map{ e => "\"" + e + "\"" } mkString("",",","") }, "];",
 				"var html_list",htmlListCounter," = [",toCSVAux(l),"];",
 				"var populateList", htmlListCounter, " = function() { ",
 					"$('.html_ul", htmlListCounter, "').empty();",
