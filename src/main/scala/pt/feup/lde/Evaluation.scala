@@ -335,10 +335,11 @@ object Evaluation {
 	   */
 	  def composeHtmlResult( code: String, name: String, value: String, string: Boolean, showName : Boolean, category: Int) : String = { 
 		println("GOT IF IT IS STRING = " + string.toString)
+		val temp = Math.abs(Random.nextInt())
 		"<!doctype html>" +
-		"<div id='#div_" + name + "'>" +
+		"<div id='div_" + name + "'>" +
 		"<div style='display:inline;'>" + 
-		"<span id='#label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + 
+		"<span id='label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + 
 		( if(showName) ("<big>" + name + "</big>: ") else "") + 
 		( if(code.length>150) (fromHtmltoString(code.substring(0,150) + "...",new java.lang.StringBuilder())) else fromHtmltoString(code,new java.lang.StringBuilder()) ) + "</span>" + 
 		{ category match {

@@ -131,6 +131,14 @@ var addInstructionHistory = function(code) {
 }
 
 /**
+ * FUNCTIONS FOR STORING ALL IDS RECEIVES FROM RESPONSES
+ * 
+ * WHEN AN EXISTING ID COMES ALONG, WE MUST UPDATE THE PREVIOUS DOM ELEMENT
+ * 
+ */
+var identifiers = new Array();
+
+/**
  * FUNCTIONS FOR SENDING CODE TO BE EVALUATED SERVERSIDE
  * 
  * requestEvaluation sends a code for evaluating and receives a new full response. It then appends it to the output body.
