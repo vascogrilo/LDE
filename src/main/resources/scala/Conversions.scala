@@ -92,8 +92,8 @@ object Conversions {
 						"window.step", htmlListCounter, " += step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							//"url: 'http://visual-scala.herokuapp.com/repl',",
-							"url: 'http://localhost:8080/repl',",
+							"url: 'http://visual-scala.herokuapp.com/repl',",
+							//"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',", 
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -107,8 +107,8 @@ object Conversions {
 						"window.step", htmlListCounter, " -= step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							//"url: 'http://visual-scala.herokuapp.com/repl',", 
-							"url: 'http://localhost:8080/repl',",
+							"url: 'http://visual-scala.herokuapp.com/repl',", 
+							//"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',",
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); if(data===\"\") console.log(\"Got empty string from pagination. Something went wrong.\"); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -185,46 +185,59 @@ object Conversions {
 				   "</script>").mkString("")
 		}
 		
+		def toNLSV[A](l: Iterable[A]) : String = {
+			l match {
+				case Nil => ""
+				case x => x.head.toString + "\\n" + toNLSV(x.tail)
+			}
+		}
+		
 		def toHeapTree : String = {
 			d3HeapTreeCounter = d3HeapTreeCounter + 1
-			List("<div class='d3tree",d3HeapTreeCounter,"'></div>",
-				"<style type='text/css'>",
-				".node {  fill: #fff; stroke: #000;  stroke-width: 1px; } .link { fill: none;  stroke: #000; }</style>",
+			List("<div id='tree",d3HeapTreeCounter,"'></div>",
+				"<style>",
+				".link {",
+					"fill: none;",
+					"stroke: #ccc;",
+					"stroke-width: 4.5px;",
+				"}</style>",
 				"<script type='text/javascript'>",
-				"var index",d3HeapTreeCounter," = 1;",
-				"var vals",d3HeapTreeCounter," = [",toCSVAux(l),"];",
-				"var w = 800,h = 500,root = {},data = [root],tree = d3.layout.tree().size([w - 20, h - 20]),diagonal = d3.svg.diagonal(),duration = 500,timer",d3HeapTreeCounter," = setInterval(update",d3HeapTreeCounter,", duration);",
-				"var vis = d3.select('.d3tree",d3HeapTreeCounter,"').append('svg:svg').attr('width', w).attr('height', h).append('svg:g').attr('transform', 'translate(10, 10)');",
-				"vis.selectAll('circle').data(tree(root)).enter().append('svg:circle').attr('class', 'node').attr('r', 10).attr('cx', x).attr('cy', y).append('svg:title').text(vals",d3HeapTreeCounter,"[0]);",
-				"function update",d3HeapTreeCounter,"() {",
-				  "if (index",d3HeapTreeCounter," == vals",d3HeapTreeCounter,".length) return clearInterval(timer",d3HeapTreeCounter,");",
-				  "var d = {id: index",d3HeapTreeCounter,", value: vals",d3HeapTreeCounter,"[index",d3HeapTreeCounter,"]}, parent = data[Math.floor((index",d3HeapTreeCounter,"-1)/2)];",
-				  "if (parent.children) parent.children.push(d); else parent.children = [d];",
-				  "data.push(d);",
-				  "index",d3HeapTreeCounter," = index",d3HeapTreeCounter," + 1;",
-				  "var nodes = tree(root);",
-				  "var node = vis.selectAll('circle.node').data(nodes, nodeId);",
-				  "node.enter().append('svg:circle').attr('class', 'node').attr('r', 10).attr('cx', function(d) { return d.parent.data.x0; }).attr('cy', function(d) { return d.parent.data.y0; }).append('svg:title').text(d.value).transition().duration(duration).attr('cx', x).attr('cy', y);",
-				  "node.transition().duration(duration).attr('cx', x).attr('cy', y);",
-				  "var link = vis.selectAll('path.link').data(tree.links(nodes), linkId);",
-				  "link.enter().insert('svg:path', 'circle').attr('class', 'link').attr('d', function(d) { var o = {x: d.source.data.x0, y: d.source.data.y0}; return diagonal({source: o, target: o}); }).transition().duration(duration).attr('d', diagonal);",
-				  "link.transition().duration(duration).attr('d', diagonal);",
+				"var dados",d3HeapTreeCounter," = \"value\\n",toNLSV(l.drop(1)),"\";",
+				"var nodos",d3HeapTreeCounter," = [",l.head,"];",
+				"var data",d3HeapTreeCounter," = [{}];",
+				"var csv",d3HeapTreeCounter," = d3.csv.parse(dados",d3HeapTreeCounter,");",
+				"var i",d3HeapTreeCounter," = 0;",
+				"function makeTree",d3HeapTreeCounter,"(nodes) {",
+					"data",d3HeapTreeCounter," = [{value: nodos",d3HeapTreeCounter,"[0], children: []}];",
+					"nodes.forEach(function(d) {",
+					"var nod = {value: d.value};",
+					"var parent = data",d3HeapTreeCounter,"[(Math.floor((i",d3HeapTreeCounter,")/2))];",
+					"if(parent.children) parent.children.push(nod); else parent.children = [nod];",
+					"data",d3HeapTreeCounter,".push(nod);",
+					"i",d3HeapTreeCounter,"++;",
+					"});",
+					"return data",d3HeapTreeCounter,"[0];",
 				"}",
-				"function linkId(d) {",
-				  "return d.source.data.id + '-' + d.target.data.id;",
+				"function drawTree",d3HeapTreeCounter,"() {",
+					"var vis = d3.select('#tree",d3HeapTreeCounter,"').append('svg:svg').attr('width', 700).attr('height', 500).append('svg:g').attr('transform', 'translate(20, 20)');",
+					"var tree = d3.layout.tree().size([700,400]);",
+					"var diagonal = d3.svg.diagonal().projection(function(d) { return [d.x, d.y]; });",
+					"var nodes = tree.nodes(makeTree",d3HeapTreeCounter,"(csv",d3HeapTreeCounter,"));",
+					"var links = tree.links(nodes);",
+					"var link = vis.selectAll('pathlink').data(links).enter().append('svg:path').attr('class', 'link').attr('d', diagonal);",
+					"var node = vis.selectAll('g.node').data(nodes).enter().append('svg:g').attr('transform', function(d) { return 'translate(' + d.x + ',' + d.y + ')'; });",
+					"node.append('svg:circle').attr('r', 5);",
+			        "node.append('svg:text').attr('dx', function(d) { return d.children ? -8 : 8; }).attr('dy', 3).attr('text-anchor', function(d) { return d.children ? 'end' : 'start'; }).text(function(d) { return d.value; })",
 				"}",
-				"function nodeId(d) {",
-				  "return d.data.id;",
-				"}",
-				"function x(d) {",
-				  "return d.data.x0 = d.x;",
-				"}",
-				"function y(d) {",
-				  "return d.data.y0 = d.y;",
-				"}</script>"
-			).mkString("")
+				"drawTree",d3HeapTreeCounter,"();",
+				"</script>").mkString("")
 		}
     }
+	
+	implicit def fromMap2(m: Map[String, Double]) = new Object {
+		
+		def toHtml: String = <table class='table'> <tr> <th> KEY </th> <th> VALUE </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1.toString } </td> <td> { keyValue._2.toString } </td> </tr> ) } </table> toString
+	}
 	
 	implicit def fromMap[A,B](m : Map[A,B]) = new Object {
 	
