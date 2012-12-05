@@ -175,7 +175,7 @@ object Evaluation {
 				}*/
 				auxValue3.toString match {
 					case x:String if(x.contains("Map")) => {
-						category = 0;
+						category = 2;
 						lastName = firstName
 					}
 					case x:String if(x.contains("scala.collection")) => {
@@ -268,7 +268,9 @@ object Evaluation {
 		cookies match {
 				case Some(Cookie("session",session,_,_,_,_,_,_)) => {
 					println("\n\nGOT COOKIES! VALUE IS " + session.toString + "\n")
-					session.toString
+					if(interpreters.contains(session.toString))
+						session.toString
+					else ""
 				}
 				case _ => {
 					println("\n\nDIDNT HAVE COOKIES ON POST REQUEST! SOMETHING WENT VERY WRONG\n")
@@ -349,6 +351,11 @@ object Evaluation {
 			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toBinaryTree\");'>Binary Tree</a></li>", 
 			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHtml\");'>Paginated List</a></li>", 
 			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHtmlList\");'>Plain HTML</a></li>",
+			"</ul>","</div>").mkString("")
+			case 2 => List("<span class='dropdown-span' data-dropdown='#dropdown-",name,"'>View as</span>","</div>","<div id='dropdown-",name,"' class='dropdown-menu'>", 
+			"<ul>",  
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toPieChart\");'>Pie Chart</a></li>",
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHtml\");'>HTML Table</a></li>",
 			"</ul>","</div>").mkString("")
 			case 0 => ""
 			}

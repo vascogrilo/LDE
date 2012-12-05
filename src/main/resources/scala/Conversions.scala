@@ -92,8 +92,8 @@ object Conversions {
 						"window.step", htmlListCounter, " += step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://visual-scala.herokuapp.com/repl',",
-							//"url: 'http://localhost:8080/repl',",
+							//"url: 'http://visual-scala.herokuapp.com/repl',",
+							"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',", 
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -107,8 +107,8 @@ object Conversions {
 						"window.step", htmlListCounter, " -= step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://visual-scala.herokuapp.com/repl',", 
-							//"url: 'http://localhost:8080/repl',",
+							//"url: 'http://visual-scala.herokuapp.com/repl',", 
+							"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',",
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); if(data===\"\") console.log(\"Got empty string from pagination. Something went wrong.\"); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -239,12 +239,36 @@ object Conversions {
 	
 	implicit def fromMap2(m: Map[String, Double]) = new Object {
 		
-		def toHtml: String = <table class='table'> <tr> <th> KEY </th> <th> VALUE </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1.toString } </td> <td> { keyValue._2.toString } </td> </tr> ) } </table> toString
+		def toHtml: String = <table class='table'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1.toString } </td> <td> { keyValue._2.toString } </td> </tr> ) } </table> toString
 	}
 	
 	implicit def fromMap[A,B](m : Map[A,B]) = new Object {
 	
 		def toHtml: String = <table class='table table-hover'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1.toString } </td> <td> { keyValue._2.toString } </td> </tr> ) } </table> toString 
+	
+		def toPieChart: String = {
+			List("<div id='pieChart' class='pieChart'></div>",
+				"<style>",
+				".pieChart {",
+					"font: 10px sans-serif;",
+				"}",
+				".arc path {",
+					"stroke: #fff;",
+				"}​</style>",
+				"<script type='text/javascript'>",
+					"var dados = \"key,value\\n" + { m.map( x => x._1.toString + "," + x._2.toString + "\\n") mkString("") } + "\";",
+					"var data = d3.csv.parse(dados);",
+					"var width = 770, height = 400, radius = Math.min(width, height) / 2;",
+					"var color = d3.scale.ordinal().range(['#98abc5', '#8a89a6', '#7b6888', '#6b486b', '#a05d56', '#d0743c', '#ff8c00']);",
+					"var arc = d3.svg.arc().outerRadius(radius - 10).innerRadius(0);",
+					"var pie = d3.layout.pie().sort(null).value(function(d) { return d.value; });",
+					"var svg = d3.select('#pieChart').append('svg').attr('width', width).attr('height', height).append('g').attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')');",
+					"data.forEach(function(d) { d.population = +d.population; });",
+					"var g = svg.selectAll('.arc').data(pie(data)).enter().append('g').attr('class', 'arc');",				
+					"g.append('path').attr('d', arc).style('fill', function(d) { return color(d.data.key); });",
+					"g.append('text').attr('transform', function(d) { return 'translate(' + arc.centroid(d) + ')'; }).attr('dy', '.35em').style('text-anchor', 'middle').text(function(d) { return d.data.key; });",
+				"</script>").mkString("")
+		}
 	}
 }
 
