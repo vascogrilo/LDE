@@ -150,8 +150,8 @@ var identifiers = new Array();
 var requestEvaluation = function() {
 	$.ajax({
 		type: 'POST',
-		url: 'http://visual-scala.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://visual-scala.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: $('#code').val()
@@ -163,21 +163,39 @@ var requestEvaluation = function() {
 		success: function(data) {
 			$('#code').val('');
 			$('#outputBody').append(data);
-		},
-		complete: function() {
 			$('#loaderG').hide();
 			$('#buttonSubmit').show();
+		},
+		error: function( jqXHR, exception ){
+			
+			if (jqXHR.status === 0) {
+                alert('Error.\nNot connected or Server is down!');
+            } else if (jqXHR.status == 404) {
+                alert('Error.\nRequested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Error.\nInternal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Error.\nRequested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Error.\nTime out error.');
+            } else if (exception === 'abort') {
+                alert('Error.\nAjax request aborted.');
+            } else {
+                alert('Error.\n' + jqXHR.responseText);
+            }
+            
+            $('#loaderG').hide();
+			$('#buttonSubmit').show();
 		}
+		
 	});
 }
 
 var requestConversion = function(div_id,instr) {
-	//console.log(div_id);
-	//console.log(instr);
 	$.ajax({
 		type: 'POST',
-		url: 'http://visual-scala.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://visual-scala.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: instr + " :!: partial"
@@ -194,9 +212,29 @@ var requestConversion = function(div_id,instr) {
 				$('#well_' + div_id).empty();
 				$('#well_' + div_id).append(data);
 			}
-		},
-		complete: function() {
+			
 			$('#loaderG').hide();
+			$('#buttonSubmit').show();
+		},
+		error: function( jqXHR, exception ){
+			
+			if (jqXHR.status === 0) {
+                alert('Error.\nNot connected or Server is down!');
+            } else if (jqXHR.status == 404) {
+                alert('Error.\nRequested page not found. [404]');
+            } else if (jqXHR.status == 500) {
+                alert('Error.\nInternal Server Error [500].');
+            } else if (exception === 'parsererror') {
+                alert('Error.\nRequested JSON parse failed.');
+            } else if (exception === 'timeout') {
+                alert('Error.\nTime out error.');
+            } else if (exception === 'abort') {
+                alert('Error.\nAjax request aborted.');
+            } else {
+                alert('Error.\n' + jqXHR.responseText);
+            }
+            
+            $('#loaderG').hide();
 			$('#buttonSubmit').show();
 		}
 	});
