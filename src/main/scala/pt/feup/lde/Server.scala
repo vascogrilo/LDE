@@ -14,6 +14,7 @@ object Server {
 		.handler(ResourceLoader)
 		.handler(BootstrapLoader)
 		.handler(D3Loader)
+		.handler(ToolmanLoader)
 		.run { s =>
 			println("Started Unfiltered Server on port %s".format(s.port))
 		}
