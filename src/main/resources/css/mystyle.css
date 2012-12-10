@@ -58,6 +58,7 @@ button#buttonSubmit {
 	list-style-type: none;
 	margin-top: 10px;
 	margin-bottom: 10px;
+	margin-left: 5px;
 	display: inline;
 }
 
@@ -65,21 +66,22 @@ button#buttonSubmit {
 	border: solid 1px #CCCCCC;
 	background-color: #FFFFFF;
 	color: #2F4F4F;
-	padding: 8px;
+	padding: 9px;
 	display: inline;
 	text-align: center;
+	cursor: move;
 }
 
 .list-controls-left {
 	cursor: pointer;
-	margin-left: 35px;
+	margin-left: 10px;
 	margin-bottom: 5px;
 	display: inline;
 }
 
 .list-controls-right {
 	cursor: pointer;
-	margin-left: 25px;
+	margin-left: 5px;
 	margin-bottom: 5px;
 	display: inline;
 }
@@ -223,4 +225,33 @@ opacity:1}
 -ms-transform:scale(0.7);
 opacity:0.1}
 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.inplace, input {
+	margin: 0px;
+	padding-left: 1px;
+	background-color: #ffffcc;
+}
+
+.inplace {
+	position: absolute;
+	visibility: hidden;
+	z-index: 10000;
 }

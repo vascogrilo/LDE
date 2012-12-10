@@ -74,7 +74,7 @@ var keyDownHandler = function(event) {
 		if(checkIfCanEvaluate($.trim($('#code').val()))){
 			addInstructionHistory($.trim($('#code').val()));
 			console.log(instructions);
-			requestEvaluation();
+			requestEvaluation($('#code').val());
 			return false;
 		}
 		else return true;
@@ -147,25 +147,26 @@ var identifiers = new Array();
  * 
  */
 
-var requestEvaluation = function() {
+var requestEvaluation = function(code_str) {
 	$.ajax({
 		type: 'POST',
 		//url: 'http://visual-scala.herokuapp.com/repl',
 		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
-			code: $('#code').val()
+			//code: $('#code').val()
+			code: code_str
 		},
 		beforeSend: function(xhr,opts) {
 			$('#buttonSubmit').hide();
 			$('#loaderG').show();
 		},
 		success: function(data) {
-			$('#code').val('');
-			$('#outputBody').append(data);
-			
 			$('#loaderG').hide();
 			$('#buttonSubmit').show();
+			
+			$('#code').val('');
+			$('#outputBody').append(data);
 		},
 		error: function( jqXHR, exception ){
 			
@@ -192,6 +193,10 @@ var requestConversion = function(div_id,instr) {
 			$('#loaderG').show();
 		},
 		success: function(data) {
+			
+			$('#loaderG').hide();
+			$('#buttonSubmit').show();
+			
 			if(data===""){
 				console.log("Got empty data from conversion. Something went wrong.");
 			}
@@ -199,9 +204,6 @@ var requestConversion = function(div_id,instr) {
 				$('#well_' + div_id).empty();
 				$('#well_' + div_id).append(data);
 			}
-			
-			$('#loaderG').hide();
-			$('#buttonSubmit').show();
 		},
 		error: function( jqXHR, exception ){
 			
@@ -228,5 +230,112 @@ function alertError(jqXHR,exception) {
 		alert('Error.\nAjax request aborted.');
 	} else {
 		alert('Error.\n' + jqXHR.responseText);
+	}
+}
+
+
+
+
+
+
+/**
+ * 
+ * 
+ * TOOLMAN
+ * 
+ * 
+ */
+var ESCAPE = 27;
+var ENTER = 13;
+var TAB = 9;
+var coordinates = ToolMan.coordinates();
+var dragsort = ToolMan.dragsort();
+
+function join(name, isDoubleClick) {
+	var view = document.getElementById(name + 'View');
+	view.editor = document.getElementById(name + 'Edit');
+
+	var showEditor = function(event) {
+		event = fixEvent(event);
+
+		var view = this;
+		var editor = view.editor;
+
+		if (!editor) return true;
+
+		if (editor.currentView != null) {
+			editor.blur();
+		}
+		editor.currentView = view;
+
+		var topLeft = coordinates.topLeftOffset(view);
+		topLeft.reposition(editor);
+		if (editor.nodeName == 'TEXTAREA') {
+			editor.style['width'] = view.offsetWidth + 'px';
+			editor.style['height'] = view.offsetHeight + 'px';
+		}
+		editor.value = view.innerHTML;
+		editor.style['visibility'] = 'visible';
+		view.style['visibility'] = 'hidden';
+		editor.focus();
+		return false;
+	}
+
+	if (isDoubleClick) {
+		view.ondblclick = showEditor;
+	} else {
+		view.onclick = showEditor;
+	}
+
+	view.editor.onblur = function(event) {
+		event = fixEvent(event);
+
+		var editor = event.target;
+		var view = editor.currentView;
+
+		if (!editor.abandonChanges) view.innerHTML = editor.value;
+		editor.abandonChanges = false;
+		editor.style['visibility'] = 'hidden';
+		editor.value = '';
+		view.style['visibility'] = 'visible';
+		editor.currentView = null;
+
+		return true;
+	}
+	
+	view.editor.onkeydown = function(event) {
+		event = fixEvent(event);
+		
+		var editor = event.target;
+		if (event.keyCode == TAB) {
+			editor.blur();
+			return false;
+		}
+	}
+
+	view.editor.onkeyup = function(event) {
+		event = fixEvent(event);
+
+		var editor = event.target;
+		if (event.keyCode == ESCAPE) {
+			editor.abandonChanges = true;
+			editor.blur();
+			return false;
+		} else if (event.keyCode == TAB) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	function fixEvent(event) {
+		if (!event) event = window.event;
+		if (event.target) {
+			if (event.target.nodeType == 3) event.target = event.target.parentNode;
+		} else if (event.srcElement) {
+			event.target = event.srcElement;
+		}
+
+		return event;
 	}
 }

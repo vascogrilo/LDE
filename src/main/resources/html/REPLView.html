@@ -28,6 +28,7 @@
 		<script src="js/myfunctions.js"></script>
 		<script src="js/myscript.js"></script>
 		<script src="js/jquery.autosize-min.js"></script>
+		
 	</head>
 	
 	<body id="body">	
@@ -43,7 +44,7 @@
 		<!-- INPUT BODY -->
 		<div id="inputBody">
 			<textarea id="code" name="code"></textarea>
-			<button id="buttonSubmit" onclick="requestEvaluation()" class="btn btn-primary">Evaluate</button>
+			<button id="buttonSubmit" onclick="requestEvaluation($('#code').val())" class="btn btn-primary">Evaluate</button>
 			<div id="loaderG" style="display:none">
 				<div id="blockG_1" class="loader_blockG">
 				</div>

@@ -69,22 +69,54 @@ object Conversions {
 		def toPlainText: String = l.map{ e => e }.mkString("","","")
 		
 		def toHtmlList : String = {
-			toPlainHtml(l) toString
+			htmlListCounter = htmlListCounter + 1
+			toPlainHtml(l.toList).toString + "\n<script type='text/javascript'>\n" + createScriptForJoins(l,0) + "dragsort.makeListSortable(document.getElementById(\"list" + htmlListCounter + "\"));\n</script>"
 		}
 		
-		def toPlainHtml[A](l: Iterable[A]): xml.Elem = {
-			<ul>{ l.map(_ match {
-				case e:Iterable[_] => <li>{ toPlainHtml(e) }</li>
-				case e => <li>{ e }</li>
+		def toPlainHtml[A](l: List[A]): xml.Elem = {
+			val name = "edit" + htmlListCounter + "_"
+			<ul id={ "list" + htmlListCounter.toString } class={ "sortable boxy" }>{ l.map(_ match {
+				case e:Iterable[_] => <li>{ toPlainHtml(e.toList) }</li>
+				case e => <li><div style={"cursor: move"} id={ "edit" + htmlListCounter + "_" + l.indexOf(e) + "_View"} class={"view"}>{ e }</div><input id={name + l.indexOf(e) + "_Edit"} class={"inplace"}/></li>
 			})}</ul>
+		}
+		
+		/*def createInputs[A](l: Iterable[A],index: Int): String = {
+			val name = "edit" + htmlListCounter + "_" + index + "_Edit"
+			l.size match {
+				case 0 => ""
+				case _ => List("<input id='",name,"' name='",name,"' class='inplace'>\n").mkString("") + createInputs(l.tail,index+1)
+			}
+		}*/
+		
+		def createScriptForJoins[A](l: Iterable[A],index: Int): String = {
+			val name = "edit" + htmlListCounter + "_" + index + "_"
+			l.size match {
+				case 0 => ""
+				case _ => ("join(\"" + name + "\",true);\n") + createScriptForJoins(l.tail,index+1)
+			}
 		}
 		
 		def toHtml: String = {
 			htmlListCounter = htmlListCounter + 1
-			List("<div class='pagination-box'><div class='paginated-list html_list", htmlListCounter,"'><button id='html_listPrev",htmlListCounter,"' class='btn btn-info list-controls-left'>«</button>",
-				"<ul class='html_ul", htmlListCounter, " paginated-list-ul'> </ul>",
-				"<button id='html_listNext", htmlListCounter, "' class='btn btn-info list-controls-right'>»</button></div></div>", 
-				"<script type='text/javascript'>",  
+			List("<div class='pagination-box'>",
+					"<div class='paginated-list html_list", htmlListCounter,"'>",
+						"<button id='html_listPrev",htmlListCounter,"' class='btn btn-info list-controls-left'>«</button>",
+						"<ul id='list",htmlListCounter ,"' class='html_ul", htmlListCounter, " paginated-list-ul'> </ul>",
+						"<button id='html_listNext", htmlListCounter, "' class='btn btn-info list-controls-right'>»</button>",
+					"</div>",
+				"</div>",
+				"<button id='updateList",htmlListCounter,"' class='btn btn-link' onclick='modifyList",htmlListCounter,"();'>Modify</button>",
+				"<script type='text/javascript'>",
+				"function modifyList",htmlListCounter,"() {",
+					"var str",htmlListCounter," = \"Iterable(\";",
+					"$.each($('.html_ul",htmlListCounter,"').children(), function(index,value) { if(index!=0) str",htmlListCounter,"+= \",\"; str",htmlListCounter,"+= value.innerHTML; });",
+					"str",htmlListCounter,"+= \")\";",
+					"var tmp_id = $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id');",
+					"requestEvaluation(tmp_id + \".slice(0,\" + step",htmlListCounter," + \") ++ \" + str",htmlListCounter," + \" ++ \" + tmp_id + \".slice(\" + (step",htmlListCounter,"+13) + \",\" + tmp_id + \".size)\");",
+					//"console.log(step",htmlListCounter,");",
+					//"requestEvaluation(str",htmlListCounter,");",
+				"}",
 				"var moreElements", htmlListCounter, " = function() { ", 
 					"console.log(\"entrou moreElements com step = \" + window.step", htmlListCounter," + \" e length = \" + window.html_list",htmlListCounter,".length);",
 					"if(window.html_list",htmlListCounter,".length == 13) {",
@@ -123,10 +155,11 @@ object Conversions {
 					"console.log(\"vou popular\");",
 					"for(var i=0; i<window.html_list",htmlListCounter,".length; i++) { ",
 						"console.log(window.html_list",htmlListCounter,"[i]);",
-						"$('.html_ul", htmlListCounter, "').append(\"<li>\" + window.html_list",htmlListCounter,"[i].toString() + \"</li>\"); } };",
+						"$('.html_ul", htmlListCounter, "').append(\"<li>\" + window.html_list",htmlListCounter,"[i].toString() + \"</li>\"); } dragsort.makeListSortable(document.getElementById(\"list",htmlListCounter,"\")); };",
 				"populateList", htmlListCounter, "();", 
 				"$('#html_listNext", htmlListCounter, "').click(moreElements", htmlListCounter, ");",
 				"$('#html_listPrev", htmlListCounter, "').click(lessElements", htmlListCounter, ");",
+				//"dragsort.makeListSortable(document.getElementById(\"list",htmlListCounter,"\"));",
 			"</script>").mkString("")
 		}
 		
