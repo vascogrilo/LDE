@@ -124,8 +124,8 @@ object Conversions {
 						"window.step", htmlListCounter, " += step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							//"url: 'http://visual-scala.herokuapp.com/repl',",
-							"url: 'http://localhost:8080/repl',",
+							"url: 'http://visual-scala.herokuapp.com/repl',",
+							//"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',", 
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -139,8 +139,8 @@ object Conversions {
 						"window.step", htmlListCounter, " -= step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							//"url: 'http://visual-scala.herokuapp.com/repl',", 
-							"url: 'http://localhost:8080/repl',",
+							"url: 'http://visual-scala.herokuapp.com/repl',", 
+							//"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',",
 							"data: { code: $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id') + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); if(data===\"\") console.log(\"Got empty string from pagination. Something went wrong.\"); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -159,7 +159,6 @@ object Conversions {
 				"populateList", htmlListCounter, "();", 
 				"$('#html_listNext", htmlListCounter, "').click(moreElements", htmlListCounter, ");",
 				"$('#html_listPrev", htmlListCounter, "').click(lessElements", htmlListCounter, ");",
-				//"dragsort.makeListSortable(document.getElementById(\"list",htmlListCounter,"\"));",
 			"</script>").mkString("")
 		}
 		
