@@ -19,6 +19,7 @@ object Evaluation {
 	var interpreterCounter = 0
 	var interpreterID = ""
 	var special = false;
+	var instructionCounter = 0
 	//var interpreters = Seq[MyInterpreter]()
 	//var interpretersConfigs = Seq[Config]()
 	val interpreters = HashMap.empty[String,MyInterpreter]
@@ -338,6 +339,7 @@ object Evaluation {
 	  def composeHtmlResult( code: String, name: String, value: String, string: Boolean, showName : Boolean, category: Int) : String = { 
 		println("GOT IF IT IS STRING = " + string.toString)
 		val temp = Math.abs(Random.nextInt())
+		instructionCounter = instructionCounter + 1
 		"<!doctype html>" +
 		"<div id='div_" + name + "'>" +
 		"<div style='display:inline;'>" + 
