@@ -130,13 +130,7 @@ var addInstructionHistory = function(code) {
 	instruction_counter = instructions.length;
 }
 
-/**
- * FUNCTIONS FOR STORING ALL IDS RECEIVES FROM RESPONSES
- * 
- * WHEN AN EXISTING ID COMES ALONG, WE MUST UPDATE THE PREVIOUS DOM ELEMENT
- * 
- */
-var identifiers = new Array();
+
 
 /**
  * FUNCTIONS FOR SENDING CODE TO BE EVALUATED SERVERSIDE
@@ -146,12 +140,11 @@ var identifiers = new Array();
  * requestConversion sends a code for evaluating and receives a partial response to be appended to an existing result on the body.
  * 
  */
-
 var requestEvaluation = function(code_str) {
 	$.ajax({
 		type: 'POST',
-		url: 'http://visual-scala.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://visual-scala.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: code_str
@@ -181,8 +174,8 @@ var requestEvaluation = function(code_str) {
 var requestConversion = function(div_id,instr) {
 	$.ajax({
 		type: 'POST',
-		url: 'http://visual-scala.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://visual-scala.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: instr + " :!: partial"
