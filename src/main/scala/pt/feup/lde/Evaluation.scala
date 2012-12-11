@@ -341,29 +341,29 @@ object Evaluation {
 		val temp = Math.abs(Random.nextInt())
 		instructionCounter = instructionCounter + 1
 		"<!doctype html>" +
-		"<div id='div_" + name + "'>" +
+		"<div id='div_" + name + "_" + instructionCounter + "'>" +
 		"<div style='display:inline;'>" + 
-		"<span id='label_" + name + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "'>" + 
+		"<span id='label_" + name + "_" + instructionCounter + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "_" + instructionCounter + "'>" + 
 		( if(showName) ("<big>" + name + "</big>: ") else "") + 
-		( if(code.length>150) (fromHtmltoString(code.substring(0,150) + "...",new java.lang.StringBuilder())) else fromHtmltoString(code,new java.lang.StringBuilder()) ) + "</span>" + 
+		( if(code.length>120) (fromHtmltoString(code.substring(0,120) + "...",new java.lang.StringBuilder())) else fromHtmltoString(code,new java.lang.StringBuilder()) ) + "</span>" + 
 		{ category match {
 			case 1 => List("<span class='dropdown-span' data-dropdown='#dropdown-",name,"'>View as</span>","</div>","<div id='dropdown-",name,"' class='dropdown-menu'>", 
 			"<ul>",  
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toD3BarChart\");'>Bar Chart</a></li>", 
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toBinaryTree\");'>Binary Tree</a></li>", 
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHtml\");'>Paginated List</a></li>", 
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHtmlList\");'>Plain HTML</a></li>",
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"_",instructionCounter,"\",\"",name," :!: toD3BarChart\");'>Bar Chart</a></li>", 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"_",instructionCounter,"\",\"",name," :!: toBinaryTree\");'>Binary Tree</a></li>", 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"_",instructionCounter,"\",\"",name," :!: toHtml\");'>Paginated List</a></li>", 
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"_",instructionCounter,"\",\"",name," :!: toHtmlList\");'>Plain HTML</a></li>",
 			"</ul>","</div>").mkString("")
 			case 2 => List("<span class='dropdown-span' data-dropdown='#dropdown-",name,"'>View as</span>","</div>","<div id='dropdown-",name,"' class='dropdown-menu'>", 
 			"<ul>",  
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toPieChart\");'>Pie Chart</a></li>",
-			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"\",\"",name," :!: toHtml\");'>HTML Table</a></li>",
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"_",instructionCounter,"\",\"",name," :!: toPieChart\");'>Pie Chart</a></li>",
+			"<li><a href='javascript:void(0)' onclick='requestConversion(\"",name,"_",instructionCounter,"\",\"",name," :!: toHtml\");'>HTML Table</a></li>",
 			"</ul>","</div>").mkString("")
 			case 0 => ""
 			}
 		} + 
-		"<div id='" + name + "' class='collapse in'>" + 
-		"<div id='well_" + name + "' class='well well-small' style='overflow-x: auto;'>" + toInterpretableString(value) +
+		"<div id='" + name + "_" + instructionCounter + "' class='collapse in'>" + 
+		"<div id='well_" + name + "_" + instructionCounter + "' class='well well-small' style='overflow-x: auto;'>" + toInterpretableString(value) +
 		"</div></div></div>"
 	}
 	

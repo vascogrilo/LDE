@@ -115,8 +115,6 @@ object Conversions {
 					"str",htmlListCounter,"+= \")\";",
 					"var tmp_id = $('.html_list", htmlListCounter, "').parent().parent().parent().attr('id');",
 					"requestEvaluation(tmp_id + \".slice(0,\" + step",htmlListCounter," + \") ++ \" + str",htmlListCounter," + \" ++ \" + tmp_id + \".slice(\" + (step",htmlListCounter,"+13) + \",\" + tmp_id + \".size)\");",
-					//"console.log(step",htmlListCounter,");",
-					//"requestEvaluation(str",htmlListCounter,");",
 				"}",
 				"var moreElements", htmlListCounter, " = function() { ", 
 					"console.log(\"entrou moreElements com step = \" + window.step", htmlListCounter," + \" e length = \" + window.html_list",htmlListCounter,".length);",
