@@ -20,10 +20,22 @@ object Evaluation {
 	var interpreterID = ""
 	var special = false;
 	var instructionCounter = 0
-	//var interpreters = Seq[MyInterpreter]()
-	//var interpretersConfigs = Seq[Config]()
+	
+	val converts = scala.collection.mutable.Map.empty[Int,List[String]]
 	val interpreters = HashMap.empty[String,MyInterpreter]
-	 
+	
+	/**
+	 * initConversionsMenu
+	 * 
+	 * This method aims to initialize the Map containing the List of conversions available for
+	 * a certain category (represented by an integer)
+	 * 
+	 */
+    def initConversionsMenu = {
+		converts += (0 -> List(""))
+		converts += (1 -> List("toD3BarChart","toBinaryTree","toPlainHtml"))
+		converts += (2 -> List("toPieChart"))
+	}
 	
 	/**
 	 * evaluatePartial

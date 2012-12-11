@@ -154,7 +154,6 @@ var requestEvaluation = function(code_str) {
 		//url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
-			//code: $('#code').val()
 			code: code_str
 		},
 		beforeSend: function(xhr,opts) {
