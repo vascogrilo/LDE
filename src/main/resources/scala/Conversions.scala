@@ -69,7 +69,7 @@ object Conversions {
 		
 		def toPlainText: String = l.map{ e => e }.mkString("","","")
 		
-		def toHtmlList : String = {
+		def toHtml : String = {
 			htmlListCounter = htmlListCounter + 1
 			toPlainHtml(l.toList).toString + "\n<script type='text/javascript'>\n" + createScriptForJoins(l,0) + "dragsort.makeListSortable(document.getElementById(\"list" + htmlListCounter + "\"));\n</script>"
 		}
@@ -98,7 +98,7 @@ object Conversions {
 			}
 		}
 		
-		def toHtml: String = {
+		def toPaginatedList: String = {
 			htmlListCounter = htmlListCounter + 1
 			List("<div class='pagination-box'>",
 					"<div class='paginated-list html_list", htmlListCounter,"'>",
