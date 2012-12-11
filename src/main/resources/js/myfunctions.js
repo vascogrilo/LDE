@@ -143,8 +143,8 @@ var addInstructionHistory = function(code) {
 var requestEvaluation = function(code_str) {
 	$.ajax({
 		type: 'POST',
-		url: 'http://visual-scala.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://visual-scala.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: code_str
@@ -174,8 +174,8 @@ var requestEvaluation = function(code_str) {
 var requestConversion = function(div_id,instr) {
 	$.ajax({
 		type: 'POST',
-		url: 'http://visual-scala.herokuapp.com/repl',
-		//url: 'http://localhost:8080/repl',
+		//url: 'http://visual-scala.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: instr + " :!: partial"
@@ -195,6 +195,77 @@ var requestConversion = function(div_id,instr) {
 			else {
 				$('#well_' + div_id).empty();
 				$('#well_' + div_id).append(data);
+			}
+		},
+		error: function( jqXHR, exception ){
+			
+			alertError(jqXHR,exception);
+            
+            $('#loaderG').hide();
+			$('#buttonSubmit').show();
+		}
+	});
+}
+
+function requestConversionsUpdate() {
+	console.log($('#text_conversions').text());
+	
+	$.ajax({
+		type: 'POST',
+		//url: 'http://visual-scala.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
+		data: { 
+			code: $('#text_conversions').text().toString()
+		},
+		beforeSend: function(xhr,opts) {
+			$('#buttonSubmit').hide();
+			$('#loaderG').show();
+		},
+		success: function(data) {
+			
+			$('#loaderG').hide();
+			$('#buttonSubmit').show();
+			
+			console.log("Success: " + data);
+		},
+		error: function( jqXHR, exception ){
+			
+			alertError(jqXHR,exception);
+            
+            $('#loaderG').hide();
+			$('#buttonSubmit').show();
+		}
+	});
+}
+
+
+function requestConversionsFile() {
+	$.ajax({
+		type: 'POST',
+		//url: 'http://visual-scala.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
+		dataType: 'html',
+		data: { 
+			code: "conversions :!: conv"
+		},
+		beforeSend: function(xhr,opts) {
+			$('#buttonSubmit').hide();
+			$('#loaderG').show();
+		},
+		success: function(data) {
+			
+			$('#loaderG').hide();
+			$('#buttonSubmit').show();
+			
+			console.log(data);
+			
+			if(data===""){
+				console.log("Got empty data from conversions file. Something went wrong.");
+			}
+			else {
+				//$('#well_conversions').empty();
+				//$('#well_conversions').append("<p style='font-size: 12px'>" + data + "</p>");
+				$('#text_conversions').text(data);
 			}
 		},
 		error: function( jqXHR, exception ){

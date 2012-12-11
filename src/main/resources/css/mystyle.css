@@ -22,9 +22,28 @@ textarea#code {
 	overflow: auto;
 }
 
+textarea#text_conversions {
+	wrap: off;
+	resize: none;
+	width: 100%;
+	overflow: auto;
+	overflow-x: auto;
+	height: 450px;
+}
+
 button#buttonSubmit {
    height: 50px; 
 	width: 10%;
+	margin-bottom: 10px;
+}
+
+div#well_conversions {
+	overflow-x: auto;
+	overflow: auto;
+	max-height: 600px;
+}
+
+div#conversionsBody {
 	margin-bottom: 10px;
 }
 

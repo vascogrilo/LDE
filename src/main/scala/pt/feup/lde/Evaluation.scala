@@ -348,6 +348,11 @@ object Evaluation {
 		  true
 	  }
 	  
+	  def getConversionsCode: String = {
+		  //fromHtmltoString(readFromFile(getClass,"/scala/Conversions.scala"),new java.lang.StringBuilder()).replaceAll(" ","&nbsp;").replaceAll("\n","<br/>").replaceAll("\t","&nbsp;&nbsp;&nbsp;&nbsp;")
+		  readFromFile(getClass,"/scala/Conversions.scala")
+	  }
+	  
 	  
 	  
      /**

@@ -34,16 +34,24 @@ object ScalaEditor extends ServerPlan2 {
 		
 		case POST(Path("/repl") & Params(data) & Cookies(cookies)) =>
 			
+			println("RECEIVED: " + data("code") + "\n\n")
+			
 			if(data("code").length > 0) {
 				//println("\n\nI'm going to interpret " + data("code").head)
 				val args = data("code").head.split(":!:")
-				if(args.length > 2 && args.apply(2).trim.equals("partial"))
-					ResponseString(Evaluation.evaluatePartial(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
-				else ResponseString(Evaluation.evaluateSingle(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
+				
+				if(args.length > 1 && args.apply(0).trim.equals("conversions") && args.apply(1).trim.equals("conv"))
+					ResponseString(Evaluation.getConversionsCode)
+				else {
+					if(args.length > 2 && args.apply(2).trim.equals("partial"))
+						ResponseString(Evaluation.evaluatePartial(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
+					else ResponseString(Evaluation.evaluateSingle(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
+				}
 			}
 			else {
 				println("Got data with 0 length. Showing view with same data.\n\n")
-				EditorView.view(EditorView.data)(NodeSeq.Empty)
+				//EditorView.view(EditorView.data)(NodeSeq.Empty)
+				ResponseString("")
 			}
 	}
 }

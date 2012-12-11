@@ -117,9 +117,14 @@ object Utilities {
 		//val html6 : String = readFromFile(getClass,"/html/View3_part3.html")
 		val replView = readFromFile(getClass,"/html/REPLView.html")
 		
+		val replView1 = readFromFile(getClass,"/html/REPLView1.html")
+		val replView2 = readFromFile(getClass,"/html/REPLView2.html")
+		val conv = readFromFile(getClass,"/scala/Conversions.scala")
+		
 		def view(data: scala.collection.mutable.Map[ String, Seq[ String ] ])(body: NodeSeq) = {
-			//Html(XML.loadString(html4 + data("interpreter").reduceLeft(_ + _) + html5 + data("code").head + html6))
+			//println(replView1 + conv + replView2)
 			Html(XML.loadString(replView))
+			//Html(XML.loadString(replView1 + conv + replView2))
 		}
 		
 		def resetResultData = { 

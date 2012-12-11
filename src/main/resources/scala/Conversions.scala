@@ -20,7 +20,6 @@ object Conversions {
 	
 	def manOf[T: Manifest](t: T): Manifest[T] = manifest[T]
 
-	
 	implicit def fromString(s : java.lang.String) = new Object {
 		
 		def toHtml = toDisplayableString(s, new java.lang.StringBuilder())
@@ -30,7 +29,6 @@ object Conversions {
 				case "" => res toString
 				case _ => toDisplayableString(s.tail, res.append(toDisplayableChar(s.head)))
 			}
-			
 		}
 		
 		def toDisplayableChar( c : Char ) : String = {
@@ -39,7 +37,6 @@ object Conversions {
 				case '>' => "&gt;"
 			    case '&' => "&amp;"
 			    case '\n' => "<br/>"
-			    //case ' ' => "&nbsp;"
 				case _ => c toString
 			}
 		}
@@ -47,10 +44,8 @@ object Conversions {
 	
 	
 	implicit def fromInt(i : Int) = new Object {
-	
 		def toHtml = i toString
 	}
-	
 	
 	
 	implicit def fromXmlElem(e : scala.xml.Elem) = new Object {
@@ -58,11 +53,9 @@ object Conversions {
 	}
 	
 	
-	
 	implicit def fromXmlNodeBuffer(l : scala.xml.NodeBuffer) = new Object {
 		def toHtml = l.map{ e => e }.mkString("","","")
 	}
-	
 	
 	
 	implicit def fromIterable[A](l : Iterable[A]) = new Object {
@@ -116,8 +109,8 @@ object Conversions {
 						"window.step", htmlListCounter, " += step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://visual-scala.herokuapp.com/repl',",
-							//"url: 'http://localhost:8080/repl',",
+							//"url: 'http://visual-scala.herokuapp.com/repl',",
+							"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',", 
 							"data: { code: result_id + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -131,8 +124,8 @@ object Conversions {
 						"window.step", htmlListCounter, " -= step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							"url: 'http://visual-scala.herokuapp.com/repl',", 
-							//"url: 'http://localhost:8080/repl',",
+							//"url: 'http://visual-scala.herokuapp.com/repl',", 
+							"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',",
 							"data: { code: result_id + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); if(data===\"\") console.log(\"Got empty string from pagination. Something went wrong.\"); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -261,13 +254,13 @@ object Conversions {
 		}
     }
 	
-	implicit def fromMap2(m: Map[String, Double]) = new Object {
-		
+	
+	implicit def fromMap2(m: Map[String, Double]) = new Object {	
 		def toHtml: String = <table class='table'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1.toString } </td> <td> { keyValue._2.toString } </td> </tr> ) } </table> toString
 	}
 	
-	implicit def fromMap[A,B](m : Map[A,B]) = new Object {
 	
+	implicit def fromMap[A,B](m : Map[A,B]) = new Object {
 		def toHtml: String = <table class='table table-hover'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1.toString } </td> <td> { keyValue._2.toString } </td> </tr> ) } </table> toString 
 	
 		def toPieChart: String = {

@@ -39,6 +39,13 @@
 		</div>
 		
 		<!-- OUTPUT BODY -->
+		<div id="conversionsBody">
+			<span id='conversionsLabel' class='label labelInput' data-toggle='collapse' data-target='#conversions2'><big>object Conversions</big>, click to see the conversions that are active and edit them.</span>
+			<div id='conversions2' class='collapse'>
+				<button id='conversionsBtn' class='btn btn-link' onclick="requestConversionsUpdate();" style="margin-top: 15px; margin-left: -10px;">Update Conversions</button>
+				<textarea id='text_conversions'></textarea>
+			</div>
+		</div>
 		<div id="outputBody" class="well"></div>
 		
 		<!-- INPUT BODY -->
