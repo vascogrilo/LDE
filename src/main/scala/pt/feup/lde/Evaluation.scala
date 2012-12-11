@@ -21,8 +21,7 @@ object Evaluation {
 	var special = false;
 	var instructionCounter = 0
 	
-	val converts = scala.collection.mutable.Map.empty[Int,List[String]]
-	val convertsText = scala.collection.mutable.Map.empty[String,String]
+	val converts = scala.collection.mutable.Map.empty[Int,Map[String,String]]
 	
 	val interpreters = HashMap.empty[String,MyInterpreter]
 	
@@ -34,13 +33,15 @@ object Evaluation {
 	 * 
 	 */
     def initConversionsMenu = {
-		convertsText += ("toHtml" -> "HTML")
-		convertsText += ("toString" -> "Plain Text")
-		converts += (0 -> List(""))
-		converts += (1 -> List("toD3BarChart","toBinaryTree","toPaginatedList","toHtml","toString"))
-		convertsText += ("toD3BarChart" -> "Bar Chart", "toBinaryTree" -> "Binary Tree", "toPaginatedList" -> "Paginated List")
-		converts += (2 -> List("toPieChart","toHtml","toString"))
-		convertsText += ("toPieChart" -> "Pie Chart")
+		converts += (0 -> Map.empty[String,String])
+		converts += (1 -> Map("toBinaryTree" -> "Binary Tree",
+								"toHtml" -> "Paginated List",
+								"toHtmlList" -> "HTML List",
+								"toD3BarChart" -> "Bar Chart",
+								"toString" -> "Text"))
+		converts += (2 -> Map("toPieChart" -> "Pie Chart",
+								"toHtml" -> "Html Table",
+								"toString" -> "Text"))
 	}
 	
 	initConversionsMenu
@@ -370,7 +371,7 @@ object Evaluation {
 				case 0 => ""
 				case x => "<span class='dropdown-span' data-dropdown='#dropdown-"+name+"'>View as</span><div id='dropdown-"+name+"' class='dropdown-menu'>"+
 							"<ul>"+
-							{ converts(x).map( x1 => "<li><a href='javascript:void(0)' onclick='requestConversion(\""+name+"_TEMPORARYID"+instructionCounter+"\",\""+name+" :!: "+x1+"\");'>"+convertsText(x1)+"</a></li>" ) mkString("") }+
+							{ converts(x).map( x1 => "<li><a href='javascript:void(0)' onclick='requestConversion(\""+name+"_TEMPORARYID"+instructionCounter+"\",\""+name+" :!: "+(x1._1)+"\");'>"+(x1._2)+"</a></li>" ) mkString("") }+
 							"</ul></div>"
 			}
 		} +

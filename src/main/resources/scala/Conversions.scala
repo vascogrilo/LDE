@@ -69,7 +69,7 @@ object Conversions {
 		
 		def toPlainText: String = l.map{ e => e }.mkString("","","")
 		
-		def toHtml : String = {
+		def toHtmlList : String = {
 			htmlListCounter = htmlListCounter + 1
 			toPlainHtml(l.toList).toString + "\n<script type='text/javascript'>\n" + createScriptForJoins(l,0) + "dragsort.makeListSortable(document.getElementById(\"list" + htmlListCounter + "\"));\n</script>"
 		}
@@ -82,14 +82,6 @@ object Conversions {
 			})}</ul>
 		}
 		
-		/*def createInputs[A](l: Iterable[A],index: Int): String = {
-			val name = "edit" + htmlListCounter + "_" + index + "_Edit"
-			l.size match {
-				case 0 => ""
-				case _ => List("<input id='",name,"' name='",name,"' class='inplace'>\n").mkString("") + createInputs(l.tail,index+1)
-			}
-		}*/
-		
 		def createScriptForJoins[A](l: Iterable[A],index: Int): String = {
 			val name = "edit" + htmlListCounter + "_" + index + "_"
 			l.size match {
@@ -98,7 +90,7 @@ object Conversions {
 			}
 		}
 		
-		def toPaginatedList: String = {
+		def toHtml: String = {
 			htmlListCounter = htmlListCounter + 1
 			List("<div class='pagination-box'>",
 					"<div class='paginated-list html_list", htmlListCounter,"'>",
@@ -124,8 +116,8 @@ object Conversions {
 						"window.step", htmlListCounter, " += step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							//"url: 'http://visual-scala.herokuapp.com/repl',",
-							"url: 'http://localhost:8080/repl',",
+							"url: 'http://visual-scala.herokuapp.com/repl',",
+							//"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',", 
 							"data: { code: result_id + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
@@ -139,8 +131,8 @@ object Conversions {
 						"window.step", htmlListCounter, " -= step_incr",htmlListCounter,";",
 						"$.ajax({ ",
 							"type: 'POST',", 
-							//"url: 'http://visual-scala.herokuapp.com/repl',", 
-							"url: 'http://localhost:8080/repl',",
+							"url: 'http://visual-scala.herokuapp.com/repl',", 
+							//"url: 'http://localhost:8080/repl',",
 							"dataType: 'html',",
 							"data: { code: result_id + \".slice(\" + window.step", htmlListCounter, " + \",13 + \" + window.step", htmlListCounter, " + \") :!: toCSV :!: partial\" },", 
 							"success: function(data) { console.log(data); if(data===\"\") console.log(\"Got empty string from pagination. Something went wrong.\"); window.html_list",htmlListCounter," = data.toString().split(\",\"); window.populateList",htmlListCounter,"(); }",
