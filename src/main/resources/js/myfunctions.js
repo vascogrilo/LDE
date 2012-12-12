@@ -207,6 +207,47 @@ var requestConversion = function(div_id,instr) {
 	});
 }
 
+var createNewConversion = function() {
+	var conv = "implicit def conversion" + instructions.length + "(x: " + $('#conversionType').val() + ") = new Object {\n" +
+				"def " + $('#conversionName').val() + " = { (" + $('#conversionCode').val() + ").toString }\n" +
+				"}";
+	$.ajax({
+		type: 'POST',
+		//url: 'http://visual-scala.herokuapp.com/repl',
+		url: 'http://localhost:8080/repl',
+		data: { 
+			code: conv + " :!: conversion"
+		},
+		beforeSend: function(xhr,opts) {
+			$('#buttonSubmit').hide();
+			$('#loaderG').show();
+		},
+		success: function(data) {
+			
+			$('#loaderG').hide();
+			$('#buttonSubmit').show();
+			
+			if(data.toString() == "SUCCESS"){
+				$('#conversionType').val("");
+				$('#conversionName').val("");
+				$('#conversionDesc').val("");
+				$('#conversionCode').val("");
+				$('#closeModal').click();
+				alert("Success!");
+			}
+			else alert("Your conversion was malformed. Please review.");
+		},
+		error: function( jqXHR, exception ){
+			
+			alertError(jqXHR,exception);
+            
+            $('#loaderG').hide();
+			$('#buttonSubmit').show();
+		}
+	});
+}
+
+
 function requestConversionsUpdate() {
 	console.log($('#text_conversions').text());
 	
@@ -239,14 +280,14 @@ function requestConversionsUpdate() {
 }
 
 
-function requestConversionsFile() {
+function requestConversionsOp(sufix) {
 	$.ajax({
 		type: 'POST',
 		//url: 'http://visual-scala.herokuapp.com/repl',
 		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
-			code: "conversions :!: conv"
+			code: "conversions :!: " + sufix
 		},
 		beforeSend: function(xhr,opts) {
 			$('#buttonSubmit').hide();
@@ -263,9 +304,9 @@ function requestConversionsFile() {
 				console.log("Got empty data from conversions file. Something went wrong.");
 			}
 			else {
-				//$('#well_conversions').empty();
-				//$('#well_conversions').append("<p style='font-size: 12px'>" + data + "</p>");
-				$('#text_conversions').text(data);
+				if(sufix == "reload")
+					alert("Object Conversions reverted to default.");
+				else  $('#text_conversions').text(data);
 			}
 		},
 		error: function( jqXHR, exception ){

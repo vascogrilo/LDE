@@ -47,6 +47,35 @@ object Evaluation {
 	initConversionsMenu
 	
 	/**
+	 * evaluateConversion
+	 * 
+	 * This method aims to interpret a conversion provided by the user.
+	 * It is only called for user submited conversions, and it doesn't generates a full response.
+	 * 
+	 * The instruction is evaluated and if successfully, a simple SUCCESS string is returned to the client's browser.
+	 * If not, an ERROR string is returned.
+	 * 
+	 * We don't need to return any special information because the goal is to update the interpreter's conversions library.
+	 * 
+	 */
+	def evaluateConversion(code: String,interpreterId: String): String = {
+		println("ENTERED EVALUATE CONVERSION!\nCODE IS: " + code + "\n")
+		val interpreter = interpreters(interpreterId)
+		interpreter.interpret(code) match {
+			case Success(name,value) => {
+				println("Success evaluation conversion. " + name + " = " + value + "\n")
+				converts(1) += ("TEST" -> "LOLOL")
+				"SUCCESS"
+			}
+			case _ => {
+				println("Error evaluating conversion.\n")
+				"ERROR"
+			}
+		}
+	}
+	
+	
+	/**
 	 * evaluatePartial
 	 * 
 	 * This method aims to interpret an instruction.
@@ -315,23 +344,24 @@ object Evaluation {
 	 */
 	def setUpInterpreter(cookies : Option[Cookie]) : String = {
 		 cookies match {
-				case Some(Cookie(_,session,_,_,_,_,_,_)) => {
-					println("\n\nGOT COOKIES! VALUE IS '" + session.toString + "'\n")
-					if(interpreters.keySet.contains(session)){
-						println("Key is valid")
-						session.toString
-					}
-					else {
-						println("Key is invalid. Creating new one and generating new interpreter.")
-						initInterpreter
-					}
+			case Some(Cookie(_,session,_,_,_,_,_,_)) => {
+				println("\n\nGOT COOKIES! VALUE IS '" + session.toString + "'\n")
+				if(interpreters.keySet.contains(session)){
+					println("Key is valid")
+					session.toString
 				}
-				case _ => {
-					println("\n\nDIDNT HAVE COOKIES! GENERATING NEW INTERPRETER AND SETTING COOKIE TO INTERPRETER ID\n")
+				else {
+					println("Key is invalid. Creating new one and generating new interpreter.")
 					initInterpreter
 				}
 			}
+			case _ => {
+				println("\n\nDIDNT HAVE COOKIES! GENERATING NEW INTERPRETER AND SETTING COOKIE TO INTERPRETER ID\n")
+				initInterpreter
+			}
 		}
+	}
+	 
 	 
 	 /**
 	  * injectConversions
@@ -348,11 +378,33 @@ object Evaluation {
 		  true
 	  }
 	  
+	  
+	  /**
+	   * injectConversionsCookie
+	   * 
+	   * This method is an auxiliary for calling the injectConversions.
+	   * However, in this case the user asked for the Conversions object to be restored to it's default value.
+	   * 
+	   * As we get only the cookie information at the requests handler, this method acts as a bridge to calling injectConversions.
+	   */
+	  def injectConversionsCookie(cookies: Option[Cookie]) : Boolean = {
+		  injectConversions(interpreters(getInterpreterID(cookies)))
+	  }
+	  
+	  
+	  /**
+	   * getConversionsCode
+	   * 
+	   * This method returns the code contained in the Conversions source file.
+	   * 
+	   * It is called right when the page loads on the browser in order to show the user
+	   * the contents of Conversions and enable him to edit them.
+	   * 
+	   */
 	  def getConversionsCode: String = {
 		  //fromHtmltoString(readFromFile(getClass,"/scala/Conversions.scala"),new java.lang.StringBuilder()).replaceAll(" ","&nbsp;").replaceAll("\n","<br/>").replaceAll("\t","&nbsp;&nbsp;&nbsp;&nbsp;")
 		  readFromFile(getClass,"/scala/Conversions.scala")
 	  }
-	  
 	  
 	  
      /**

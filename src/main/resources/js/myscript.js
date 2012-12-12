@@ -21,6 +21,6 @@ $(document).ready(function() {
 	$('#code').keydown(keyDownHandler);
 	$('#code').keyup(keyUpHandler);
 	
-	requestConversionsFile();
+	requestConversionsOp("conv");
 });
 

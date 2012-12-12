@@ -37,11 +37,22 @@ object ScalaEditor extends ServerPlan2 {
 			println("RECEIVED: " + data("code") + "\n\n")
 			
 			if(data("code").length > 0) {
-				//println("\n\nI'm going to interpret " + data("code").head)
 				val args = data("code").head.split(":!:")
 				
-				if(args.length > 1 && args.apply(0).trim.equals("conversions") && args.apply(1).trim.equals("conv"))
-					ResponseString(Evaluation.getConversionsCode)
+				if(args.length == 2){
+					
+					if(args.apply(0).trim.equals("conversions")) {
+						//TEST IF IT IS TO RESPOND WITH CONVERSION OR TO REVERT TO DEFAULT
+						if(args.apply(1).trim.equals("conv"))
+							ResponseString(Evaluation.getConversionsCode)
+						else {
+							ResponseString(Evaluation.injectConversionsCookie(cookies("session")).toString)
+						}
+					}
+					else {
+						ResponseString(Evaluation.evaluateConversion(args.apply(0),Evaluation.getInterpreterID(cookies("session"))) toString)
+					}
+				}
 				else {
 					if(args.length > 2 && args.apply(2).trim.equals("partial"))
 						ResponseString(Evaluation.evaluatePartial(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
@@ -50,7 +61,6 @@ object ScalaEditor extends ServerPlan2 {
 			}
 			else {
 				println("Got data with 0 length. Showing view with same data.\n\n")
-				//EditorView.view(EditorView.data)(NodeSeq.Empty)
 				ResponseString("")
 			}
 	}
