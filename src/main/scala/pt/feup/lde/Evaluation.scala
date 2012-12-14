@@ -424,22 +424,23 @@ object Evaluation {
 		instructionCounter = instructionCounter + 1
 		"<!doctype html>" +
 		"<div id='div_" + name + "_TEMPORARYID" + instructionCounter + "'>" +
-		"<div style='display:inline;'>" + 
+		"<div id='div_inline_" + name + "_TEMPORARYID" + instructionCounter + "' style='display:inline;'>" + 
 		"<span id='label_" + name + "_TEMPORARYID" + instructionCounter + "' class='label labelInput' data-toggle='collapse' data-target='#" + name + "_TEMPORARYID" + instructionCounter + "'>" + 
 		( if(showName) ("<big>" + name + "</big>: ") else "") + 
 		( if(code.length>120) (fromHtmltoString(code.substring(0,120) + "...",new java.lang.StringBuilder())) else fromHtmltoString(code,new java.lang.StringBuilder()) ) + "</span>" + 
-		{ category match {
+		/*{ category match {
 				case 0 => ""
 				case x => "<span class='dropdown-span' data-dropdown='#dropdown-"+name+"'>View as</span><div id='dropdown-"+name+"' class='dropdown-menu'>"+
 							"<ul>"+
 							{ converts(x).map( x1 => "<li><a href='javascript:void(0)' onclick='requestConversion(\""+name+"_TEMPORARYID"+instructionCounter+"\",\""+name+" :!: "+(x1._1)+"\");'>"+(x1._2)+"</a></li>" ) mkString("") }+
 							"</ul></div>"
 			}
-		} +
+		} + */
 		"</div>" + 
 		"<div id='" + name + "_TEMPORARYID" + instructionCounter + "' class='collapse in'>" + 
 		"<div id='well_" + name + "_TEMPORARYID" + instructionCounter + "' class='well well-small' style='overflow-x: auto;'>" + toInterpretableString(value) +
-		"</div></div></div>"
+		"</div></div></div>" +
+		"<script type='text/javascript'> fillConversionsMenu('div_inline_" + name + "_TEMPORARYID" + instructionCounter + "'," + category + ",'" + name + "'," + instructionCounter + ");</script>"
 	}
 	
 	

@@ -132,8 +132,36 @@ var addInstructionHistory = function(code) {
 }
 
 
+var type_conversions = {
+	'convs':
+		[
+			{ 
+				1:[
+					{ 'name':'toBinaryTree','desc':'Binary Tree'},
+					{ 'name':'toD3BarChart','desc':'Bar Chart'},
+					{ 'name':'toHtml','desc':'Paginated List'},
+					{ 'name':'toHtmlList','desc':'HTML List'},
+					{ 'name':'toString','desc':'Text'}
+				]
+			},
+			{ 
+				2:[
+					{ 'name':'toHtml','desc':'HTML Table'},
+					{ 'name':'toPieChart','desc':'Pie Chart'},
+					{ 'name':'toString','desc':'Text'}
+				]
+			}
+		]
+};
 
-
+var fillConversionsMenu = function(div_id,category,name,iCounter) {
+	
+	if(category > 0) {
+		$('#' + div_id).append("<span class='dropdown-span' data-dropdown='#dropdown-"+name+"'>View as</span><div id='dropdown-"+name+"' class='dropdown-menu'><ul id='drop_" + name + iCounter + "'></ul></div>");
+		for(var i=0;i<type_conversions.convs[category-1][category].length;i++)
+			$('#drop_' + name + iCounter).append("<li><a href='javascript:void(0)' onclick='requestConversion(\""+name+"_TEMPORARYID"+iCounter+"\",\""+name+" :!: "+ type_conversions.convs[category-1][category][i].name +"\");'>"+ type_conversions.convs[category-1][category][i].desc + "</a></li>");
+	}
+};
 
 /**
  * 
