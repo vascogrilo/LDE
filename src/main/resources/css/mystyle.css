@@ -58,6 +58,10 @@ div#conversionsBody {
 	cursor: pointer;
 }
 
+#conversions2 {
+	width: 100%;
+}
+
 .conversionsOps {
 	float: right;
 }

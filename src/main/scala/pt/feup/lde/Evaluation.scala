@@ -64,7 +64,6 @@ object Evaluation {
 		interpreter.interpret(code) match {
 			case Success(name,value) => {
 				println("Success evaluation conversion. " + name + " = " + value + "\n")
-				converts(1) += ("TEST" -> "LOLOL")
 				"SUCCESS"
 			}
 			case _ => {
@@ -205,25 +204,7 @@ object Evaluation {
 		interpreter.interpret(code,true) match {
 			case Success(auxName3,auxValue3) => {
 				println("FROM ERASURE : " + auxName3 + " -> " + auxValue3 + "\n")
-				
-				/*if(auxValue3.toString().contains("scala.collection.")){
-					category = 1;
-					interpreter.interpret("val tmp_var_" + Math.abs(Random.nextInt()) + " = " + firstName + ".slice(0," + iterableSlicing + ")",true) match {
-						case Success(auxName4,auxResult4) => lastName = auxName4
-						case _ => lastName = firstName
-					}
-				}
-				else {
-					auxValue3 match {
-						case "java.lang.String" | "String" => {
-							special = true
-						}
-						case _ => {
-							println("GOT OTHER TYPE. IGNORING.")
-						}
-					}
-					lastName = firstName
-				}*/
+
 				auxValue3.toString match {
 					case x:String if(x.contains("Map")) => {
 						category = 2;
@@ -371,10 +352,33 @@ object Evaluation {
 	  */
 	  def injectConversions(i : MyInterpreter) : Boolean = {
 		  //still missing catching the exception from readFromFile...
-		  val code : String = readFromFile(getClass,"/scala/Conversions.scala")
-		  i.interpret(code,true)
+		  
+		  println("\nLoading Conversions.scala...")
+		  val conv = readFromFile(getClass,"/scala/Conversions.scala")
+		  i.interpret(conv,true)
+		  println("DONE!\n")
+		  
+		  println("\nLoading IterableConversions.scala...")
+		  val iterable = readFromFile(getClass,"/scala/IterableConversions.scala")
+		  i.interpret(iterable,true)
+		  println("DONE!\n")
+		  
+		  println("\nLoading MapConversions.scala...")
+		  val map = readFromFile(getClass,"/scala/MapConversions.scala")
+		  i.interpret(map,true)
+		  println("DONE!\n")
+		  
+		  println("\nLoading StringConversions.scala...")
+		  val string = readFromFile(getClass,"/scala/StringConversions.scala")
+		  i.interpret(string,true)
+		  println("DONE!\n")
+		  
+		  println("\nLoading XMLConversions.scala...")
+		  val xml = readFromFile(getClass,"/scala/XMLConversions.scala")
+		  i.interpret(xml,true)
+		  println("DONE!\n")
+		  
 		  println("\n====================\n" + results.toString + "\n====================\n")
-		  //i.compileString(code)
 		  true
 	  }
 	  

@@ -22,5 +22,10 @@ $(document).ready(function() {
 	$('#code').keyup(keyUpHandler);
 	
 	requestConversionsOp("conv");
+	
+	//RE-INSERT EVERY INSTRUCTION PREVIOUSLY RECEIVED
+	//SO THEY CAN SURVIVE REFRESHING THE WINDOW
+	for(i=0;i<Session.get("counter");i++)
+		$('#outputBody').append(Session.get("i"+i.toString()));
 });
 

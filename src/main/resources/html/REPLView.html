@@ -28,6 +28,7 @@
 		<script src="js/myfunctions.js"></script>
 		<script src="js/myscript.js"></script>
 		<script src="js/jquery.autosize-min.js"></script>
+		<script src="js/session.js"></script>
 		
 	</head>
 	
@@ -40,9 +41,9 @@
 		
 		<!-- OUTPUT BODY -->
 		<div id="conversionsBody">
-			<span id='conversionsLabel' class='label label-info labelInput' data-toggle='collapse' data-target='#conversions2'><big>object Conversions</big>, click to see the conversions that are active and edit them.</span>
-			<div class='conversionsOps'>
-				<span id='revertConversions' class='label label-info' onclick="requestConversionsOp('reload');">Revert to default Conversions</span>
+			<span id="conversionsLabel" class="label" data-toggle="collapse" data-target="#conversions2" style="cursor: pointer"><big>object Conversions</big>, click to see the conversions that are active and edit them.</span>
+			<div class="conversionsOps">
+				<span id="revertConversions" class="label" onclick="requestConversionsOp('reload');">Revert to default Conversions</span>
 				<a id="newConversion" href="#myModal" role="button" class="label label-info" data-toggle="modal">New conversion</a>
 			</div>
 			<div id='conversions2' class='collapse'>
@@ -76,17 +77,25 @@
 		    <p>Insert a valid type, a name for the conversion (ex: toSortedBarChart) and the respective code. The code for the conversion must return a String.</p>
 		    <p>Be carefull because if you don't define it well your conversion will not work properly.</p>
 		    
-		    <p><span class="label label-info">Type</span></p>
-		    <p><input id="conversionType" class="input-medium" type="text" placeholder="(ex: List[Double]"/></p>
+		    <div class="modalRow">
+			    <span class="label label-info">Type</span>
+			    <input id="conversionType" class="input-medium" type="text" placeholder="(ex: Iterable[Any]"/>
+		    </div>
 		    
-		    <p><span class="label label-info">Method name</span></p>
-		    <p><input id="conversionName" class="input-medium" type="text" placeholder="(ex: toOrderedList)"/></p>
+		    <div class="modalRow">
+			    <span class="label label-info">Method name</span>
+			    <input id="conversionName" class="input-medium" type="text" placeholder="(ex: toOrderedList)"/>
+		    </div>
 		    
-		    <p><span class="label label-info">Description</span></p>
-		    <p><input id="conversionDesc" class="input-medium" type="text" placeholder="(ex: Ordered List)"/></p>
+		    <div class="modalRow">
+			    <span class="label label-info">Description</span>
+			    <input id="conversionDesc" class="input-medium" type="text" placeholder="(ex: Ordered List)"/>
+		    </div>
 		    
-		    <p><span class="label label-info">Code</span></p>
-		    <p><textarea id="conversionCode" class="conversionCode" placeholder="&lt;ol&gt;{ x.map( e => &lt;li&gt;{ e }&lt;/li&gt;) }&lt;/ol&gt;"></textarea></p>
+		    <div class="modalRow">
+			    <span class="label label-info">Code</span>
+			    <textarea id="conversionCode" class="conversionCode" placeholder="&lt;ol&gt;{ x.map( e => &lt;li&gt;{ e }&lt;/li&gt;) }&lt;/ol&gt;"></textarea>
+			</div>
 		  </div>
 		  <div class="modal-footer">
 		    <button class="btn" data-dismiss="modal" aria-hidden="true">Cancel</button>
