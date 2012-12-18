@@ -43,10 +43,14 @@ object ScalaEditor extends ServerPlan2 {
 					
 					if(args.apply(0).trim.equals("conversions")) {
 						//TEST IF IT IS TO RESPOND WITH CONVERSION OR TO REVERT TO DEFAULT
-						if(args.apply(1).trim.equals("conv"))
-							ResponseString(Evaluation.getConversionsCode)
-						else {
-							ResponseString(Evaluation.injectConversionsCookie(cookies("session")).toString)
+						args.apply(1) match {
+							case x if(x.trim.startsWith("reload-")) => {
+								val file = x.slice(x.indexOf("-")+1,x.length)
+								ResponseString(Evaluation.injectConversionFileCookie(cookies("session"),file) toString)
+							}
+							case x => {
+								ResponseString(Evaluation.getConversionsFile(x.trim))
+							}
 						}
 					}
 					else {

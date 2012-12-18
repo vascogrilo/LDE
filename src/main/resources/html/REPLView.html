@@ -42,14 +42,13 @@
 		
 		<!-- OUTPUT BODY -->
 		<div id="conversionsBody">
-			<span id="conversionsLabel" class="label" data-toggle="collapse" data-target="#conversions2" style="cursor: pointer"><big>object Conversions</big>, click to see the conversions that are active and edit them.</span>
+			<span id="conversionsLabel" class="label" data-toggle="collapse" data-target="#conversions2" style="cursor: pointer"><big>Conversions</big>. Click here to see the list of active conversions.</span>
 			<div class="conversionsOps">
-				<span id="revertConversions" class="label" onclick="requestConversionsOp('reload');">Revert to default Conversions</span>
 				<a id="newConversion" href="#myModal" role="button" class="label label-info" data-toggle="modal">New conversion</a>
 			</div>
 			<div id='conversions2' class='collapse'>
-				<button id='conversionsBtn' class='btn btn-link' onclick="requestConversionsUpdate();" style="margin-top: 15px; margin-left: -10px;">Update Conversions</button>
-				<textarea id='text_conversions'></textarea>
+				<div class="conversions_list">
+				</div>
 			</div>
 		</div>
 		<div id="outputBody" class="well"></div>

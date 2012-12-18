@@ -16,26 +16,29 @@ div#inputBody {
 }
 
 textarea.code {
-	wrap: off;
 	resize: none;
 	width: 89%;
 	overflow: auto;
 }
 
-textarea.conversionCode  {
-	wrap: off;
-	resize: none;
-	width: 100%;
-	overflow: auto;
-	height: 100px;
-}
-textarea#text_conversions {
-	wrap: off;
+textarea.text_conversions {
 	resize: none;
 	width: 100%;
 	overflow: auto;
 	overflow-x: auto;
 	height: 450px;
+	margin-top: 5px;
+	font-family: Courier, sans-serif;
+	font-size: 12px;
+}
+
+div.conversions_item {
+	margin-top: 7px;
+	cursor: pointer;
+}
+
+div.conversions_list {
+	margin-top: 15px;
 }
 
 button#buttonSubmit {
@@ -52,10 +55,6 @@ div#well_conversions {
 
 div#conversionsBody {
 	margin-bottom: 10px;
-}
-
-#revertConversions {
-	cursor: pointer;
 }
 
 #conversions2 {

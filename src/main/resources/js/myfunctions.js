@@ -6,6 +6,29 @@
  * 
  */
  
+/**
+ * 
+ * CONVERSIONS
+ * 
+ */
+var conversions = ["ClassConversions","IterableConversions","MapConversions","StringConversions","XMLConversions","Other"];
+
+var generateConversionsArea = function() {
+	var element;
+	for(var i=0;i<conversions.length;i++){
+		element = "<div class='conversions_item'>" +
+					"<span class='label' data-toggle='collapse' data-target='#conversions_" + conversions[i] + "'>" +
+						conversions[i] + "</span>" +
+					"<div class='conversionsOps'>" +
+					"<a id='submit" + conversions[i] + "' href='#' role='button' class='label label-info' onclick=''>Submit</a>" +
+					"<a id='revert" + conversions[i] + "' href='#' role='button' class='label label-info' style='margin-left: 5px' onclick='requestConversionsOp(0,'reload-" + conversions[i] + "');'>Revert</a>" +
+					"</div>" +
+					"<div id='conversions_" + conversions[i] + "' class='collapse'>" + 
+					"<textarea id='text_" + conversions[i] + "' class='text_conversions'></textarea></div></div>";
+		$('.conversions_list').append(element);
+	}
+}
+
  
 /**
  * elementSupportsAttribute
@@ -117,6 +140,8 @@ var checkIfCanEvaluate = function(code) {
 	return can;
 }
 
+
+
 /**
  * FUNCTIONS FOR STORING AND GETTING PREVIOUS INSTRUCTIONS
  * STORED IN MEMORY
@@ -132,34 +157,76 @@ var addInstructionHistory = function(code) {
 }
 
 
+
+/**
+ * getCategory
+ * 
+ * This method converts a string representing a type to a numeric value representing it's category.
+ * The string is received from the user's new conversion type chosen.
+ * 
+ */
+ 
 var type_conversions = {
-	'convs':
+	'Iterable':
 		[
-			{ 
-				1:[
-					{ 'name':'toBinaryTree','desc':'Binary Tree'},
-					{ 'name':'toD3BarChart','desc':'Bar Chart'},
-					{ 'name':'toHtml','desc':'Paginated List'},
-					{ 'name':'toHtmlList','desc':'HTML List'},
-					{ 'name':'toString','desc':'Text'}
-				]
-			},
-			{ 
-				2:[
-					{ 'name':'toHtml','desc':'HTML Table'},
-					{ 'name':'toPieChart','desc':'Pie Chart'},
-					{ 'name':'toString','desc':'Text'}
-				]
-			}
+			{ 'name':'toBinaryTree','desc':'Binary Tree'},
+			{ 'name':'toD3BarChart','desc':'Bar Chart'},
+			{ 'name':'toHtml','desc':'Paginated List'},
+			{ 'name':'toHtmlList','desc':'HTML List'},
+			{ 'name':'toString','desc':'Text'}
+		],
+	'Map':
+		[
+			{ 'name':'toHtml','desc':'HTML Table'},
+			{ 'name':'toPieChart','desc':'Pie Chart'},
+			{ 'name':'toString','desc':'Text'}
+		],
+	'Class':
+		[
+			{ 'name':'toClass','desc':'Graphic class'},
+			{ 'name':'toString','desc':'Text'}
 		]
 };
 
+var getCategory = function(str) {
+	var str_aux = str;
+	
+	if(str.indexOf("[") > -1)
+		str_aux = str.substr(0,str.indexOf("["));
+	
+	if(str_aux.lastIndexOf(".") > -1)
+		str_aux = str_aux.substr(str_aux.lastIndexOf(".")+1,str_aux.length);
+		
+	if( str == "Iterable" 
+		|| str == "List"
+		|| str == "Range"
+		|| str == "Set" )
+		return 1;
+		
+	if(str == "Map" 
+		|| str == "HashMap"
+		|| str == "TreeMap")
+		return 2;
+}
+
+var fromIntToCategory = function(i) {
+	switch(i){
+			case 1: return 'Iterable';
+			case 2: return 'Map';
+	}
+}
+
 var fillConversionsMenu = function(div_id,category,name,iCounter) {
+	
+	console.log("div_id: " + div_id);
+	console.log("category: " + category);
+	console.log("name: " + name);
+	console.log("iCounter: " + iCounter);
 	
 	if(category > 0) {
 		$('#' + div_id).append("<span class='dropdown-span' data-dropdown='#dropdown-"+name+"'>View as</span><div id='dropdown-"+name+"' class='dropdown-menu'><ul id='drop_" + name + iCounter + "'></ul></div>");
-		for(var i=0;i<type_conversions.convs[category-1][category].length;i++)
-			$('#drop_' + name + iCounter).append("<li><a href='javascript:void(0)' onclick='requestConversion(\""+name+"_TEMPORARYID"+iCounter+"\",\""+name+" :!: "+ type_conversions.convs[category-1][category][i].name +"\");'>"+ type_conversions.convs[category-1][category][i].desc + "</a></li>");
+		for(var i=0;i<type_conversions[fromIntToCategory(category)].length;i++)
+			$('#drop_' + name + iCounter).append("<li><a href='javascript:void(0)' onclick='requestConversion(\""+name+"_TEMPORARYID"+iCounter+"\",\""+name+" :!: "+ type_conversions[fromIntToCategory(category)][i].name +"\");'>"+ type_conversions[fromIntToCategory(category)][i].desc + "</a></li>");
 	}
 };
 

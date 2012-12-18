@@ -97,6 +97,7 @@ var createNewConversion = function() {
 			$('#buttonSubmit').show();
 			
 			if(data.toString() == "SUCCESS"){
+				//type_conversions.convs
 				$('#conversionType').val("");
 				$('#conversionName').val("");
 				$('#conversionDesc').val("");
@@ -149,7 +150,7 @@ function requestConversionsUpdate() {
 }
 
 
-function requestConversionsOp(sufix) {
+function requestConversionsOp(op,sufix) {
 	$.ajax({
 		type: 'POST',
 		//url: 'http://visual-scala.herokuapp.com/repl',
@@ -173,9 +174,14 @@ function requestConversionsOp(sufix) {
 				console.log("Got empty data from conversions file. Something went wrong.");
 			}
 			else {
-				if(sufix == "reload")
-					alert("Object Conversions reverted to default.");
-				else  $('#text_conversions').text(data);
+				if(op == 0) { //RELOAD
+					if(data==="true")
+						alert(sufix.substr(sufix.indexOf('-')+1,sufix.length) + " was reverted to the original content.");
+					else alert("Something went wrong.")
+				}
+				else { //REQUEST
+					$('#text_' + sufix).val(data);
+				}
 			}
 		},
 		error: function( jqXHR, exception ){

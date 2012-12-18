@@ -378,7 +378,20 @@ object Evaluation {
 		  i.interpret(xml,true)
 		  println("DONE!\n")
 		  
+		  println("\nLoading ClassConversions.scala...")
+		  val cl = readFromFile(getClass,"/scala/ClassConversions.scala")
+		  i.interpret(cl,true)
+		  println("DONE!\n") 
+		  
 		  println("\n====================\n" + results.toString + "\n====================\n")
+		  true
+	  }
+	  
+	  def injectConversionFile(i: MyInterpreter,file: String): Boolean = {
+		  println("\nLoading " + file + ".scala...")
+		  val conv = readFromFile(getClass,"/scala/" + file + ".scala")
+		  i.interpret(conv,true)
+		  println("DONE!\n")
 		  true
 	  }
 	  
@@ -395,6 +408,10 @@ object Evaluation {
 		  injectConversions(interpreters(getInterpreterID(cookies)))
 	  }
 	  
+	  def injectConversionFileCookie(cookies: Option[Cookie],file: String): Boolean = {
+		  injectConversionFile(interpreters(getInterpreterID(cookies)),file)
+	  }
+	  
 	  
 	  /**
 	   * getConversionsCode
@@ -405,9 +422,8 @@ object Evaluation {
 	   * the contents of Conversions and enable him to edit them.
 	   * 
 	   */
-	  def getConversionsCode: String = {
-		  //fromHtmltoString(readFromFile(getClass,"/scala/Conversions.scala"),new java.lang.StringBuilder()).replaceAll(" ","&nbsp;").replaceAll("\n","<br/>").replaceAll("\t","&nbsp;&nbsp;&nbsp;&nbsp;")
-		  readFromFile(getClass,"/scala/Conversions.scala")
+	  def getConversionsFile(file: String) : String = {
+		  readFromFile(getClass,"/scala/" + file + ".scala")
 	  }
 	  
 	  
