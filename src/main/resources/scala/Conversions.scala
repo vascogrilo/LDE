@@ -14,10 +14,6 @@
 object Conversions {
 	
 	def manOf[T: Manifest](t: T): Manifest[T] = manifest[T]
-	
-	/*implicit def fromMap2(m: Map[String, Double]) = new Object {	
-		def toHtml: String = <table class='table'> <tr> <th> Key </th> <th> Value </th> </tr> { m.map( keyValue => <tr> <td> { keyValue._1.toString } </td> <td> { keyValue._2.toString } </td> </tr> ) } </table> toString
-	}*/
 }
 
 import Conversions._

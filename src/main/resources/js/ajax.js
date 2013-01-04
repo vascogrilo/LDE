@@ -9,8 +9,8 @@
 var requestEvaluation = function(code_str) {
 	$.ajax({
 		type: 'POST',
-		//url: 'http://visual-scala.herokuapp.com/repl',
-		url: 'http://localhost:8080/repl',
+		url: 'http://visual-scala.herokuapp.com/repl',
+		//url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: code_str
@@ -43,8 +43,8 @@ var requestEvaluation = function(code_str) {
 var requestConversion = function(div_id,instr) {
 	$.ajax({
 		type: 'POST',
-		//url: 'http://visual-scala.herokuapp.com/repl',
-		url: 'http://localhost:8080/repl',
+		url: 'http://visual-scala.herokuapp.com/repl',
+		//url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: instr + " :!: partial"
@@ -82,8 +82,8 @@ var createNewConversion = function() {
 				"}";
 	$.ajax({
 		type: 'POST',
-		//url: 'http://visual-scala.herokuapp.com/repl',
-		url: 'http://localhost:8080/repl',
+		url: 'http://visual-scala.herokuapp.com/repl',
+		//url: 'http://localhost:8080/repl',
 		data: { 
 			code: conv + " :!: conversion"
 		},
@@ -118,15 +118,16 @@ var createNewConversion = function() {
 }
 
 
-function requestConversionsUpdate() {
-	console.log($('#text_conversions').text());
+function requestConversionsUpdate(id) {
+	
+	console.log($('#text_' + id).val());
 	
 	$.ajax({
 		type: 'POST',
-		//url: 'http://visual-scala.herokuapp.com/repl',
-		url: 'http://localhost:8080/repl',
+		url: 'http://visual-scala.herokuapp.com/repl',
+		//url: 'http://localhost:8080/repl',
 		data: { 
-			code: $('#text_conversions').text().toString()
+			code: $('#text_' + id).val().toString()
 		},
 		beforeSend: function(xhr,opts) {
 			$('#buttonSubmit').hide();
@@ -153,8 +154,8 @@ function requestConversionsUpdate() {
 function requestConversionsOp(op,sufix) {
 	$.ajax({
 		type: 'POST',
-		//url: 'http://visual-scala.herokuapp.com/repl',
-		url: 'http://localhost:8080/repl',
+		url: 'http://visual-scala.herokuapp.com/repl',
+		//url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
 			code: "conversions :!: " + sufix

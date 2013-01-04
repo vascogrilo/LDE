@@ -11,7 +11,7 @@
  * CONVERSIONS
  * 
  */
-var conversions = ["ClassConversions","IterableConversions","MapConversions","StringConversions","XMLConversions","Other"];
+var conversions = ["ClassConversions","IterableConversions","MapConversions","StringConversions","XMLConversions","Conversions"];
 
 var generateConversionsArea = function() {
 	var element;
@@ -20,13 +20,18 @@ var generateConversionsArea = function() {
 					"<span class='label' data-toggle='collapse' data-target='#conversions_" + conversions[i] + "'>" +
 						conversions[i] + "</span>" +
 					"<div class='conversionsOps'>" +
-					"<a id='submit" + conversions[i] + "' href='#' role='button' class='label label-info' onclick=''>Submit</a>" +
+					"<a id='submit" + conversions[i] + "' href='#' role='button' class='label label-info' onclick='requestConversionsUpdate(\"" + conversions[i].trim() + "\");'>Submit</a>" +
 					"<a id='revert" + conversions[i] + "' href='#' role='button' class='label label-info' style='margin-left: 5px' onclick='requestConversionsOp(0,'reload-" + conversions[i] + "');'>Revert</a>" +
 					"</div>" +
 					"<div id='conversions_" + conversions[i] + "' class='collapse'>" + 
 					"<textarea id='text_" + conversions[i] + "' class='text_conversions'></textarea></div></div>";
 		$('.conversions_list').append(element);
 	}
+}
+
+var generateConversionsRequests = function() {
+	for(var i=0;i<conversions.length;i++)
+		requestConversionsOp(1,conversions[i]);
 }
 
  

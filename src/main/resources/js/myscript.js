@@ -22,13 +22,7 @@ $(document).ready(function() {
 	$('#code').keyup(keyUpHandler);
 	
 	generateConversionsArea();
-	
-	requestConversionsOp(1,"IterableConversions");
-	requestConversionsOp(1,"MapConversions");
-	requestConversionsOp(1,"StringConversions");
-	requestConversionsOp(1,"XMLConversions");
-	requestConversionsOp(1,"ClassConversions");
-	requestConversionsOp(1,"Conversions");
+	generateConversionsRequests();
 	
 	//RE-INSERT EVERY INSTRUCTION PREVIOUSLY RECEIVED
 	//SO THEY CAN SURVIVE REFRESHING THE WINDOW
