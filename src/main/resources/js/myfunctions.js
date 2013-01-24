@@ -17,11 +17,11 @@ var generateConversionsArea = function() {
 	var element;
 	for(var i=0;i<conversions.length;i++){
 		element = "<div class='conversions_item'>" +
-					"<span class='label' data-toggle='collapse' data-target='#conversions_" + conversions[i] + "'>" +
+					"<span class='label label_" + conversions[i] + "' data-toggle='collapse' data-target='#conversions_" + conversions[i] + "'>" +
 						conversions[i] + "</span>" +
 					"<div class='conversionsOps'>" +
 					"<a id='submit" + conversions[i] + "' href='javascript:void(0)' role='button' class='label label-info' onclick='requestConversionsUpdate(\"" + conversions[i].trim() + "\");'>Submit</a>" +
-					"<a id='revert" + conversions[i] + "' href='javascript:void(0)' role='button' class='label label-info' style='margin-left: 5px' onclick='requestConversionsOp(0,'reload-" + conversions[i] + "');'>Revert</a>" +
+					"<a id='revert" + conversions[i] + "' href='javascript:void(0)' role='button' class='label label-info' style='margin-left: 5px' onclick='requestConversionsOp(0,'" + conversions[i] + "');'>Revert</a>" +
 					"</div>" +
 					"<div id='conversions_" + conversions[i] + "' class='collapse'>" + 
 					"<textarea id='text_" + conversions[i] + "' class='text_conversions'></textarea></div></div>";
@@ -172,7 +172,7 @@ var addInstructionHistory = function(code) {
  */
  
 var type_conversions = {
-	'Iterable':
+	'1':
 		[
 			{ 'name':'toBinaryTree','desc':'Binary Tree'},
 			{ 'name':'toD3BarChart','desc':'Bar Chart'},
@@ -180,18 +180,22 @@ var type_conversions = {
 			{ 'name':'toHtmlList','desc':'HTML List'},
 			{ 'name':'toString','desc':'Text'}
 		],
-	'Map':
+	'2':
 		[
 			{ 'name':'toHtml','desc':'HTML Table'},
 			{ 'name':'toPieChart','desc':'Pie Chart'},
 			{ 'name':'toString','desc':'Text'}
 		],
-	'Class':
+	'3':
 		[
 			{ 'name':'toClass','desc':'Graphic class'},
 			{ 'name':'toString','desc':'Text'}
 		]
 };
+
+var addConversion = function(type,name,desc) {
+	type_conversions[getCategory(type)].push({ 'name':name, 'desc':desc });
+}
 
 var getCategory = function(str) {
 	var str_aux = str;
@@ -201,23 +205,44 @@ var getCategory = function(str) {
 	
 	if(str_aux.lastIndexOf(".") > -1)
 		str_aux = str_aux.substr(str_aux.lastIndexOf(".")+1,str_aux.length);
+	
+	console.log("GOT " + str_aux);
+	
+	if( str_aux == "Iterable" 
+		|| str_aux == "List"
+		|| str_aux == "Range"
+		|| str_aux == "Set"
+		|| str_aux == "TreeSet"
+		|| str_aux == "HashSet"
+		|| str_aux == "LinkedHashSet"
+		|| str_aux == "BitSet"
+		|| str_aux == "Stream"
+		|| str_aux == "MutableList"
+		|| str_aux == "Queue"
+		|| str_aux == "Buffer"
+		|| str_aux == "ListBuffer"
+		|| str_aux == "ArrayBuffer"
+		|| str_aux == "Vector"
+		|| str_aux == "ResizableArray"
+		|| str_aux == "ArraySeq"
+		|| str_aux == "StringBuilder"
+		|| str_aux == "Traversable"
+		|| str_aux == "SortedSet"
+		|| str_aux == "Buffer"
+		|| str_aux == "IndexedSeq"
+		|| str_aux == "LinearSeq" )
+		return '1';
 		
-	if( str == "Iterable" 
-		|| str == "List"
-		|| str == "Range"
-		|| str == "Set" )
-		return 1;
-		
-	if(str == "Map" 
-		|| str == "HashMap"
-		|| str == "TreeMap")
-		return 2;
+	if(str_aux == "Map" 
+		|| str_aux == "HashMap"
+		|| str_aux == "TreeMap")
+		return '2';
 }
 
 var fromIntToCategory = function(i) {
 	switch(i){
-			case 1: return 'Iterable';
-			case 2: return 'Map';
+			case 1: return '1';
+			case 2: return '2';
 	}
 }
 

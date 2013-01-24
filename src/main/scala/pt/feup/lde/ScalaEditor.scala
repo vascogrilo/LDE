@@ -34,38 +34,33 @@ object ScalaEditor extends ServerPlan2 {
 		
 		case POST(Path("/repl") & Params(data) & Cookies(cookies)) =>
 			
-			println("RECEIVED: " + data("code") + "\n\n")
+			//println("RECEIVED: " + data("code") + "\n\n")
 			
-			if(data("code").length > 0) {
-				val args = data("code").head.split(":!:")
-				
-				if(args.length == 2){
-					
-					if(args.apply(0).trim.equals("conversions")) {
-						//TEST IF IT IS TO RESPOND WITH CONVERSION OR TO REVERT TO DEFAULT
-						args.apply(1) match {
-							case x if(x.trim.startsWith("reload-")) => {
-								val file = x.slice(x.indexOf("-")+1,x.length)
-								ResponseString(Evaluation.injectConversionFileCookie(cookies("session"),file) toString)
-							}
-							case x => {
-								ResponseString(Evaluation.getConversionsFile(x.trim))
-							}
-						}
-					}
-					else {
-						ResponseString(Evaluation.evaluateConversion(args.apply(0),Evaluation.getInterpreterID(cookies("session"))) toString)
-					}
+			data("type").head match {
+				case "eval" => {
+					println("GOT TYPE EVAL!! \n\n")
+					ResponseString(Evaluation.evaluateSingle(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
 				}
-				else {
-					if(args.length > 2 && args.apply(2).trim.equals("partial"))
-						ResponseString(Evaluation.evaluatePartial(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
-					else ResponseString(Evaluation.evaluateSingle(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
+				case "partial" => {
+					println("GOT TYPE PARTIAL!! \n\n")
+					ResponseString(Evaluation.evaluatePartial(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
 				}
-			}
-			else {
-				println("Got data with 0 length. Showing view with same data.\n\n")
-				ResponseString("")
+				case "req" => {
+					println("GOT TYPE REQUEST!! \n\n")
+					ResponseString(Evaluation.getConversionsFile(data("code").head))
+				}
+				case "update" => {
+					println("GOT TYPE UPDATE!! \n\n")
+					ResponseString(Evaluation.evaluateConversion(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
+				}
+				case "revert" => {
+					println("GOT TYPE REVERT!! \n\n")
+					ResponseString(Evaluation.injectConversionFileCookie(cookies("session"),data("code").head) toString)
+				}
+				case "new" => {
+					println("GOT TYPE NEW CONVERSION!! \n\n")
+					ResponseString(Evaluation.evaluateConversion(data("code").head,Evaluation.getInterpreterID(cookies("session"))) toString)
+				}
 			}
 	}
 }

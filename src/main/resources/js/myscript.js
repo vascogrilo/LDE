@@ -14,7 +14,6 @@ $(document).ready(function() {
 	
 	$('#code').autosize();
 	
-	
 	/**
 	 * HANDLERS FOR EVENTS
 	 */

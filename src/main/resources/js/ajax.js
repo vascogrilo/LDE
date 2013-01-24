@@ -13,6 +13,7 @@ var requestEvaluation = function(code_str) {
 		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
+			type: "eval",
 			code: code_str
 		},
 		beforeSend: function(xhr,opts) {
@@ -46,7 +47,8 @@ var requestConversion = function(div_id,instr) {
 		//url: 'http://visual-scala.herokuapp.com/repl',
 		url: 'http://localhost:8080/repl',
 		dataType: 'html',
-		data: { 
+		data: {
+			type: "partial",
 			code: instr + " :!: partial"
 		},
 		beforeSend: function(xhr,opts) {
@@ -78,14 +80,15 @@ var requestConversion = function(div_id,instr) {
 
 var createNewConversion = function() {
 	var conv = "implicit def conversion" + instructions.length + "(x: " + $('#conversionType').val() + ") = new Object {\n" +
-				"def " + $('#conversionName').val() + " = { (" + $('#conversionCode').val() + ").toString }\n" +
+				"def " + $('#conversionName').val() + " = " + $('#conversionCode').val() + " \n" +
 				"}";
 	$.ajax({
 		type: 'POST',
 		//url: 'http://visual-scala.herokuapp.com/repl',
 		url: 'http://localhost:8080/repl',
 		data: { 
-			code: conv + " :!: conversion"
+			type: "new",
+			code: conv
 		},
 		beforeSend: function(xhr,opts) {
 			$('#buttonSubmit').hide();
@@ -97,7 +100,10 @@ var createNewConversion = function() {
 			$('#buttonSubmit').show();
 			
 			if(data.toString() == "SUCCESS"){
-				//type_conversions.convs
+				//type_conversions.convs				
+				
+				addConversion($('#conversionType').val(),$('#conversionName').val(),$('#conversionDesc').val());
+				
 				$('#conversionType').val("");
 				$('#conversionName').val("");
 				$('#conversionDesc').val("");
@@ -127,6 +133,7 @@ function requestConversionsUpdate(id) {
 		//url: 'http://visual-scala.herokuapp.com/repl',
 		url: 'http://localhost:8080/repl',
 		data: { 
+			type: "update",
 			code: $('#text_' + id).val().toString()
 		},
 		beforeSend: function(xhr,opts) {
@@ -138,6 +145,9 @@ function requestConversionsUpdate(id) {
 			$('#loaderG').hide();
 			$('#buttonSubmit').show();
 			
+			alert("Changes were successful!");
+			
+			$('#label_' + id).click();
 			console.log("Success: " + data);
 		},
 		error: function( jqXHR, exception ){
@@ -152,13 +162,19 @@ function requestConversionsUpdate(id) {
 
 
 function requestConversionsOp(op,sufix) {
+	var typeE;
+	if(op==1)
+		typeE = "req";
+	else typeE = "revert";
+	
 	$.ajax({
 		type: 'POST',
 		//url: 'http://visual-scala.herokuapp.com/repl',
 		url: 'http://localhost:8080/repl',
 		dataType: 'html',
 		data: { 
-			code: "conversions :!: " + sufix
+			type: typeE,
+			code: sufix
 		},
 		beforeSend: function(xhr,opts) {
 			$('#buttonSubmit').hide();
