@@ -21,7 +21,7 @@ var generateConversionsArea = function() {
 						conversions[i] + "</span>" +
 					"<div class='conversionsOps'>" +
 					"<a id='submit" + conversions[i] + "' href='javascript:void(0)' role='button' class='label label-info' onclick='requestConversionsUpdate(\"" + conversions[i].trim() + "\");'>Submit</a>" +
-					"<a id='revert" + conversions[i] + "' href='javascript:void(0)' role='button' class='label label-info' style='margin-left: 5px' onclick='requestConversionsOp(0,'" + conversions[i] + "');'>Revert</a>" +
+					"<a id='revert" + conversions[i] + "' href='javascript:void(0)' role='button' class='label label-info' style='margin-left: 5px' onclick='requestConversionsOp(0,\"" + conversions[i].trim() + "\");'>Revert</a>" +
 					"</div>" +
 					"<div id='conversions_" + conversions[i] + "' class='collapse'>" + 
 					"<textarea id='text_" + conversions[i] + "' class='text_conversions'></textarea></div></div>";

@@ -104,12 +104,13 @@ var createNewConversion = function() {
 				
 				addConversion($('#conversionType').val(),$('#conversionName').val(),$('#conversionDesc').val());
 				
+				alert("Success!");
+				
 				$('#conversionType').val("");
 				$('#conversionName').val("");
 				$('#conversionDesc').val("");
 				$('#conversionCode').val("");
 				$('#closeModal').click();
-				alert("Success!");
 			}
 			else alert("Your conversion was malformed. Please review.");
 		},
@@ -161,17 +162,20 @@ function requestConversionsUpdate(id) {
 }
 
 
-function requestConversionsOp(op,sufix) {
+var requestConversionsOp = function(op,sufix) {
 	var typeE;
 	if(op==1)
 		typeE = "req";
 	else typeE = "revert";
 	
+	console.log("Got typeE = " + typeE + " and sufix = " + sufix);
+	
+	
 	$.ajax({
 		type: 'POST',
 		//url: 'http://visual-scala.herokuapp.com/repl',
 		url: 'http://localhost:8080/repl',
-		dataType: 'html',
+		//dataType: 'html',
 		data: { 
 			type: typeE,
 			code: sufix
